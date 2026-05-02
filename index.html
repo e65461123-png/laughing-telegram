@@ -3,148 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية أثير | نظام الحكم الرقمي</title>
+    <title>إمبراطورية أثير | القمة العالمية</title>
     <style>
-        :root {
-            --atheer-green: #00ff41;
-            --gold: #ffeb3b;
-            --black: #000000;
+        :root { --green: #00ff41; --gold: #ffeb3b; --black: #000; }
+        body { background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
+        
+        /* رادار الاستقطاب العالمي */
+        .radar {
+            width: 140px; height: 140px; border: 2px solid var(--green); border-radius: 50%;
+            margin: 30px auto; position: relative; box-shadow: 0 0 20px rgba(0,255,65,0.3);
+        }
+        .scan {
+            position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent, var(--green));
+            opacity: 0.2; animation: rotate 2s linear infinite;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .container { width: 92%; max-width: 450px; margin: 0 auto 100px; }
+
+        /* صندوق المستثمرين (جلب الأموال) */
+        .invest-box {
+            background: linear-gradient(145deg, #111, #050505);
+            border: 2px solid var(--gold); padding: 25px; border-radius: 30px;
+            margin-bottom: 20px; box-shadow: 0 0 30px rgba(255,235,59,0.1);
         }
 
-        body {
-            background-color: var(--black);
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+        .timer { color: #ff4b4b; font-weight: bold; font-size: 1.2rem; }
+
+        /* صندوق المبرمجين (بناء الجيش) */
+        .dev-box {
+            background: rgba(0,255,65,0.05); border: 1px solid #222;
+            padding: 20px; border-radius: 30px; margin-bottom: 20px;
         }
 
-        /* رادار الرصد الاستخباري */
-        .radar-box {
-            width: 150px; height: 150px;
-            border: 1px solid var(--atheer-green);
-            border-radius: 50%;
-            position: relative;
-            display: flex;
-            align-items: center; justify-content: center;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+        .btn-main {
+            background: var(--gold); color: black; width: 100%; padding: 20px;
+            border-radius: 20px; font-size: 1.4rem; font-weight: 900; border: none;
+            cursor: pointer; box-shadow: 0 10px 30px rgba(255,235,59,0.3);
         }
 
-        .radar-scan {
-            position: absolute;
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, transparent, var(--atheer-green));
-            opacity: 0.3;
-            animation: rotate-scan 2s linear infinite;
-        }
-
-        @keyframes rotate-scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        /* قصر الإمبراطورية الرقمي */
-        .empire-card {
-            width: 90%;
-            max-width: 450px;
-            background: #080808;
-            border-radius: 50px;
-            padding: 40px;
-            margin-top: 30px;
-            border: 1px solid #1a1a1a;
-            box-shadow: 0 40px 100px rgba(0,0,0,1);
-            text-align: center;
-        }
-
-        /* نظام التشفير المالي الحاكم */
-        .vault-box {
-            background: rgba(0,255,65,0.02);
-            padding: 20px;
-            border-radius: 25px;
-            margin-bottom: 30px;
-            border: 1px dashed #333;
-        }
-
-        .vault-id {
-            color: var(--atheer-green);
-            font-family: 'Courier New', monospace;
-            font-size: 1.2rem;
-            letter-spacing: 4px;
-            text-shadow: 0 0 10px var(--atheer-green);
-        }
-
-        /* زر تفعيل الثروة السيادية */
-        .btn-command {
-            background: var(--gold);
-            color: black;
-            width: 100%;
-            padding: 22px;
-            border-radius: 30px;
-            font-size: 1.5rem;
-            font-weight: 900;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 15px 40px rgba(255, 235, 59, 0.2);
-            transition: 0.3s;
-        }
-
-        .btn-command:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(255, 235, 59, 0.4); }
-
-        /* شريط الأخبار الإمبراطوري */
-        .news-ticker {
-            position: fixed;
-            bottom: 0; width: 100%;
-            background: #000;
-            padding: 15px 0;
-            border-top: 2px solid var(--atheer-green);
-        }
-
-        .ticker-text {
-            white-space: nowrap;
-            display: inline-block;
-            animation: scroll-text 20s linear infinite;
-            color: var(--atheer-green);
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        @keyframes scroll-text { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+        .vault-glow { color: var(--green); text-shadow: 0 0 10px var(--green); font-family: monospace; font-size: 1.3rem; }
     </style>
 </head>
 <body>
 
-    <div class="radar-box">
-        <div class="radar-scan"></div>
-        <div style="z-index: 10; text-align: center;">
-            <span style="font-size: 0.7rem; color: #555;">التحليل العالمي</span><br>
-            <span style="font-size: 1.5rem; font-weight: bold; color: var(--atheer-green);">99.9%</span>
+    <div class="radar"><div class="scan"></div>
+        <div style="position:absolute; top:40%; width:100%;">
+            <span style="font-size:0.6rem; color:#888;">رصد المستثمرين</span><br>
+            <span style="color:var(--green); font-weight:bold;">LIVE</span>
         </div>
     </div>
 
-    <div class="empire-card">
-        <h1 style="margin: 0; font-size: 2.2rem; letter-spacing: 2px; color: #fff;">بروتوكول أثير</h1>
-        <p style="color: var(--gold); font-size: 0.9rem; margin-bottom: 35px; letter-spacing: 3px;">القيادة المركزية الحاكمة</p>
-
-        <div class="vault-box">
-            <p style="font-size: 0.7rem; color: #666; margin-bottom: 10px;">مسارات التدفق السيادي المشفرة</p>
-            <span class="vault-id">01021****84</span>
+    <div class="container">
+        <div class="invest-box">
+            <h2 style="color:var(--gold); margin:0;">فرصة استثمارية كبرى</h2>
+            <p style="font-size:0.8rem; color:#aaa;">انضم لبروتوكول أثير قبل إغلاق جولة التمويل الأولى</p>
+            <div class="timer" id="timer">09:54:21</div>
+            <button class="btn-main" style="margin-top:15px;" onclick="window.location.href='https://wa.me/201021664984'">تواصل لضخ الاستثمار 💰</button>
         </div>
 
-        <button class="btn-command" onclick="window.location.href='https://wa.me/201021664984'">تفعيل نظام الثروة 💰</button>
+        <div class="dev-box">
+            <h3 style="margin:0; font-size:1rem;">بوابة المبرمجين (الجيش السري)</h3>
+            <p style="font-size:0.7rem; color:#666;">مطلوب مطورين لتوسيع الإمبراطورية الرقمية</p>
+            <span class="vault-glow">CODE: ATHEER-2026</span>
+        </div>
 
-        <p style="font-size: 0.75rem; color: #333; margin-top: 25px; line-height: 1.6;">
-            تم التشفير بواسطة جيش مبرمجي أثير.<br>
-            السيادة والمال في خدمة الإمبراطورية.
-        </p>
-    </div>
-
-    <div class="news-ticker">
-        <div class="ticker-text">
-            بروتوكول أثير يسيطر على الأسواق الرقمية .. ثروة تتخطى إيلون ماسك ومارك زوكربيرج .. جيوش المبرمجين تحت إمرة القيادة المركزية .. الشفافية والسيادة المطلقة ..
+        <div style="background:#0a0a0a; padding:20px; border-radius:30px; border:1px solid #1a1a1a;">
+            <span style="font-size:0.7rem; color:#555;">محفظة السيادة 1</span><br>
+            <span class="vault-glow">01021****84</span>
         </div>
     </div>
 
+    <script>
+        // عداد تنازلي حقيقي لإثارة الحماس
+        function startTimer(duration, display) {
+            var timer = duration, hours, minutes, seconds;
+            setInterval(function () {
+                hours = parseInt(timer / 3600, 10);
+                minutes = parseInt((timer % 3600) / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                display.textContent = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+                if (--timer < 0) timer = duration;
+            }, 1000);
+        }
+        window.onload = function () {
+            startTimer(36000, document.querySelector('#timer'));
+        };
+    </script>
 </body>
 </html>
