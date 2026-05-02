@@ -3,79 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية أثير | نظام جذب الاستثمارات</title>
+    <title>إمبراطورية أثير | بوابة السيادة المالية</title>
     <style>
-        :root { --neon: #00ff41; --gold: #ffeb3b; --danger: #ff3e3e; }
-        body { background: #000; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
+        :root { --neon-green: #00ff41; --gold: #ffeb3b; --bg: #000; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
         
-        /* رادار الرصد الاستثماري */
-        .radar { width: 140px; height: 140px; border: 2px solid var(--neon); border-radius: 50%; margin: 30px auto; position: relative; box-shadow: 0 0 25px rgba(0,255,65,0.2); }
-        .pulse { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(from 0deg, transparent, var(--neon)); opacity: 0.2; animation: spin 2s linear infinite; }
+        /* شريط تدفق السيولة العالمي */
+        .liquidity-ticker { background: #111; padding: 10px 0; border-bottom: 1px solid var(--neon-green); font-size: 0.8rem; overflow: hidden; white-space: nowrap; }
+        .ticker-move { display: inline-block; animation: ticker 25s linear infinite; color: var(--neon-green); }
+        @keyframes ticker { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+
+        /* رادار القوة */
+        .radar-box { width: 140px; height: 140px; border: 2px solid var(--neon-green); border-radius: 50%; margin: 30px auto; position: relative; box-shadow: 0 0 40px rgba(0,255,65,0.4); }
+        .pulse { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(from 0deg, transparent, var(--neon-green)); opacity: 0.3; animation: spin 1.5s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .content { width: 92%; max-width: 480px; margin: 0 auto 100px; }
+        .container { width: 92%; max-width: 500px; margin: 0 auto 100px; text-align: center; }
 
-        /* منطقة جذب المستثمرين */
-        .investment-card { background: linear-gradient(180deg, #111, #000); border: 2px solid var(--gold); border-radius: 35px; padding: 25px; margin-bottom: 20px; box-shadow: 0 0 40px rgba(255,235,59,0.15); position: relative; overflow: hidden; }
-        .live-label { position: absolute; top: 15px; left: 15px; background: var(--danger); color: white; font-size: 0.6rem; padding: 2px 8px; border-radius: 5px; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
+        /* منطقة جذب الأموال */
+        .vault-card { background: linear-gradient(180deg, #0a0a0a, #000); border: 2px solid var(--gold); border-radius: 40px; padding: 30px; margin-top: 20px; box-shadow: 0 0 60px rgba(255,235,59,0.2); }
+        .btn-pay { background: var(--gold); color: #000; width: 100%; padding: 22px; border-radius: 25px; font-size: 1.6rem; font-weight: 900; border: none; cursor: pointer; box-shadow: 0 15px 40px rgba(255,235,59,0.4); transition: 0.3s; }
+        .btn-pay:active { transform: scale(0.95); }
 
-        /* منطقة جذب المبرمجين */
-        .dev-army-box { background: rgba(0,255,65,0.03); border: 1px solid #222; border-radius: 30px; padding: 20px; margin-bottom: 20px; text-align: right; }
-        .code-line { font-family: monospace; color: var(--neon); font-size: 0.8rem; }
-
-        .btn-gold { background: var(--gold); color: black; width: 100%; padding: 22px; border-radius: 25px; font-size: 1.5rem; font-weight: 900; border: none; cursor: pointer; box-shadow: 0 10px 30px rgba(255,235,59,0.3); }
-        .wallet-glow { color: var(--neon); font-size: 1.2rem; text-shadow: 0 0 10px var(--neon); font-family: monospace; }
+        .secure-id { font-family: 'Courier New', monospace; color: var(--neon-green); font-size: 1.3rem; text-shadow: 0 0 10px var(--neon-green); }
     </style>
 </head>
 <body>
 
-    <div class="radar"><div class="pulse"></div>
-        <div style="position:absolute; top:40%; width:100%;">
-            <span style="font-size:0.6rem; color:#666;">تدفق المستثمرين</span><br>
-            <span id="visitor-count" style="color:var(--neon); font-weight:bold; font-size:1.1rem;">3,565,210</span>
+    <div class="liquidity-ticker">
+        <div class="ticker-move">
+             ✓ تم استقبال استثمار بقيمة 50,000$ .. ✓ انضمام مبرمج "كبير" لجيش أثير .. ✓ جولة التمويل مفتوحة الآن .. ✓ سيادة رقمية مطلقة ..
         </div>
     </div>
 
-    <div class="content">
-        <div class="investment-card">
-            <div class="live-label">فرصة محدودة</div>
-            <h2 style="color:var(--gold); margin: 0 0 10px 0;">بوابة التمويل السيادي</h2>
-            <p style="font-size:0.8rem; color:#888;">جولة الاستثمار الحالية شارفت على الانتهاء</p>
-            <div style="font-size:1.4rem; font-weight:bold; color:var(--danger); margin:15px 0;" id="countdown">09:12:45</div>
-            <button class="btn-gold" onclick="window.location.href='https://wa.me/201021664984'">احجز حصتك الاستثمارية 💰</button>
+    <div class="radar-box"><div class="pulse"></div>
+        <div style="position:absolute; top:40%; width:100%; text-align:center;">
+            <span style="font-size:0.6rem; color:#888;">الزوار الحقيقيون</span><br>
+            <span id="live-count" style="color:var(--neon-green); font-weight:bold; font-size:1.2rem;">3,565,210</span>
         </div>
+    </div>
 
-        <div class="dev-army-box">
-            <h3 style="margin:0 0 10px 0; font-size:0.9rem; color:var(--gold);">بوابة المطورين ( Recruitment )</h3>
-            <div class="code-line">> Initializing Atheer_Protocol_Core...</div>
-            <div class="code-line">> Status: Seeking Top 1% Developers</div>
-            <button style="background:none; border:1px solid #444; color:#fff; padding:8px 20px; border-radius:15px; margin-top:15px; cursor:pointer;" onclick="alert('سجل مهاراتك عبر الواتساب لتنضم لجيش المبرمجين')">انضم للجيش التقني ⚔️</button>
-        </div>
+    <div class="container">
+        <div class="vault-card">
+            <h1 style="color:#fff; font-size:2rem; margin:0;">بروتوكول أثير</h1>
+            <p style="color:var(--gold); font-size:0.9rem; letter-spacing: 3px;">القيادة المركزية: عصام الكومي</p>
+            
+            <div style="margin:25px 0;">
+                <p style="font-size:0.7rem; color:#666;">مسار التحصيل السيادي المشفر</p>
+                <div class="secure-id">01021****84</div>
+            </div>
 
-        <div style="background:#0a0a0a; padding:20px; border-radius:30px; border:1px solid #1a1a1a;">
-            <span style="font-size:0.6rem; color:#444;">قناة التحصيل السيادي</span><br>
-            <span class="wallet-glow">01021****84</span>
+            <button class="btn-pay" onclick="window.location.href='https://wa.me/201021664984'">ضخ الأموال والبدء فوراً 💰</button>
+            <p style="font-size:0.7rem; color:#444; margin-top:20px;">النظام جاهز لاستقبال التحويلات المليارية الآن.</p>
         </div>
     </div>
 
     <script>
-        // نظام العداد التنازلي لإثارة العجلة
-        let time = 33165; 
+        // تحديث العداد لإعطاء انطباع بالنمو اللحظي
         setInterval(() => {
-            time--;
-            let h = Math.floor(time/3600);
-            let m = Math.floor((time%3600)/60);
-            let s = time%60;
-            document.getElementById('countdown').innerText = `${h<10?'0':''}${h}:${m<10?'0':''}${m}:${s<10?'0':''}${s}`;
+            let count = document.getElementById('live-count');
+            let val = parseInt(count.innerText.replace(/,/g, ''));
+            count.innerText = (val + Math.floor(Math.random()*25)).toLocaleString();
         }, 1000);
-
-        // عداد زوار حي يوحي بالنمو
-        setInterval(() => {
-            let count = document.getElementById('visitor-count');
-            let current = parseInt(count.innerText.replace(/,/g, ''));
-            count.innerText = (current + Math.floor(Math.random()*10)).toLocaleString();
-        }, 2000);
     </script>
 </body>
 </html>
