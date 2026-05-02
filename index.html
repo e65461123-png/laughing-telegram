@@ -3,102 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام أثير السيادي</title>
+    <title>إمبراطورية أثير | التحكم المطلق</title>
     <style>
         :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Segoe UI', sans-serif; margin: 0; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; overflow-x: hidden; }
         
-        /* شاشة الدخول */
-        #gate, #admin-view { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, #0a1a0a, #000); }
-        .card { border: 2px solid var(--neon); padding: 30px; border-radius: 20px; text-align: center; width: 85%; max-width: 400px; background: #000; }
-        input { width: 90%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid var(--neon); color: var(--neon); text-align: center; border-radius: 8px; }
-        .btn { background: var(--neon); color: #000; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        /* شاشات النظام */
+        #gate, #admin-panel, #main-app { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+        #main-app, #admin-panel { display: none; }
+
+        .card { border: 2px solid var(--neon); padding: 30px; border-radius: 25px; text-align: center; width: 100%; max-width: 400px; background: rgba(0,0,0,0.9); box-shadow: 0 0 30px rgba(0,255,65,0.1); }
+        input { width: 90%; padding: 15px; margin: 15px 0; background: #111; border: 1px solid var(--neon); color: var(--neon); border-radius: 12px; text-align: center; font-size: 20px; outline: none; }
+        .btn { background: var(--neon); color: #000; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 18px; }
         
-        /* شاشة المستخدمين */
-        #user-view { display: none; padding: 20px; text-align: center; }
-        .radar { width: 100px; height: 100px; border: 2px solid var(--neon); border-radius: 50%; margin: 0 auto 20px; position: relative; }
+        /* الرادار والواجهة */
+        .radar { width: 100px; height: 100px; border: 2px solid var(--neon); border-radius: 50%; position: relative; margin-bottom: 20px; }
         .radar::after { content: ''; position: absolute; width: 50%; height: 2px; background: var(--neon); top: 50%; left: 50%; transform-origin: left; animation: scan 3s linear infinite; }
         @keyframes scan { to { transform: rotate(360deg); } }
-        .pay-card { border: 2px solid var(--gold); padding: 20px; border-radius: 15px; margin-top: 20px; background: rgba(255,204,0,0.05); }
 
-        /* صفحة التعديل المخفية */
-        #admin-view { display: none; background: #050505; }
-        .admin-box { border: 2px dashed #ff4444; padding: 20px; border-radius: 15px; }
+        .gold-card { border-color: var(--gold); background: rgba(255,204,0,0.02); }
+        .pay-num { font-size: 26px; color: var(--gold); font-weight: bold; display: block; margin: 10px 0; letter-spacing: 2px; }
+        .footer { position: fixed; bottom: 0; width: 100%; background: var(--neon); color: #000; font-size: 10px; padding: 10px; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div id="gate">
     <div class="card">
-        <h1 onclick="goToAdmin()" style="cursor:default">ATHEER</h1>
-        <p style="color: var(--gold)">ادخل الكود للمتابعة</p>
-        <input type="password" id="passInput" placeholder="كود الدخول">
-        <button class="btn" onclick="login()">دخول النظام</button>
+        <h1 style="letter-spacing: 8px; margin:0;">ATHEER</h1>
+        <p style="color: var(--gold); margin-bottom: 20px;">ادخل الكود للمتابعة</p>
+        <input type="password" id="entryCode" placeholder="••••••">
+        <button class="btn" onclick="verifyEntry()">دخول النظام 🔓</button>
+        <p onclick="openAdminGate()" style="font-size: 10px; margin-top: 20px; opacity: 0.3;">إدارة السيادة</p>
     </div>
 </div>
 
-<div id="user-view">
+<div id="main-app">
     <div class="radar"></div>
-    <h2>بروتوكول أثير للخير</h2>
-    <div class="pay-card">
-        <h3 style="color: var(--gold)">بوابة الاستثمار</h3>
-        <p id="displayNum1">01021664984</p>
-        <p id="displayNum2">01017667875</p>
-        <a href="#" class="btn" style="background:var(--gold); text-decoration:none; display:block">إرسال دعم</a>
+    <h2 style="margin:0;">بروتوكول أثير للخير</h2>
+    <p style="color: #888; font-size: 12px;">DIGITAL SOVEREIGNTY SYSTEM</p>
+    
+    <div class="card gold-card" style="margin-top: 20px;">
+        <h3 style="color: var(--gold); margin:0;">💰 بوابة الاستثمار المباشر</h3>
+        <div style="margin: 20px 0;">
+            <span style="font-size: 12px; color: #fff;">المحفظة النشطة:</span>
+            <span class="pay-num" id="displayNum">01021664984</span>
+        </div>
+        <a href="https://wa.me/201021664984" class="btn" style="background: var(--gold); text-decoration: none; display: block;">تأكيد التحويل (واتساب) 💸</a>
     </div>
-    <p style="margin-top:40px; font-size:10px; color:#333" onclick="goToAdmin()">إدارة النظام</p>
+    <button onclick="location.reload()" style="background:none; border:none; color:#444; margin-top:20px; cursor:pointer;">تشفير الخروج</button>
 </div>
 
-<div id="admin-view">
-    <div class="card admin-box">
-        <h2 style="color: #ff4444;">لوحة تحكم القائد</h2>
-        <p>تعديل كود الدخول:</p>
-        <input type="text" id="newPass" placeholder="الكود الجديد">
-        <p>تعديل محفظة 1:</p>
-        <input type="text" id="newNum1" placeholder="رقم المحفظة 1">
-        <button class="btn" style="background:#ff4444" onclick="saveChanges()">حفظ التعديلات السيادية 💾</button>
-        <button class="btn" style="margin-top:10px; background:#444; color:#fff" onclick="location.reload()">خروج</button>
+<div id="admin-panel">
+    <div class="card" style="border-color: #ff4444;">
+        <h2 style="color: #ff4444; margin:0;">لوحة تحكم القائد</h2>
+        <p style="font-size: 12px;">تعديل بيانات المنصة فوراً</p>
+        
+        <div style="text-align: right; font-size: 12px;">
+            <label>كود دخول الجمهور الجديد:</label>
+            <input type="text" id="newPublicCode" placeholder="مثلاً: 2026">
+            
+            <label>رقم المحفظة الجديد:</label>
+            <input type="text" id="newWalletNum" placeholder="010XXXXXXXX">
+        </div>
+        
+        <button class="btn" style="background: #ff4444; color: #fff;" onclick="saveAdminChanges()">حفظ التعديلات السيادية 💾</button>
+        <button onclick="location.reload()" style="background:none; border:none; color:#888; margin-top:15px; cursor:pointer;">إلغاء والعودة</button>
     </div>
 </div>
+
+<div class="footer">SYSTEM ID: ESSAM-2026 | SECURED BY ATHEER PROTOCOL</div>
 
 <script>
-    // القيم الافتراضية
-    let currentPass = localStorage.getItem('atheer_pass') || '2026';
-    let num1 = localStorage.getItem('atheer_num1') || '01021664984';
+    // جلب البيانات من الذاكرة المحلية أو استخدام الافتراضي
+    let publicCode = localStorage.getItem('atheer_public_code') || '2026';
+    let walletNum = localStorage.getItem('atheer_wallet_num') || '01021664984';
 
-    // تحديث الأرقام في الواجهة
-    document.getElementById('displayNum1').innerText = num1;
+    // تحديث الواجهة بالبيانات الحالية
+    document.getElementById('displayNum').innerText = walletNum;
 
-    function login() {
-        const val = document.getElementById('passInput').value;
-        if(val === currentPass) {
+    // وظيفة دخول الجمهور
+    function verifyEntry() {
+        const input = document.getElementById('entryCode').value;
+        if(input === publicCode) {
             document.getElementById('gate').style.display = 'none';
-            document.getElementById('user-view').style.display = 'block';
-        } else if(val === 'admin99') { // كود سري لفتح صفحة التعديل مباشرة
-            goToAdmin();
+            document.getElementById('main-app').style.display = 'flex';
         } else {
-            alert('الكود خاطئ');
+            alert('الكود غير صحيح يا فندم!');
         }
     }
 
-    function goToAdmin() {
-        // حماية إضافية: يطلب كلمة سر الإدارة
-        const master = prompt("ادخل كلمة سر الإدارة لفتح صفحة التعديل:");
-        if(master === 'عصام2026') {
+    // وظيفة فتح صفحة التعديل (سرية)
+    function openAdminGate() {
+        const adminPass = prompt("ادخل كلمة سر القائد لفتح صفحة التعديل:");
+        if(adminPass === 'عصام2026') {
             document.getElementById('gate').style.display = 'none';
-            document.getElementById('user-view').style.display = 'none';
-            document.getElementById('admin-view').style.display = 'flex';
+            document.getElementById('admin-panel').style.display = 'flex';
+        } else {
+            alert("صلاحية غير مصرح بها!");
         }
     }
 
-    function saveChanges() {
-        const p = document.getElementById('newPass').value;
-        const n1 = document.getElementById('newNum1').value;
-        
-        if(p) localStorage.setItem('atheer_pass', p);
-        if(n1) localStorage.setItem('atheer_num1', n1);
-        
-        alert('تم حفظ التعديلات بنجاح يا قائد!');
+    // حفظ التعديلات من صفحة التعديل
+    function saveAdminChanges() {
+        const newCode = document.getElementById('newPublicCode').value;
+        const newNum = document.getElementById('newWalletNum').value;
+
+        if(newCode) localStorage.setItem('atheer_public_code', newCode);
+        if(newNum) localStorage.setItem('atheer_wallet_num', newNum);
+
+        alert('تم تحديث بروتوكول أثير بنجاح يا قائد عصام!');
         location.reload();
     }
 </script>
