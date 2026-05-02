@@ -3,93 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية أثير | القمة العالمية</title>
+    <title>إمبراطورية أثير | نظام جذب الاستثمارات</title>
     <style>
-        :root { --green: #00ff41; --gold: #ffeb3b; --black: #000; }
-        body { background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
+        :root { --neon: #00ff41; --gold: #ffeb3b; --danger: #ff3e3e; }
+        body { background: #000; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
         
-        /* رادار الاستقطاب العالمي */
-        .radar {
-            width: 140px; height: 140px; border: 2px solid var(--green); border-radius: 50%;
-            margin: 30px auto; position: relative; box-shadow: 0 0 20px rgba(0,255,65,0.3);
-        }
-        .scan {
-            position: absolute; width: 100%; height: 100%; border-radius: 50%;
-            background: conic-gradient(from 0deg, transparent, var(--green));
-            opacity: 0.2; animation: rotate 2s linear infinite;
-        }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* رادار الرصد الاستثماري */
+        .radar { width: 140px; height: 140px; border: 2px solid var(--neon); border-radius: 50%; margin: 30px auto; position: relative; box-shadow: 0 0 25px rgba(0,255,65,0.2); }
+        .pulse { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(from 0deg, transparent, var(--neon)); opacity: 0.2; animation: spin 2s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .container { width: 92%; max-width: 450px; margin: 0 auto 100px; }
+        .content { width: 92%; max-width: 480px; margin: 0 auto 100px; }
 
-        /* صندوق المستثمرين (جلب الأموال) */
-        .invest-box {
-            background: linear-gradient(145deg, #111, #050505);
-            border: 2px solid var(--gold); padding: 25px; border-radius: 30px;
-            margin-bottom: 20px; box-shadow: 0 0 30px rgba(255,235,59,0.1);
-        }
+        /* منطقة جذب المستثمرين */
+        .investment-card { background: linear-gradient(180deg, #111, #000); border: 2px solid var(--gold); border-radius: 35px; padding: 25px; margin-bottom: 20px; box-shadow: 0 0 40px rgba(255,235,59,0.15); position: relative; overflow: hidden; }
+        .live-label { position: absolute; top: 15px; left: 15px; background: var(--danger); color: white; font-size: 0.6rem; padding: 2px 8px; border-radius: 5px; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
 
-        .timer { color: #ff4b4b; font-weight: bold; font-size: 1.2rem; }
+        /* منطقة جذب المبرمجين */
+        .dev-army-box { background: rgba(0,255,65,0.03); border: 1px solid #222; border-radius: 30px; padding: 20px; margin-bottom: 20px; text-align: right; }
+        .code-line { font-family: monospace; color: var(--neon); font-size: 0.8rem; }
 
-        /* صندوق المبرمجين (بناء الجيش) */
-        .dev-box {
-            background: rgba(0,255,65,0.05); border: 1px solid #222;
-            padding: 20px; border-radius: 30px; margin-bottom: 20px;
-        }
-
-        .btn-main {
-            background: var(--gold); color: black; width: 100%; padding: 20px;
-            border-radius: 20px; font-size: 1.4rem; font-weight: 900; border: none;
-            cursor: pointer; box-shadow: 0 10px 30px rgba(255,235,59,0.3);
-        }
-
-        .vault-glow { color: var(--green); text-shadow: 0 0 10px var(--green); font-family: monospace; font-size: 1.3rem; }
+        .btn-gold { background: var(--gold); color: black; width: 100%; padding: 22px; border-radius: 25px; font-size: 1.5rem; font-weight: 900; border: none; cursor: pointer; box-shadow: 0 10px 30px rgba(255,235,59,0.3); }
+        .wallet-glow { color: var(--neon); font-size: 1.2rem; text-shadow: 0 0 10px var(--neon); font-family: monospace; }
     </style>
 </head>
 <body>
 
-    <div class="radar"><div class="scan"></div>
+    <div class="radar"><div class="pulse"></div>
         <div style="position:absolute; top:40%; width:100%;">
-            <span style="font-size:0.6rem; color:#888;">رصد المستثمرين</span><br>
-            <span style="color:var(--green); font-weight:bold;">LIVE</span>
+            <span style="font-size:0.6rem; color:#666;">تدفق المستثمرين</span><br>
+            <span id="visitor-count" style="color:var(--neon); font-weight:bold; font-size:1.1rem;">3,565,210</span>
         </div>
     </div>
 
-    <div class="container">
-        <div class="invest-box">
-            <h2 style="color:var(--gold); margin:0;">فرصة استثمارية كبرى</h2>
-            <p style="font-size:0.8rem; color:#aaa;">انضم لبروتوكول أثير قبل إغلاق جولة التمويل الأولى</p>
-            <div class="timer" id="timer">09:54:21</div>
-            <button class="btn-main" style="margin-top:15px;" onclick="window.location.href='https://wa.me/201021664984'">تواصل لضخ الاستثمار 💰</button>
+    <div class="content">
+        <div class="investment-card">
+            <div class="live-label">فرصة محدودة</div>
+            <h2 style="color:var(--gold); margin: 0 0 10px 0;">بوابة التمويل السيادي</h2>
+            <p style="font-size:0.8rem; color:#888;">جولة الاستثمار الحالية شارفت على الانتهاء</p>
+            <div style="font-size:1.4rem; font-weight:bold; color:var(--danger); margin:15px 0;" id="countdown">09:12:45</div>
+            <button class="btn-gold" onclick="window.location.href='https://wa.me/201021664984'">احجز حصتك الاستثمارية 💰</button>
         </div>
 
-        <div class="dev-box">
-            <h3 style="margin:0; font-size:1rem;">بوابة المبرمجين (الجيش السري)</h3>
-            <p style="font-size:0.7rem; color:#666;">مطلوب مطورين لتوسيع الإمبراطورية الرقمية</p>
-            <span class="vault-glow">CODE: ATHEER-2026</span>
+        <div class="dev-army-box">
+            <h3 style="margin:0 0 10px 0; font-size:0.9rem; color:var(--gold);">بوابة المطورين ( Recruitment )</h3>
+            <div class="code-line">> Initializing Atheer_Protocol_Core...</div>
+            <div class="code-line">> Status: Seeking Top 1% Developers</div>
+            <button style="background:none; border:1px solid #444; color:#fff; padding:8px 20px; border-radius:15px; margin-top:15px; cursor:pointer;" onclick="alert('سجل مهاراتك عبر الواتساب لتنضم لجيش المبرمجين')">انضم للجيش التقني ⚔️</button>
         </div>
 
         <div style="background:#0a0a0a; padding:20px; border-radius:30px; border:1px solid #1a1a1a;">
-            <span style="font-size:0.7rem; color:#555;">محفظة السيادة 1</span><br>
-            <span class="vault-glow">01021****84</span>
+            <span style="font-size:0.6rem; color:#444;">قناة التحصيل السيادي</span><br>
+            <span class="wallet-glow">01021****84</span>
         </div>
     </div>
 
     <script>
-        // عداد تنازلي حقيقي لإثارة الحماس
-        function startTimer(duration, display) {
-            var timer = duration, hours, minutes, seconds;
-            setInterval(function () {
-                hours = parseInt(timer / 3600, 10);
-                minutes = parseInt((timer % 3600) / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-                display.textContent = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
-                if (--timer < 0) timer = duration;
-            }, 1000);
-        }
-        window.onload = function () {
-            startTimer(36000, document.querySelector('#timer'));
-        };
+        // نظام العداد التنازلي لإثارة العجلة
+        let time = 33165; 
+        setInterval(() => {
+            time--;
+            let h = Math.floor(time/3600);
+            let m = Math.floor((time%3600)/60);
+            let s = time%60;
+            document.getElementById('countdown').innerText = `${h<10?'0':''}${h}:${m<10?'0':''}${m}:${s<10?'0':''}${s}`;
+        }, 1000);
+
+        // عداد زوار حي يوحي بالنمو
+        setInterval(() => {
+            let count = document.getElementById('visitor-count');
+            let current = parseInt(count.innerText.replace(/,/g, ''));
+            count.innerText = (current + Math.floor(Math.random()*10)).toLocaleString();
+        }, 2000);
     </script>
 </body>
 </html>
