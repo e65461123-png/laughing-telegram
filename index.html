@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>إمبراطورية أثير | الواجهة العالمية</title>
+    <title>إمبراطورية أثير | النسخة الرشيقة</title>
     <style>
         :root {
             --neon-green: #00ff41;
@@ -21,12 +21,14 @@
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
+            transform: scale(0.9); /* تصغير الواجهة بالكامل بنسبة بسيطة */
+            transform-origin: top center;
         }
 
-        /* 1. الرادار وعداد الزوار */
+        /* رادار أصغر وأكثر دقة */
         .radar-section {
-            margin-top: 30px;
-            width: 150px; height: 150px;
+            margin-top: 20px;
+            width: 120px; height: 120px;
             border: 2px solid var(--neon-green);
             border-radius: 50%;
             position: relative;
@@ -47,27 +49,27 @@
 
         @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* 2. حاوية التطبيق المنظمة */
+        /* حاوية التطبيق المصغرة */
         .app-card {
-            width: 90%;
-            max-width: 400px;
+            width: 88%;
+            max-width: 360px; /* تقليل العرض الأقصى */
             background: var(--card-bg);
-            border-radius: 40px;
-            padding: 25px;
-            margin-top: 30px;
+            border-radius: 35px;
+            padding: 20px;
+            margin-top: 20px;
             border: 1px solid #222;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            margin-bottom: 100px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            margin-bottom: 120px;
         }
 
-        /* نافذة البث المباشر */
+        /* نافذة البث المباشر مصغرة */
         .live-window {
             width: 100%;
-            height: 180px;
+            height: 150px; /* تقليل الارتفاع */
             background: #000;
-            border-radius: 25px;
-            margin-bottom: 25px;
+            border-radius: 20px;
+            margin-bottom: 20px;
             position: relative;
             display: flex;
             align-items: center; justify-content: center;
@@ -76,77 +78,77 @@
 
         .live-tag {
             position: absolute;
-            top: 15px; right: 15px;
+            top: 10px; right: 10px;
             background: red;
-            padding: 3px 12px;
-            border-radius: 5px;
-            font-size: 0.7rem;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.65rem;
             animation: pulse 1.5s infinite;
         }
 
         @keyframes pulse { 50% { opacity: 0.5; } }
 
-        /* المحافظ المحمية بالنجوم */
+        /* المحافظ المنسقة */
         .wallet-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 25px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .wallet-box {
             background: #1a1a1a;
-            padding: 15px;
-            border-radius: 20px;
+            padding: 12px;
+            border-radius: 18px;
             border: 1px solid #282828;
         }
 
         .masked-num {
             color: var(--neon-green);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: block;
             margin-top: 5px;
             direction: ltr;
         }
 
-        /* أزرار السوشيال ميديا المنسقة */
+        /* زر الأكشن */
+        .btn-gold {
+            background: var(--gold);
+            color: black;
+            width: 100%;
+            padding: 15px;
+            border-radius: 18px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* روابط السوشيال ميديا */
         .social-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 20px;
+            gap: 8px;
+            margin-top: 15px;
         }
 
         .social-link {
             background: #1a1a1a;
-            padding: 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
             color: #ccc;
             text-decoration: none;
             border: 1px solid #222;
         }
 
-        /* زر الأكشن الرئيسي */
-        .btn-gold {
-            background: var(--gold);
-            color: black;
-            width: 100%;
-            padding: 18px;
-            border-radius: 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        /* شريط الأخبار السفلي */
+        /* الشريط السفلي */
         .news-ticker {
             position: fixed;
             bottom: 0; width: 100%;
             background: #000;
-            padding: 12px 0;
+            padding: 10px 0;
             border-top: 1px solid var(--neon-green);
         }
 
@@ -156,6 +158,7 @@
             animation: scroll 25s linear infinite;
             color: var(--neon-green);
             font-weight: bold;
+            font-size: 0.9rem;
         }
 
         @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
@@ -166,27 +169,27 @@
     <div class="radar-section">
         <div class="radar-sweep"></div>
         <div style="z-index: 10; text-align: center;">
-            <span style="font-size: 0.6rem; color: #888;">الزوار الآن</span><br>
-            <span style="font-size: 1.4rem; font-weight: bold; color: var(--neon-green);">3,565,210</span>
+            <span style="font-size: 0.55rem; color: #888;">الزوار</span><br>
+            <span style="font-size: 1.2rem; font-weight: bold; color: var(--neon-green);">3,565,210</span>
         </div>
     </div>
 
     <div class="app-card">
         <div class="live-window">
-            <div class="live-tag">LIVE بث مباشر</div>
-            <span style="color: #444; font-size: 0.8rem;">ATHEER LIVE NETWORK</span>
+            <div class="live-tag">LIVE مباشر</div>
+            <span style="color: #333; font-size: 0.75rem;">ATHEER LIVE MONITOR</span>
         </div>
 
-        <h2 style="margin: 0; font-size: 1.8rem;">بروتوكول أثير</h2>
-        <p style="color: var(--gold); font-size: 0.8rem; margin-bottom: 25px;">بقيادة القائد عصام الكومي</p>
+        <h2 style="margin: 0; font-size: 1.5rem;">بروتوكول أثير</h2>
+        <p style="color: var(--gold); font-size: 0.75rem; margin-bottom: 20px;">بقيادة عصام الكومي</p>
 
         <div class="wallet-grid">
             <div class="wallet-box">
-                <span style="font-size: 0.7rem; color: #666;">محفظة 1</span>
+                <span style="font-size: 0.65rem; color: #666;">محفظة 1</span>
                 <span class="masked-num">84****01021</span>
             </div>
             <div class="wallet-box">
-                <span style="font-size: 0.7rem; color: #666;">محفظة 2</span>
+                <span style="font-size: 0.65rem; color: #666;">محفظة 2</span>
                 <span class="masked-num">75****01017</span>
             </div>
         </div>
@@ -202,7 +205,7 @@
 
     <div class="news-ticker">
         <div class="ticker-text">
-            القائد عصام الكومي يرحب بكم في عالم السيادة الرقمية .. بروتوكول أثير يغزو العالم .. الشفافية هي سر نجاحنا .. انضموا لجيش العمالقة الآن ..
+            القائد عصام الكومي يرحب بكم .. نظام بروتوكول أثير يغزو العالم .. الشفافية سر نجاحنا ..
         </div>
     </div>
 
