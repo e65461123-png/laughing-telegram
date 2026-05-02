@@ -3,59 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية أثير | السيطرة المالية</title>
+    <title>إمبراطورية أثير | التشفير السيادي</title>
     <style>
         :root { --gold: #ffeb3b; --neon: #00ff41; --danger: #ff3131; }
-        body { background: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 0; overflow-x: hidden; }
-        
-        /* رادار الاقتناص السيادي */
-        .radar-box { padding: 20px; position: relative; }
-        .radar { width: 150px; height: 150px; border: 2px solid var(--neon); border-radius: 50%; margin: 0 auto; position: relative; box-shadow: 0 0 50px var(--neon); }
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 0; }
+        .urgent-timer { background: var(--danger); color: #fff; padding: 15px; font-weight: 900; animation: blink 0.8s infinite; }
+        @keyframes blink { 50% { opacity: 0.3; } }
+        .radar { width: 120px; height: 120px; border: 2px solid var(--neon); border-radius: 50%; margin: 20px auto; position: relative; box-shadow: 0 0 30px var(--neon); }
         .scan { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(from 0deg, transparent, var(--neon)); opacity: 0.3; animation: spin 1.5s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        /* عداد الضغط المالي */
-        .urgent-timer { background: var(--danger); color: #fff; padding: 15px; font-weight: 900; font-size: 1.2rem; animation: blink 0.8s infinite; }
-        @keyframes blink { 50% { opacity: 0.3; } }
-
-        .container { padding: 30px; max-width: 500px; margin: auto; }
-        .vault-card { background: #111; border: 2px solid var(--gold); border-radius: 40px; padding: 25px; box-shadow: 0 0 30px rgba(255, 235, 59, 0.2); }
-        
-        .pay-btn { background: var(--gold); color: #000; width: 100%; padding: 20px; border-radius: 25px; font-size: 1.8rem; font-weight: 900; border: none; cursor: pointer; margin-top: 20px; box-shadow: 0 10px 0 #b7a500; transition: 0.2s; }
-        .pay-btn:active { transform: translateY(5px); box-shadow: 0 5px 0 #b7a500; }
-        
-        .wallet-id { color: var(--neon); font-family: monospace; font-size: 1.1rem; background: #222; padding: 10px; border-radius: 10px; margin: 10px 0; border: 1px solid #333; }
-        .footer-tech { font-size: 0.7rem; color: #555; margin-top: 30px; letter-spacing: 2px; }
+        .vault-card { background: #111; border: 2px solid var(--gold); border-radius: 30px; padding: 25px; margin: 20px; box-shadow: 0 0 20px rgba(255, 235, 59, 0.2); }
+        .wallet-id { color: var(--neon); font-family: monospace; font-size: 1.2rem; background: #222; padding: 10px; border-radius: 10px; margin: 10px 0; border: 1px solid #333; letter-spacing: 2px; }
+        .pay-btn { background: var(--gold); color: #000; width: 100%; padding: 15px; border-radius: 20px; font-size: 1.5rem; font-weight: 900; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
-
-    <div class="urgent-timer">⚠️ تنبيه إمبراطوري: إغلاق جولة السيادة بعد 10 دقائق فقط!</div>
-
-    <div class="container">
-        <div class="radar-box">
-            <div class="radar"><div class="scan"></div></div>
-            <p style="color: var(--neon); font-size: 0.8rem; margin-top: 10px;">جاري رصد الحيتان والمستثمرين...</p>
+    <div class="urgent-timer">⚠️ تنبيه سيادي: جولة الاستثمار تنتهي الآن!</div>
+    <div class="radar"><div class="scan"></div></div>
+    <div class="vault-card">
+        <h2 style="color: var(--gold);">بروتوكول أثير</h2>
+        <p style="font-size: 0.8rem; color: #888;">بإشراف القائد: عصام الكومي</p>
+        
+        <div style="text-align: right;">
+            <p style="font-size: 0.7rem; color: #aaa; margin-bottom: 5px;">قناة التشفير (1):</p>
+            <div class="wallet-id">ID: 0102****984</div>
+            
+            <p style="font-size: 0.7rem; color: #aaa; margin-bottom: 5px;">قناة التشفير (2):</p>
+            <div class="wallet-id">ID: 0101****875</div>
         </div>
 
-        <div class="vault-card">
-            <h1 style="color: var(--gold); margin-bottom: 5px;">بروتوكول أثير</h1>
-            <p style="margin-top: 0; font-size: 0.9rem; color: #888;">بإشراف القائد: عصام الكومي</p>
-
-            <div style="text-align: right; margin-top: 20px;">
-                <label style="font-size: 0.7rem; color: #aaa;">قناة التحصيل السيادي (1):</label>
-                <div class="wallet-id">ID: 01021664984</div>
-                
-                <label style="font-size: 0.7rem; color: #aaa;">قناة التحصيل السيادي (2):</label>
-                <div class="wallet-id">ID: 01017667875</div>
-            </div>
-
-            <button class="pay-btn" onclick="window.location.href='https://wa.me/201021664984'">اضخ المال الآن 💰</button>
-            <p style="font-size: 0.6rem; color: var(--neon); margin-top: 15px;">✓ المعاملة مشفرة بنظام AES-256</p>
-        </div>
-
-        <div class="footer-tech">ATHEER PROTOCOL v2.0 | SECURE NODES ACTIVE</div>
+        <button class="pay-btn" onclick="window.location.href='https://wa.me/201021664984'">اضخ المال الآن 💰</button>
+        <p style="font-size: 0.6rem; color: var(--neon); margin-top: 10px;">🛡️ البيانات محمية بنظام النجوم السيادي</p>
     </div>
-
 </body>
 </html>
