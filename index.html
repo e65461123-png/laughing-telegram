@@ -1,17 +1,18 @@
-<div style="margin-top: 25px; border-top: 1px dashed #333; padding-top: 20px;">
-    <p style="font-size: 0.8rem; color: var(--gold); margin-bottom: 15px;">🚀 ساهم في نشر السيادة الرقمية للعالم</p>
-    
-    <div class="share-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
-        <a href="https://api.whatsapp.com/send?text=انضموا الآن لصاروخ العصر التقني بقيادة القائد عصام الكومي.. بروتوكول أثير يغزو العالم! 🚀 https://e654611.github.io/laughing-telegram/" 
-           target="_blank" style="text-decoration: none; background: #25D366; padding: 10px; border-radius: 12px; font-size: 1.2rem;">🟢</a>
-        
-        <a href="https://t.me/share/url?url=https://e654611.github.io/laughing-telegram/&text=بروتوكول أثير - السيادة الرقمية بقيادة عصام الكومي" 
-           target="_blank" style="text-decoration: none; background: #0088cc; padding: 10px; border-radius: 12px; font-size: 1.2rem;">🔵</a>
-        
-        <a href="https://www.facebook.com/sharer/sharer.php?u=https://e654611.github.io/laughing-telegram/" 
-           target="_blank" style="text-decoration: none; background: #1877F2; padding: 10px; border-radius: 12px; font-size: 1.2rem;">🔵</a>
-        
-        <a href="https://twitter.com/intent/tweet?text=نظام أثير للسيادة الرقمية يغزو العالم.. تابعوا القائد عصام الكومي 🚀&url=https://e654611.github.io/laughing-telegram/" 
-           target="_blank" style="text-decoration: none; background: #000; border: 1px solid #333; padding: 10px; border-radius: 12px; font-size: 1.2rem;">✖️</a>
+<div style="background: rgba(255,242,64,0.05); padding: 15px; border-radius: 20px; border: 1px solid var(--gold); margin-top: 15px;">
+    <p style="color: var(--gold); font-weight: bold; font-size: 0.9rem;">🚀 انشر الصاروخ التقني للعالم الآن</p>
+    <div style="display: flex; justify-content: space-around; margin-top: 10px;">
+        <button onclick="shareAtheer('wa')" style="background:#25D366; border:none; padding:10px; border-radius:10px; cursor:pointer;">🟢 واتساب</button>
+        <button onclick="shareAtheer('tg')" style="background:#0088cc; border:none; padding:10px; border-radius:10px; cursor:pointer;">🔵 تليجرام</button>
+        <button onclick="shareAtheer('fb')" style="background:#1877F2; border:none; padding:10px; border-radius:10px; cursor:pointer;">🔵 فيسبوك</button>
     </div>
 </div>
+
+<script>
+function shareAtheer(platform) {
+    const text = "انضموا الآن لصاروخ العصر التقني بقيادة القائد عصام الكومي.. بروتوكول أثير يغزو العالم! 🚀 ";
+    const url = "https://e654611.github.io/laughing-telegram/";
+    if(platform === 'wa') window.open(`https://api.whatsapp.com/send?text=${text} ${url}`);
+    if(platform === 'tg') window.open(`https://t.me/share/url?url=${url}&text=${text}`);
+    if(platform === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
+}
+</script>
