@@ -2,175 +2,161 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>أثير لايف | Atheer Live</title>
-    <script>
-        document.oncontextmenu = () => false; // منع النقر الأيمن
-        document.onkeydown = (e) => { 
-            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || (e.ctrlKey && e.keyCode == 85)) return false; 
-        };
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أثير لايف | البث المباشر</title>
     <style>
         :root {
-            --secure-green: #00ff41;
+            --neon-green: #00ff41;
             --atheer-black: #050505;
-            --card-gray: #1a1a1a;
-            --money-yellow: #fff240; /* أصفر أكثر سطوعاً */
+            --gold-btn: #ffeb3b;
         }
 
         body {
             background-color: var(--atheer-black);
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            font-family: 'Cairo', sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
-            -webkit-user-select: none; /* منع تحديد النص */
         }
 
-        /* تأثير "جدار الأمان" في الخلفية */
-        .secure-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(#00ff4102 1px, transparent 1px),
-                        linear-gradient(90deg, #00ff4102 1px, transparent 1px);
-            background-size: 30px 30px;
-            z-index: -1;
+        /* 1. عداد الزوار العلوي مع المؤشر المتحرك */
+        .visitor-container {
+            margin-top: 20px;
+            position: relative;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* العداد العلوي المضيء */
-        .top-stat-box {
-            margin-top: 30px;
-            padding: 10px 40px;
-            border: 2px solid var(--secure-green);
-            border-radius: 20px;
-            background: rgba(0, 255, 65, 0.05);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
-            text-align: center;
-        }
-
-        .stat-count {
-            color: var(--secure-green);
-            font-size: 2rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px var(--secure-green);
-        }
-
-        /* الحاوية الرئيسية (شكل الكارت في صورتك) */
-        .main-app-card {
-            width: 90%;
-            max-width: 420px;
-            background: #111; /* أسود أعمق */
-            border-radius: 35px;
-            padding: 25px;
-            margin-top: 40px;
-            border: 1px solid #222;
-            text-align: center;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
-        }
-
-        .hub-title {
-            color: white;
-            font-size: 1.6rem;
-            margin-bottom: 30px;
-        }
-
-        /* شبكة المحافظ بنظام ltr لمنع الاختلاط */
-        .secure-wallet-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .wallet-unit {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .wallet-unit:active { transform: scale(0.95); border-color: var(--secure-green); }
-
-        .secure-num {
-            font-size: 1rem;
-            letter-spacing: 2px;
-            margin-top: 10px;
-            color: white;
-            direction: ltr; /* ثبات الأرقام */
-            display: block;
-        }
-
-        /* زر الواتساب "النابض" (ماكينة المال) */
-        .whatsapp-main-btn {
-            background: var(--money-yellow);
-            color: #000;
+        .orbit-ring {
+            position: absolute;
             width: 100%;
-            padding: 20px;
-            border-radius: 50px;
-            font-size: 1.4rem;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            animation: money-pulse 2s infinite;
+            height: 100%;
+            border: 2px solid rgba(0, 255, 65, 0.1);
+            border-radius: 50%;
         }
 
-        @keyframes money-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 242, 64, 0.6); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 242, 64, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 242, 64, 0); }
+        /* المؤشر المتحرك (الكرة المضيئة) */
+        .moving-indicator {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--neon-green);
+            offset-path: border-box;
+            animation: orbit 4s linear infinite;
         }
 
-        /* أزرار التواصل الاجتماعي المنظمة */
-        .social-link-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 25px;
-            margin-bottom: 30px;
+        @keyframes orbit {
+            from { offset-distance: 0%; }
+            to { offset-distance: 100%; }
         }
 
-        .social-item {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px 5px;
-            border-radius: 18px;
-            font-size: 0.9rem;
-            color: #888;
+        .visitor-box {
+            text-align: center;
+            z-index: 10;
         }
 
-        /* زر تسجيل الخروج الأحمر */
-        .exit-link {
-            color: #ff4b4b;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            text-decoration: underline;
-        }
+        .visitor-label { font-size: 0.7rem; color: #888; }
+        .visitor-count { font-size: 1.8rem; font-weight: bold; color: var(--neon-green); }
 
-        /* شريط الأخبار المتحرك (التدفق) */
-        .app-ticker {
-            position: fixed;
-            bottom: 0; width: 100%;
+        /* 2. نافذة البث المباشر (Atheer Live) */
+        .live-stream-container {
+            width: 90%;
+            max-width: 400px;
+            height: 220px;
             background: #000;
-            border-top: 1px solid var(--secure-green);
-            padding: 12px 0;
+            margin-top: 20px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
             overflow: hidden;
         }
 
-        .ticker-move {
-            display: inline-block;
-            white-space: nowrap;
-            animation: move-text 20s linear infinite;
-            color: var(--secure-green);
-            font-weight: bold;
+        .live-badge {
+            position: absolute;
+            top: 10px; right: 10px;
+            background: red;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            animation: pulse 1.5s infinite;
         }
 
-        @keyframes move-text {
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* 3. بوابة الاستثمار والمحافظ */
+        .investment-card {
+            width: 90%;
+            max-width: 400px;
+            background: #111;
+            border-radius: 30px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #222;
+        }
+
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .wallet-item {
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .wallet-num {
+            display: block;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            color: var(--neon-green);
+            direction: ltr;
+        }
+
+        .main-btn {
+            background: var(--gold-btn);
+            color: black;
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            border: none;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* شريط التمرير السفلي */
+        .footer-ticker {
+            position: fixed;
+            bottom: 0; width: 100%;
+            background: #000;
+            border-top: 1px solid var(--neon-green);
+            padding: 10px 0;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .ticker-text {
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+            color: var(--neon-green);
+        }
+
+        @keyframes scroll {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
@@ -178,60 +164,51 @@
 </head>
 <body>
 
-    <div class="secure-bg"></div>
-
-    <div class="top-stat-box">
-        <span style="font-size: 0.8rem; color: #ccc;">إجمالي زوار المنصة</span>
-        <span class="stat-count">3565</span>
+    <div class="visitor-container">
+        <div class="orbit-ring"></div>
+        <div class="moving-indicator"></div>
+        <div class="visitor-box">
+            <span class="visitor-label">زوار المنصة</span><br>
+            <span class="visitor-count" id="count">3565</span>
+        </div>
     </div>
 
-    <div class="main-app-card">
-        <h2 class=" hub-title">💰 بوابة الاستثمار المباشر Hub</h2>
+    <div class="live-stream-container">
+        <div class="live-badge">LIVE بث مباشر</div>
+        <p style="color: #444;">جاري الاتصال بخادم أثير...</p>
+        </div>
+
+    <div class="investment-card">
+        <h3 style="text-align: center; margin: 0;">💰 بوابة الاستثمار</h3>
         
-        <div class="secure-wallet-grid">
-            <div class="wallet-unit" onclick="copyWallet('01021664984')">
-                <span style="font-size: 0.8rem; color: #666;">محفظة التدفق الآمن 1</span>
-                <span class="secure-num">01021664984</span>
+        <div class="wallet-grid">
+            <div class="wallet-item">
+                <span style="font-size: 0.7rem;">محفظة 1</span>
+                <span class="wallet-num">01021664984</span>
             </div>
-            <div class="wallet-unit" onclick="copyWallet('01017667875')">
-                <span style="font-size: 0.8rem; color: #666;">محفظة التدفق الآمن 2</span>
-                <span class="secure-num">01017667875</span>
+            <div class="wallet-item">
+                <span style="font-size: 0.7rem;">محفظة 2</span>
+                <span class="wallet-num">01017667875</span>
             </div>
         </div>
 
-        <button class="whatsapp-main-btn" onclick="startWhatsApp()">واتساب المبادرة 💰</button>
-
-        <div class="social-link-row">
-            <div class="social-item">🎬 تيك توك</div>
-            <div class="social-item">👥 فيسبوك</div>
-            <div class="social-item">📢 تليجرام</div>
-        </div>
-
-        <button class="exit-link" onclick="location.reload()">⏻ تسجيل الخروج</button>
+        <button class="main-btn" onclick="window.location.href='https://wa.me/201021664984'">واتساب المبادرة</button>
     </div>
 
-    <div class="app-ticker">
-        <div class="ticker-move">
-            إمبراطورية أثير تفتح أبوابها للعالمية .. القائد عصام الكومي يرحب بكم .. نظام الحماية القصوى مفعل .. المال والشهرة في خدمة المجتمع .. الشفافية طريقنا للخير ..
+    <div class="footer-ticker">
+        <div class="ticker-text">
+            بإشراف القائد عصام الكومي .. نظام السيادة الرقمية متاح الآن .. استعدوا لغزو العالم رقمياً .. 
         </div>
     </div>
 
     <script>
-        function copyWallet(text) {
-            navigator.clipboard.writeText(text);
-            alert("✅ تم نسخ المحفظة للدفع الآمن عبر قناة مشفرة!");
-        }
-
-        function startWhatsApp() {
-            let msg = "أنا جاهز للاستثمار والمساهمة في السيادة الرقمية مع بروتوكول أثير والقائد عصام الكومي";
-            window.location.href = "https://wa.me/YOUR_NUMBER?text=" + encodeURIComponent(msg);
-        }
-
-        // تحذير Console لحماية المطورين
-        setInterval(function() {
-            console.clear();
-            console.log("%cتحذير! هذا النظام محمي بواسطة بروتوكول أثير!", "color: red; font-size: 22px; font-weight: bold;");
-        }, 1000);
+        // تحديث العداد تلقائياً ليعطي إيحاء بالحيوية
+        setInterval(() => {
+            let countElement = document.getElementById('count');
+            let currentCount = parseInt(countElement.innerText.replace(/,/g, ''));
+            countElement.innerText = (currentCount + Math.floor(Math.random() * 5)).toLocaleString();
+        }, 3000);
     </script>
+
 </body>
 </html>
