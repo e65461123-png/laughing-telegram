@@ -1,18 +1,239 @@
-<div style="background: rgba(255,242,64,0.05); padding: 15px; border-radius: 20px; border: 1px solid var(--gold); margin-top: 15px;">
-    <p style="color: var(--gold); font-weight: bold; font-size: 0.9rem;">🚀 انشر الصاروخ التقني للعالم الآن</p>
-    <div style="display: flex; justify-content: space-around; margin-top: 10px;">
-        <button onclick="shareAtheer('wa')" style="background:#25D366; border:none; padding:10px; border-radius:10px; cursor:pointer;">🟢 واتساب</button>
-        <button onclick="shareAtheer('tg')" style="background:#0088cc; border:none; padding:10px; border-radius:10px; cursor:pointer;">🔵 تليجرام</button>
-        <button onclick="shareAtheer('fb')" style="background:#1877F2; border:none; padding:10px; border-radius:10px; cursor:pointer;">🔵 فيسبوك</button>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>إمبراطورية أثير | القائد عصام الكومي</title>
+    <style>
+        :root {
+            --neon-green: #00ff41;
+            --gold: #fff240;
+            --deep-black: #020202;
+            --card-bg: #111111;
+        }
 
-<script>
-function shareAtheer(platform) {
-    const text = "انضموا الآن لصاروخ العصر التقني بقيادة القائد عصام الكومي.. بروتوكول أثير يغزو العالم! 🚀 ";
-    const url = "https://e654611.github.io/laughing-telegram/";
-    if(platform === 'wa') window.open(`https://api.whatsapp.com/send?text=${text} ${url}`);
-    if(platform === 'tg') window.open(`https://t.me/share/url?url=${url}&text=${text}`);
-    if(platform === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
-}
-</script>
+        body {
+            background-color: var(--deep-black);
+            color: white;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            transform: scale(0.9);
+            transform-origin: top center;
+        }
+
+        /* الرادار المطور */
+        .radar-section {
+            margin-top: 25px;
+            width: 120px; height: 120px;
+            border: 2px solid var(--neon-green);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center; justify-content: center;
+            background: radial-gradient(circle, rgba(0,255,65,0.1) 0%, transparent 75%);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+        }
+
+        .radar-sweep {
+            position: absolute;
+            width: 50%; height: 50%;
+            top: 0; left: 50%;
+            background: linear-gradient(45deg, var(--neon-green) 0%, transparent 60%);
+            transform-origin: bottom left;
+            border-radius: 100% 0 0 0;
+            animation: sweep 3s linear infinite;
+        }
+
+        @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* حاوية الإمبراطورية */
+        .app-card {
+            width: 88%;
+            max-width: 360px;
+            background: var(--card-bg);
+            border-radius: 35px;
+            padding: 22px;
+            margin-top: 20px;
+            border: 1px solid #222;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            margin-bottom: 120px;
+        }
+
+        /* نافذة البث المباشر */
+        .live-window {
+            width: 100%;
+            height: 160px;
+            background: #000;
+            border-radius: 20px;
+            margin-bottom: 22px;
+            position: relative;
+            display: flex;
+            align-items: center; justify-content: center;
+            border: 1px solid #333;
+        }
+
+        .live-tag {
+            position: absolute;
+            top: 10px; right: 10px;
+            background: red;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            animation: pulse-red 1.5s infinite;
+        }
+
+        @keyframes pulse-red { 50% { opacity: 0.5; } }
+
+        /* المحافظ المشفرة بتوهج أخضر */
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .wallet-box {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px;
+            border-radius: 18px;
+            border: 1px solid #222;
+            cursor: pointer;
+        }
+
+        .masked-num {
+            color: var(--neon-green);
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: block;
+            margin-top: 5px;
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+
+        /* زر الانضمام الصاروخي */
+        .btn-gold {
+            background: var(--gold);
+            color: black;
+            width: 100%;
+            padding: 18px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 242, 64, 0.2);
+        }
+
+        /* أزرار النشر العالمي (السر في الشهرة) */
+        .share-section {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .share-btn {
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #999;
+            text-decoration: none;
+            border: 1px solid #333;
+        }
+
+        /* شريط الأخبار السفلي */
+        .news-ticker {
+            position: fixed;
+            bottom: 0; width: 100%;
+            background: #000;
+            padding: 12px 0;
+            border-top: 2px solid var(--neon-green);
+        }
+
+        .ticker-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll 25s linear infinite;
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+
+        @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+
+        /* إشعار النسخ */
+        #toast {
+            visibility: hidden;
+            background: var(--neon-green);
+            color: black;
+            padding: 10px;
+            position: fixed;
+            bottom: 80px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        #toast.show { visibility: visible; }
+    </style>
+</head>
+<body>
+
+    <div id="toast">🔒 تم نسخ المحفظة بنجاح</div>
+
+    <div class="radar-section">
+        <div class="radar-sweep"></div>
+        <div style="z-index: 10; text-align: center;">
+            <span style="font-size: 0.55rem; color: #888;">الزوار</span><br>
+            <span style="font-size: 1.3rem; font-weight: 900; color: var(--neon-green);">3,565,210</span>
+        </div>
+    </div>
+
+    <div class="app-card">
+        <div class="live-window">
+            <div class="live-tag">LIVE مباشر</div>
+            <span style="color: #333; font-size: 0.75rem;">ATHEER GLOBAL MONITOR</span>
+        </div>
+
+        <h2 style="margin: 0; font-size: 1.6rem;">بروتوكول أثير</h2>
+        <p style="color: var(--gold); font-size: 0.75rem; margin-bottom: 22px;">بقيادة القائد عصام الكومي</p>
+
+        <div class="wallet-grid">
+            <div class="wallet-box" onclick="copyNum('01021664984')">
+                <span style="font-size: 0.65rem; color: #666;">محفظة 1</span>
+                <span class="masked-num">84****01021</span>
+            </div>
+            <div class="wallet-box" onclick="copyNum('01017667875')">
+                <span style="font-size: 0.65rem; color: #666;">محفظة 2</span>
+                <span class="masked-num">75****01017</span>
+            </div>
+        </div>
+
+        <button class="btn-gold" onclick="window.location.href='https://wa.me/201021664984'">انضم للعمالقة 💰🚀</button>
+
+        <div class="share-section">
+            <a href="#" class="share-btn">🎬 تيك توك</a>
+            <a href="#" class="share-btn">👥 فيسبوك</a>
+            <a href="#" class="share-btn">📢 تليجرام</a>
+        </div>
+    </div>
+
+    <div class="news-ticker">
+        <div class="ticker-text">
+            القائد عصام الكومي يرحب بكم في عالم السيادة الرقمية .. بروتوكول أثير يغزو العالم رقمياً .. الشفافية هي سر نجاحنا ..
+        </div>
+    </div>
+
+    <script>
+        function copyNum(text) {
+            navigator.clipboard.writeText(text);
+            var x = document.getElementById("toast");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
+        }
+    </script>
+</body>
+</html>
