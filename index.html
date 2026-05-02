@@ -7,22 +7,21 @@
     <style>
         :root { --gold: #ffeb3b; --neon: #00ff41; --danger: #ff3131; }
         body { background: #000; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 0; overflow-x: hidden; }
-        .urgent-timer { background: var(--danger); color: #fff; padding: 15px; font-weight: 900; animation: blink 0.8s infinite; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .urgent-timer { background: var(--danger); color: #fff; padding: 15px; font-weight: 900; animation: blink 0.8s infinite; position: fixed; top: 0; width: 100%; z-index: 1000; font-size: 1.1rem; }
         @keyframes blink { 50% { opacity: 0.3; } }
-        .main-content { margin-top: 80px; padding-bottom: 50px; }
-        .radar { width: 120px; height: 120px; border: 2px solid var(--neon); border-radius: 50%; margin: 20px auto; position: relative; box-shadow: 0 0 30px var(--neon); }
+        .main-content { margin-top: 80px; padding-bottom: 60px; }
+        .radar { width: 100px; height: 100px; border: 2px solid var(--neon); border-radius: 50%; margin: 20px auto; position: relative; box-shadow: 0 0 20px var(--neon); }
         .scan { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(from 0deg, transparent, var(--neon)); opacity: 0.3; animation: spin 1.5s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .vault-card { background: #111; border: 2px solid var(--gold); border-radius: 35px; padding: 25px; margin: 20px; box-shadow: 0 0 25px rgba(255, 235, 59, 0.2); }
-        .wallet-id { color: var(--neon); font-family: monospace; font-size: 1.3rem; background: #222; padding: 10px; border-radius: 12px; margin: 10px 0; border: 1px solid #333; letter-spacing: 2px; font-weight: bold; }
-        .pay-btn { background: var(--gold); color: #000; width: 100%; padding: 18px; border-radius: 25px; font-size: 1.6rem; font-weight: 900; border: none; cursor: pointer; transition: 0.3s; margin-bottom: 20px;}
-        .pay-btn:hover { background: #fff; transform: scale(1.02); }
-        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
-        .social-item { background: rgba(0, 255, 65, 0.1); border: 1px solid var(--neon); border-radius: 15px; padding: 15px; text-decoration: none; color: #fff; transition: 0.3s; }
-        .social-item:hover { background: rgba(0, 255, 65, 0.3); transform: translateY(-5px); }
-        .social-icon { font-size: 2rem; margin-bottom: 5px; display: block; }
-        .social-text { font-size: 0.8rem; color: #aaa; }
-        .authenticated { background: var(--neon); color: #000; padding: 10px; font-weight: bold; font-size: 0.8rem; position: fixed; bottom: 0; width: 100%; letter-spacing: 1px; }
+        .vault-card { background: #111; border: 2px solid var(--gold); border-radius: 30px; padding: 20px; margin: 15px; box-shadow: 0 0 25px rgba(255, 235, 59, 0.2); }
+        /* تصحيح ظهور الأرقام */
+        .wallet-id { color: var(--neon); font-family: monospace; font-size: 1.4rem; background: #222; padding: 12px; border-radius: 12px; margin: 10px 0; border: 1px solid #333; letter-spacing: 2px; font-weight: bold; direction: ltr; display: inline-block; width: 90%; }
+        .pay-btn { background: var(--gold); color: #000; width: 100%; padding: 18px; border-radius: 20px; font-size: 1.6rem; font-weight: 900; border: none; cursor: pointer; margin: 15px 0; }
+        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+        .social-item { background: rgba(0, 255, 65, 0.05); border: 1px solid var(--neon); border-radius: 15px; padding: 10px; text-decoration: none; color: #fff; }
+        .social-icon { font-size: 1.5rem; display: block; margin-bottom: 5px; }
+        .social-text { font-size: 0.7rem; color: #aaa; }
+        .footer-auth { background: var(--neon); color: #000; padding: 8px; font-weight: bold; font-size: 0.7rem; position: fixed; bottom: 0; width: 100%; }
     </style>
 </head>
 <body>
@@ -32,37 +31,25 @@
         <div class="radar"><div class="scan"></div></div>
         
         <div class="vault-card">
-            <h1 style="color: var(--gold); margin-bottom: 5px; font-size: 2.2rem;">بروتوكول أثير</h1>
-            <p style="font-size: 1rem; color: #888; margin-top: 0;">بإشراف القائد: عصام الكومي</p>
+            <h1 style="color: var(--gold); margin: 0; font-size: 2rem;">بروتوكول أثير</h1>
+            <p style="font-size: 0.9rem; color: #888; margin: 5px 0 20px 0;">بإشراف القائد: عصام الكومي</p>
             
-            <div style="text-align: center; margin-top: 25px;">
-                <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 5px;">قناة التشفير (1):</p>
-                <div class="wallet-id">0102****984</div>
-                
-                <p style="font-size: 0.8rem; color: #aaa; margin-top: 15px; margin-bottom: 5px;">قناة التشفير (2):</p>
-                <div class="wallet-id">0101****875</div>
-            </div>
+            <p style="font-size: 0.8rem; color: #aaa; margin: 0;">قناة التشفير (1):</p>
+            <div class="wallet-id">0102****984</div>
+            
+            <p style="font-size: 0.8rem; color: #aaa; margin: 10px 0 0 0;">قناة التشفير (2):</p>
+            <div class="wallet-id">0101****875</div>
 
             <button class="pay-btn" onclick="window.location.href='https://wa.me/201021664984'">اضخ المال الآن 💰</button>
-            <p style="font-size: 0.7rem; color: var(--neon); margin-top: 0;">🛡️ نظام حماية النجوم السيادي نشط</p>
-
+            
             <div class="social-grid">
-                <a href="#" class="social-item">
-                    <span class="social-icon">📱</span>
-                    <span class="social-text">تيك توك</span>
-                </a>
-                <a href="#" class="social-item">
-                    <span class="social-icon">💙</span>
-                    <span class="social-text">فيسبوك</span>
-                </a>
-                <a href="#" class="social-item">
-                    <span class="social-icon">✈️</span>
-                    <span class="social-text">تيليجرام</span>
-                </a>
+                <a href="#" class="social-item"><span class="social-icon">📱</span><span class="social-text">تيك توك</span></a>
+                <a href="#" class="social-item"><span class="social-icon">💙</span><span class="social-text">فيسبوك</span></a>
+                <a href="#" class="social-item"><span class="social-icon">✈️</span><span class="social-text">تيليجرام</span></a>
             </div>
         </div>
     </div>
 
-    <div class="authenticated">AUTHENTICATED BY ATHEER | V 8.0 | ESSAM ELKOMY</div>
+    <div class="footer-auth">AUTHENTICATED BY ATHEER | V 8.0 | ESSAM ELKOMY</div>
 </body>
 </html>
