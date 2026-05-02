@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة أثير العملاقة</title>
+    <style>
+        body { background: #000; color: #0f0; text-align: center; font-family: sans-serif; padding: 20px; }
+        .container { border: 2px solid #0f0; padding: 30px; border-radius: 15px; display: inline-block; margin-top: 50px; background: #111; box-shadow: 0 0 20px #0f0; }
+        input { display: block; margin: 15px auto; padding: 12px; width: 250px; background: #000; border: 1px solid #0f0; color: #0f0; border-radius: 5px; }
+        button { padding: 12px 40px; background: #0f0; color: #000; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="login-screen" class="container">
+        <h2>مبادرة أثير للخير 🚀</h2>
+        <p>بوابة السيادة الرقمية</p>
+        <input type="text" id="user" placeholder="اسم القائد">
+        <input type="password" id="pass" placeholder="كلمة المرور">
+        <button onclick="login()">دخول المنصة</button>
+    </div>
+    <div id="secure-content" class="container" style="display:none;">
+        <h1>أهلاً بك يا قائد عصام الكومي</h1>
+        <p>لقد نجحت في تأسيس بروتوكول أثير بنطاق دائم.</p>
+    </div>
+    <script>
+        function login() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === 'Essam' && p === 'Atheer2026') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('secure-content').style.display = 'block';
+            } else { alert('عذراً.. البيانات غير صحيحة'); }
+        }
+    </script>
+</body>
+</html>
