@@ -1,22 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>إمبراطورية أثير | الرادار والبث المباشر</title>
+    <title>أثير لايف | التنظيم العبقري</title>
     <style>
         :root {
-            --neon-green: #00ff41;
-            --deep-black: #050505;
-            --gold: #ffeb3b;
-            --radar-fade: rgba(0, 255, 65, 0.2);
+            --atheer-green: #00ff41;
+            --atheer-gold: #ffeb3b;
+            --dark-bg: #080808;
+            --card-bg: #121212;
         }
 
         body {
-            background-color: var(--deep-black);
+            background-color: var(--dark-bg);
             color: white;
-            font-family: 'Cairo', sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -24,202 +23,199 @@
             overflow-x: hidden;
         }
 
-        /* 1. تصميم الرادار الاحترافي */
-        .radar-container {
+        /* رادار الزوار والعداد المنظم */
+        .header-section {
             margin-top: 30px;
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 2px solid var(--neon-green);
-            position: relative;
-            background: radial-gradient(circle, #00ff4110 0%, transparent 70%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-        }
-
-        /* خط الرادار المتحرك */
-        .radar-sweep {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            top: 0; left: 50%;
-            background: linear-gradient(45deg, var(--neon-green) 0%, transparent 50%);
-            transform-origin: bottom left;
-            border-radius: 100% 0 0 0;
-            animation: sweep 4s linear infinite;
-        }
-
-        @keyframes sweep {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* دوائر الرادار الداخلية */
-        .radar-circle {
-            position: absolute;
-            border: 1px solid rgba(0, 255, 65, 0.1);
-            border-radius: 50%;
-        }
-
-        .visitor-info {
-            z-index: 10;
             text-align: center;
         }
 
-        .stat-label { font-size: 0.7rem; color: #888; display: block; }
-        .stat-count { font-size: 1.8rem; font-weight: 900; color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
-
-        /* 2. نافذة البث المباشر الاحترافية */
-        .live-stream-window {
-            width: 90%;
-            max-width: 420px;
-            height: 230px;
-            background: #000;
-            margin-top: 25px;
-            border-radius: 25px;
-            border: 1px solid #222;
+        .radar-box {
+            width: 140px; height: 140px;
+            border: 2px solid var(--atheer-green);
+            border-radius: 50%;
             position: relative;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            overflow: hidden;
+            align-items: center; justify-content: center;
+            background: radial-gradient(circle, rgba(0,255,65,0.1) 0%, transparent 70%);
+            margin: 0 auto 15px;
         }
 
-        .live-tag {
+        .radar-line {
             position: absolute;
-            top: 15px; right: 15px;
+            width: 50%; height: 2px;
+            background: var(--atheer-green);
+            top: 50%; left: 50%;
+            transform-origin: left;
+            animation: rotateRadar 4s linear infinite;
+        }
+
+        @keyframes rotateRadar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* حاوية التطبيق الرئيسية */
+        .app-container {
+            width: 92%;
+            max-width: 400px;
+            background: var(--card-bg);
+            border-radius: 40px;
+            padding: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid #222;
+            margin-bottom: 100px;
+        }
+
+        /* نافذة البث المباشر المدمجة */
+        .live-monitor {
+            width: 100%;
+            height: 180px;
+            background: #000;
+            border-radius: 25px;
+            margin-bottom: 25px;
+            position: relative;
+            display: flex;
+            align-items: center; justify-content: center;
+            border: 1px solid #333;
+        }
+
+        .live-pulse {
+            position: absolute;
+            top: 15px; left: 15px;
             background: #ff0000;
-            color: white;
             padding: 3px 12px;
             border-radius: 5px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
-            animation: pulse-red 1.5s infinite;
-            z-index: 5;
+            animation: blink 1.5s infinite;
         }
 
-        @keyframes pulse-red { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes blink { 50% { opacity: 0.4; } }
 
-        /* 3. بوابة الاستثمار (التنسيق المتناسق) */
-        .investment-hub {
-            width: 90%;
-            max-width: 420px;
-            background: #111;
-            border-radius: 30px;
-            padding: 25px;
-            margin-top: 25px;
-            border: 1px solid #1a1a1a;
-        }
-
-        .wallet-grid {
+        /* منطقة المحافظ بنظام النجوم */
+        .wallet-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
+            margin-bottom: 25px;
         }
 
         .wallet-card {
-            background: #0a0a0a;
+            background: #1a1a1a;
             padding: 15px;
-            border-radius: 18px;
-            border: 1px solid #222;
+            border-radius: 20px;
             text-align: center;
+            border: 1px solid #282828;
         }
 
-        .wallet-id { color: var(--neon-green); font-size: 0.9rem; direction: ltr; display: block; margin-top: 5px; }
+        .star-number {
+            color: var(--atheer-green);
+            font-size: 0.95rem;
+            display: block;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
 
-        .btn-gold {
-            background: var(--gold);
-            color: #000;
+        /* زر المبادرة الكبير (واتساب) */
+        .btn-action {
+            background: var(--atheer-gold);
+            color: black;
             width: 100%;
             padding: 18px;
-            border-radius: 18px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            border-radius: 25px;
+            font-size: 1.3rem;
+            font-weight: 800;
             border: none;
-            margin-top: 20px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 242, 64, 0.2);
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(255,235,59,0.2);
         }
 
-        /* الشريط الإخباري */
-        .ticker-bar {
+        /* شبكة التواصل الاجتماعي المنسقة */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .social-btn {
+            background: #1a1a1a;
+            padding: 12px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            border: 1px solid #222;
+        }
+
+        /* الشريط السفلي المتحرك */
+        .news-ticker {
             position: fixed;
             bottom: 0; width: 100%;
             background: #000;
-            border-top: 1px solid var(--neon-green);
             padding: 12px 0;
-            white-space: nowrap;
-            overflow: hidden;
+            border-top: 1px solid var(--atheer-green);
         }
 
-        .ticker-inner {
+        .ticker-text {
             display: inline-block;
-            animation: ticker-move 20s linear infinite;
-            color: var(--neon-green);
+            white-space: nowrap;
+            animation: scrollNews 25s linear infinite;
+            color: var(--atheer-green);
             font-weight: bold;
         }
 
-        @keyframes ticker-move {
-            from { transform: translateX(100%); }
-            to { transform: translateX(-100%); }
-        }
+        @keyframes scrollNews { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
     </style>
 </head>
 <body>
 
-    <div class="radar-container">
-        <div class="radar-sweep"></div>
-        <div class="radar-circle" style="width: 60%; height: 60%;"></div>
-        <div class="radar-circle" style="width: 30%; height: 30%;"></div>
-        <div class="visitor-info">
-            <span class="stat-label">نشط الآن</span>
-            <span class="stat-count" id="live-users">3,565</span>
+    <div class="header-section">
+        <div class="radar-box">
+            <div class="radar-line"></div>
+            <div style="text-align: center; z-index: 5;">
+                <span style="font-size: 0.6rem; color: #888;">الزوار الآن</span><br>
+                <span style="font-size: 1.4rem; font-weight: bold; color: var(--atheer-green);">3,565,210</span>
+            </div>
         </div>
     </div>
 
-    <div class="live-stream-window">
-        <div class="live-tag">LIVE ● بث مباشر</div>
-        <div style="text-align: center; color: #444;">
-            <p>ATHEER LIVE STREAM</p>
-            <small>اتصال آمن ببروتوكول أثير...</small>
+    <div class="app-container">
+        <div class="live-monitor">
+            <div class="live-pulse">LIVE بث مباشر</div>
+            <span style="color: #444; font-size: 0.8rem;">ATHEER LIVE MONITOR</span>
         </div>
-    </div>
 
-    <div class="investment-hub">
-        <h3 style="margin: 0 0 20px 0; text-align: center; color: var(--gold);">💰 بوابة التدفق المالي</h3>
-        
-        <div class="wallet-grid">
+        <h2 style="text-align: center; margin-top: 0; font-size: 1.8rem;">بروتوكول أثير</h2>
+        <p style="text-align: center; color: #777; font-size: 0.85rem; margin-bottom: 25px;">السيادة الرقمية | القائد عصام الكومي</p>
+
+        <div class="wallet-section">
             <div class="wallet-card">
                 <span style="font-size: 0.7rem; color: #666;">محفظة 1</span>
-                <span class="wallet-id">01021664984</span>
+                <span class="star-number">84****01021</span>
             </div>
             <div class="wallet-card">
                 <span style="font-size: 0.7rem; color: #666;">محفظة 2</span>
-                <span class="wallet-id">01017667875</span>
+                <span class="star-number">75****01017</span>
             </div>
         </div>
 
-        <button class="btn-gold" onclick="window.location.href='https://wa.me/201021664984'">واتساب المبادرة</button>
-    </div>
+        <button class="btn-action" onclick="window.location.href='https://wa.me/201021664984'">واتساب المبادرة</button>
 
-    <div class="ticker-bar">
-        <div class="ticker-inner">
-            القائد عصام الكومي يرحب بكم .. نظام البث المباشر والسيادة الرقمية متاح الآن .. استعدوا لغزو العالم رقمياً .. الشفافية هي سر قوتنا ..
+        <div class="social-grid">
+            <a href="#" class="social-btn">🎬 تيك توك</a>
+            <a href="#" class="social-btn">👥 فيسبوك</a>
+            <a href="#" class="social-btn">📢 تليجرام</a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button style="background:none; border:none; color:#ff4b4b; cursor:pointer; text-decoration:underline; font-size:0.8rem;">تسجيل الخروج</button>
         </div>
     </div>
 
-    <script>
-        // جعل عداد الزوار "حي" ويتحرك لزيادة المصداقية
-        setInterval(() => {
-            let el = document.getElementById('live-users');
-            let current = parseInt(el.innerText.replace(/,/g, ''));
-            el.innerText = (current + Math.floor(Math.random() * 3)).toLocaleString();
-        }, 4000);
-    </script>
+    <div class="news-ticker">
+        <div class="ticker-text">
+            بإشراف القائد عصام الكومي .. نظام بروتوكول أثير يغزو العالم رقمياً .. الشفافية هي طريقنا للخير .. انضم الآن لجيش المطورين والمستثمرين ..
+        </div>
+    </div>
 
 </body>
 </html>
