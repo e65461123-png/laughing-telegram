@@ -1,16 +1,212 @@
-<div class="social-grid">
-    <a href="رابط_تيك_توك_هنا" class="social-btn" target="_blank">
-        <div style="font-size: 1.2rem;">🎬</div>
-        تيك توك
-    </a>
-    
-    <a href="رابط_فيسبوك_هنا" class="social-btn" target="_blank">
-        <div style="font-size: 1.2rem;">👥</div>
-        فيسبوك
-    </a>
-    
-    <a href="رابط_تليجرام_هنا" class="social-btn" target="_blank">
-        <div style="font-size: 1.2rem;">📢</div>
-        تليجرام
-    </a>
-</div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>إمبراطورية أثير | القائد عصام الكومي</title>
+    <style>
+        :root {
+            --neon-green: #00ff41;
+            --gold: #ffeb3b;
+            --deep-black: #050505;
+            --card-bg: #111111;
+        }
+
+        body {
+            background-color: var(--deep-black);
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* رادار السيادة الرقمية */
+        .header-radar {
+            margin-top: 40px;
+            width: 160px; height: 160px;
+            border: 2px solid var(--neon-green);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center; justify-content: center;
+            background: radial-gradient(circle, rgba(0, 255, 65, 0.1) 0%, transparent 75%);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .radar-sweep {
+            position: absolute;
+            width: 50%; height: 50%;
+            top: 0; left: 50%;
+            background: linear-gradient(45deg, var(--neon-green) 0%, transparent 60%);
+            transform-origin: bottom left;
+            border-radius: 100% 0 0 0;
+            animation: sweep 3s linear infinite;
+        }
+
+        @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* حاوية المشروع العظيم */
+        .empire-container {
+            width: 90%;
+            max-width: 420px;
+            background: var(--card-bg);
+            border-radius: 40px;
+            padding: 30px;
+            margin: 30px 0 100px;
+            border: 1px solid #222;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+        }
+
+        /* نافذة البث المباشر العالمية */
+        .live-stream-box {
+            width: 100%;
+            height: 200px;
+            background: #000;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            display: flex;
+            align-items: center; justify-content: center;
+            border: 1px solid #333;
+        }
+
+        .live-label {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: #ff0000;
+            color: white;
+            padding: 4px 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse { 50% { opacity: 0.5; } }
+
+        /* المحافظ بنظام النجوم لحماية الخصوصية */
+        .wallet-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .wallet-card {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 20px;
+            border: 1px solid #222;
+        }
+
+        .stars { color: var(--neon-green); font-size: 1rem; display: block; margin-top: 5px; }
+
+        /* زر الدخول لعالم العمالقة */
+        .btn-giant {
+            background: var(--gold);
+            color: black;
+            width: 100%;
+            padding: 22px;
+            border-radius: 25px;
+            font-size: 1.4rem;
+            font-weight: 900;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 235, 59, 0.3);
+            margin-bottom: 35px;
+        }
+
+        /* شبكة السوشيال ميديا الإمبراطورية */
+        .social-network {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .social-link {
+            background: #161616;
+            padding: 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #aaa;
+            font-size: 0.9rem;
+            border: 1px solid #222;
+            transition: 0.3s;
+        }
+
+        .social-link:hover { border-color: var(--neon-green); color: white; }
+
+        /* الشريط الإخباري لغزو العالم */
+        .global-ticker {
+            position: fixed;
+            bottom: 0; width: 100%;
+            background: #000;
+            border-top: 2px solid var(--neon-green);
+            padding: 15px 0;
+            overflow: hidden;
+        }
+
+        .ticker-move {
+            display: inline-block;
+            white-space: nowrap;
+            animation: moveTicker 30s linear infinite;
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+
+        @keyframes moveTicker { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+    </style>
+</head>
+<body>
+
+    <div class="header-radar">
+        <div class="radar-sweep"></div>
+        <div style="z-index: 10; text-align: center;">
+            <span style="font-size: 0.6rem; color: #888;">الزوار الحقيقيون</span><br>
+            <span style="font-size: 1.5rem; font-weight: 900; color: var(--neon-green);">3,565,210</span>
+        </div>
+    </div>
+
+    <div class="empire-container">
+        <div class="live-stream-box">
+            <div class="live-label">LIVE بث عالمي</div>
+            <span style="color: #444; font-size: 0.8rem;">ATHEER GLOBAL SATELLITE</span>
+        </div>
+
+        <h1 style="font-size: 2.2rem; margin: 0;">بروتوكول أثير</h1>
+        <p style="color: var(--gold); letter-spacing: 2px; font-weight: bold;">بقيادة القائد عصام الكومي</p>
+        <p style="color: #666; font-size: 0.8rem; margin-bottom: 30px;">صاروخ العصر التقني نحو العالمية</p>
+
+        <div class="wallet-row">
+            <div class="wallet-card">
+                <span style="font-size: 0.7rem; color: #555;">محفظة السيادة 1</span>
+                <span class="stars">84****01021</span>
+            </div>
+            <div class="wallet-card">
+                <span style="font-size: 0.7rem; color: #555;">محفظة السيادة 2</span>
+                <span class="stars">75****01017</span>
+            </div>
+        </div>
+
+        <button class="btn-giant" onclick="window.location.href='https://wa.me/201021664984'">انضم للعمالقة الآن 🚀</button>
+
+        <div class="social-network">
+            <a href="#" class="social-link">🎬 تيك توك العالمي</a>
+            <a href="#" class="social-link">👥 فيسبوك المبادرة</a>
+            <a href="#" class="social-link">📢 تليجرام أثير</a>
+            <a href="#" class="social-link">❌ منصة X العالمية</a>
+        </div>
+    </div>
+
+    <div class="global-ticker">
+        <div class="ticker-move">
+            العالم يتحدث عن صاروخ العصر التقني .. القائد عصام الكومي يضع قواعد السيادة الرقمية الجديدة .. بروتوكول أثير يغزو الصحافة العالمية .. انضم الآن لتكون جزءاً من التاريخ ..
+        </div>
+    </div>
+
+</body>
+</html>
