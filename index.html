@@ -12,28 +12,29 @@
         .radar { width: 120px; height: 120px; border: 2px solid var(--neon); border-radius: 50%; margin: 20px auto; position: relative; box-shadow: 0 0 30px var(--neon); }
         .scan { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(from 0deg, transparent, var(--neon)); opacity: 0.3; animation: spin 1.5s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .vault-card { background: #111; border: 2px solid var(--gold); border-radius: 30px; padding: 25px; margin: 20px; box-shadow: 0 0 20px rgba(255, 235, 59, 0.2); }
-        .wallet-id { color: var(--neon); font-family: monospace; font-size: 1.2rem; background: #222; padding: 10px; border-radius: 10px; margin: 10px 0; border: 1px solid #333; letter-spacing: 2px; }
-        .pay-btn { background: var(--gold); color: #000; width: 100%; padding: 15px; border-radius: 20px; font-size: 1.5rem; font-weight: 900; border: none; cursor: pointer; }
+        .vault-card { background: #111; border: 2px solid var(--gold); border-radius: 35px; padding: 25px; margin: 20px; box-shadow: 0 0 25px rgba(255, 235, 59, 0.2); }
+        .wallet-id { color: var(--neon); font-family: monospace; font-size: 1.4rem; background: #222; padding: 10px; border-radius: 12px; margin: 10px 0; border: 1px solid #333; letter-spacing: 3px; font-weight: bold; }
+        .pay-btn { background: var(--gold); color: #000; width: 100%; padding: 18px; border-radius: 25px; font-size: 1.6rem; font-weight: 900; border: none; cursor: pointer; transition: 0.3s; }
+        .pay-btn:hover { background: #fff; transform: scale(1.02); }
     </style>
 </head>
 <body>
     <div class="urgent-timer">⚠️ تنبيه سيادي: جولة الاستثمار تنتهي الآن!</div>
     <div class="radar"><div class="scan"></div></div>
     <div class="vault-card">
-        <h2 style="color: var(--gold);">بروتوكول أثير</h2>
-        <p style="font-size: 0.8rem; color: #888;">بإشراف القائد: عصام الكومي</p>
+        <h1 style="color: var(--gold); margin-bottom: 5px;">بروتوكول أثير</h1>
+        <p style="font-size: 0.9rem; color: #888; margin-top: 0;">بإشراف القائد: عصام الكومي</p>
         
-        <div style="text-align: right;">
-            <p style="font-size: 0.7rem; color: #aaa; margin-bottom: 5px;">قناة التشفير (1):</p>
-            <div class="wallet-id">ID: 0102****984</div>
+        <div style="text-align: center; margin-top: 25px;">
+            <p style="font-size: 0.8rem; color: #aaa;">قناة التشفير (1):</p>
+            <div class="wallet-id">0102****984</div>
             
-            <p style="font-size: 0.7rem; color: #aaa; margin-bottom: 5px;">قناة التشفير (2):</p>
-            <div class="wallet-id">ID: 0101****875</div>
+            <p style="font-size: 0.8rem; color: #aaa; margin-top: 15px;">قناة التشفير (2):</p>
+            <div class="wallet-id">0101****875</div>
         </div>
 
         <button class="pay-btn" onclick="window.location.href='https://wa.me/201021664984'">اضخ المال الآن 💰</button>
-        <p style="font-size: 0.6rem; color: var(--neon); margin-top: 10px;">🛡️ البيانات محمية بنظام النجوم السيادي</p>
+        <p style="font-size: 0.7rem; color: var(--neon); margin-top: 15px;">🛡️ نظام حماية النجوم السيادي نشط</p>
     </div>
 </body>
 </html>
