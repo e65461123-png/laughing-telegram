@@ -3,73 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية أثير | المركز السيادي</title>
+    <title>إمبراطورية أثير | نظام السيادة العالمي</title>
     <style>
-        :root { --atheer-green: #00ff41; --gold: #ffeb3b; --black: #020202; }
-        body { background: var(--black); color: white; font-family: 'Courier New', monospace; margin: 0; overflow-x: hidden; }
-        
-        /* رادار المراقبة العالمية */
-        .radar-container {
-            width: 150px; height: 150px; border: 1px solid var(--atheer-green);
-            border-radius: 50%; margin: 40px auto; position: relative;
-            box-shadow: 0 0 20px rgba(0,255,65,0.2);
-        }
-        .radar-beam {
-            position: absolute; width: 50%; height: 2px; background: var(--atheer-green);
-            top: 50%; left: 50%; transform-origin: left; animation: scan 3s linear infinite;
-        }
-        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .empire-card {
-            width: 90%; max-width: 400px; background: #0a0a0a; border: 1px solid #1a1a1a;
-            margin: 0 auto 100px; border-radius: 30px; padding: 30px; text-align: center;
+        :root {
+            --atheer-green: #00ff41;
+            --gold: #ffeb3b;
+            --deep-space: #010101;
+            --panel-bg: #0d0d0d;
         }
 
-        /* نظام التشفير المالي */
-        .secure-vault {
-            background: rgba(0,255,65,0.05); border: 1px solid #222;
-            padding: 15px; border-radius: 15px; margin-bottom: 25px;
-        }
-        .vault-num { color: var(--atheer-green); font-size: 1.1rem; letter-spacing: 3px; text-shadow: 0 0 10px var(--atheer-green); }
-
-        /* بوابة جيش المبرمجين */
-        .dev-portal {
-            border: 1px solid var(--gold); padding: 15px; border-radius: 15px;
-            margin-top: 25px; background: rgba(255,235,59,0.05);
+        body {
+            background-color: var(--deep-space);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
         }
 
+        /* رادار الرصد الاستراتيجي */
+        .radar-box {
+            margin-top: 40px;
+            width: 140px; height: 140px;
+            border: 1px solid var(--atheer-green);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center; justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .radar-scan {
+            position: absolute;
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent, var(--atheer-green));
+            opacity: 0.2;
+            animation: rotate-scan 4s linear infinite;
+        }
+
+        @keyframes rotate-scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* حاوية الإمبراطورية المركزية */
+        .empire-container {
+            width: 90%;
+            max-width: 420px;
+            background: var(--panel-bg);
+            border-radius: 40px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 1px solid #1a1a1a;
+            box-shadow: 0 30px 60px rgba(0,0,0,1);
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* نافذة المراقبة الحية */
+        .live-monitor {
+            width: 100%;
+            height: 160px;
+            background: #000;
+            border-radius: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            align-items: center; justify-content: center;
+        }
+
+        .status-dot {
+            width: 8px; height: 8px;
+            background: var(--atheer-green);
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 8px;
+            box-shadow: 0 0 10px var(--atheer-green);
+        }
+
+        /* نظام المحافظ المشفرة */
+        .vault-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .vault-item {
+            background: #111;
+            padding: 15px;
+            border-radius: 20px;
+            border: 1px solid #222;
+            transition: 0.3s;
+        }
+
+        .vault-item:hover { border-color: var(--gold); }
+
+        .secure-code {
+            color: var(--atheer-green);
+            font-family: monospace;
+            font-size: 1rem;
+            text-shadow: 0 0 5px var(--atheer-green);
+        }
+
+        /* زر السيطرة المالية */
         .btn-emperor {
-            background: var(--gold); color: black; border: none; width: 100%;
-            padding: 20px; border-radius: 15px; font-size: 1.3rem; font-weight: 900;
-            cursor: pointer; box-shadow: 0 0 30px rgba(255,235,59,0.2);
+            background: var(--gold);
+            color: black;
+            width: 100%;
+            padding: 20px;
+            border-radius: 25px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 235, 59, 0.3);
+            text-transform: uppercase;
         }
+
+        /* شريط الأخبار العالمي */
+        .ticker {
+            position: fixed;
+            bottom: 0; width: 100%;
+            background: #000;
+            padding: 15px 0;
+            border-top: 1px solid var(--atheer-green);
+        }
+
+        .ticker-text {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scroll 30s linear infinite;
+            color: var(--atheer-green);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
     </style>
 </head>
 <body>
 
-    <div class="radar-container">
-        <div class="radar-beam"></div>
-        <div style="position:absolute; top:40%; width:100%; text-align:center;">
-            <span style="font-size:0.7rem; color:var(--atheer-green);">السيادة الرقمية</span><br>
-            <span style="font-size:1.2rem; font-weight:bold;">ACTIVE</span>
+    <div class="radar-box">
+        <div class="radar-scan"></div>
+        <div style="z-index: 10; text-align: center;">
+            <span style="font-size: 0.6rem; color: #666;">النمو العالمي</span><br>
+            <span style="font-size: 1.2rem; font-weight: bold; color: var(--atheer-green);">+450%</span>
         </div>
     </div>
 
-    <div class="empire-card">
-        <h1 style="color:var(--gold); margin-bottom:5px;">بروتوكول أثير</h1>
-        <p style="color:#666; font-size:0.8rem; margin-bottom:30px;">نظام الإدارة المركزية للعالم الرقمي</p>
-
-        <div class="secure-vault">
-            <span style="font-size:0.7rem; color:#888;">محافظ التدفق الملياري</span><br>
-            <span class="vault-num">84****01021</span>
+    <div class="empire-container">
+        <div class="live-monitor">
+            <span style="font-size: 0.7rem; color: #555; letter-spacing: 2px;">ATHEER PROTOCOL CORE</span>
+            <div style="margin-top: 10px;">
+                <span class="status-dot"></span>
+                <span style="color: var(--atheer-green); font-size: 0.8rem; font-weight: bold;">النظام يعمل بكفاءة</span>
+            </div>
         </div>
 
-        <button class="btn-emperor" onclick="window.location.href='https://wa.me/201021664984'">تفعيل نظام الثروة 💰</button>
+        <h1 style="margin: 0; font-size: 1.8rem; letter-spacing: 1px;">بروتوكول أثير</h1>
+        <p style="color: var(--gold); font-size: 0.75rem; margin-bottom: 25px;">تحت إشراف القيادة المركزية للإمبراطورية</p>
 
-        <div class="dev-portal">
-            <h3 style="color:var(--gold); margin:0; font-size:0.9rem;">بوابة جيش المبرمجين</h3>
-            <p style="font-size:0.7rem; color:#888;">نحن نوظف العقول لتغيير العالم. انضم للبروتوكول.</p>
-            <button style="background:none; border:1px solid #444; color:white; padding:5px 15px; border-radius:10px; cursor:pointer;">تقديم طلب الانضمام</button>
+        <div class="vault-grid">
+            <div class="vault-item">
+                <span style="font-size: 0.6rem; color: #666;">قناة التدفق 1</span><br>
+                <span class="secure-code">84****021</span>
+            </div>
+            <div class="vault-item">
+                <span style="font-size: 0.6rem; color: #666;">قناة التدفق 2</span><br>
+                <span class="secure-code">75****017</span>
+            </div>
+        </div>
+
+        <button class="btn-emperor" onclick="window.location.href='https://wa.me/201021664984'">تفعيل بروتوكول الثروة 💰</button>
+
+        <p style="font-size: 0.7rem; color: #444; margin-top: 20px;">النظام محمي بتشفير "أثير" المتقدم. لا حاجة للظهور، النتائج هي من تتحدث.</p>
+    </div>
+
+    <div class="ticker">
+        <div class="ticker-text">
+            إمبراطورية أثير تغزو الأسواق العالمية .. السيادة الرقمية والشفافية المطلقة .. ثروة تتخطى الحدود .. الانضمام للعمالقة متاح الآن ..
         </div>
     </div>
 
