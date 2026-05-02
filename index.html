@@ -1,102 +1,133 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة أثير الاستثمارية | القائد عصام الكومي</title>
+    <title>إمبراطورية أثير | القائد عصام الكومي</title>
     <style>
-        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #050a05; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 70px; }
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #020502; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding-bottom: 80px; }
         
-        #login-box { height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #0a1f0a, #000); }
-        .auth-card { border: 2px solid var(--neon); padding: 30px; border-radius: 20px; text-align: center; background: rgba(0,0,0,0.9); width: 85%; max-width: 400px; box-shadow: 0 0 30px rgba(0,255,65,0.2); }
-        input { width: 90%; padding: 12px; margin: 10px 0; background: none; border: 1px solid var(--neon); color: var(--neon); border-radius: 8px; text-align: center; }
-        .btn-go { background: var(--neon); color: #000; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        /* شاشة الدخول السيبرانية */
+        #gate { height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #0a1f0a, #000); }
+        .gate-card { border: 2px solid var(--neon); padding: 40px; border-radius: 20px; text-align: center; background: rgba(0,0,0,0.9); box-shadow: 0 0 50px rgba(0,255,65,0.2); width: 85%; max-width: 450px; }
+        input { width: 90%; padding: 15px; margin: 15px 0; background: none; border: 1px solid var(--neon); color: var(--neon); border-radius: 10px; text-align: center; font-size: 20px; outline: none; }
+        .btn-entry { background: var(--neon); color: #000; border: none; padding: 18px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; transition: 0.3s; }
+        .btn-entry:hover { box-shadow: 0 0 30px var(--neon); transform: scale(1.03); }
 
-        #main-ui { display: none; padding: 15px; }
-        .card { border: 1px solid var(--neon); border-radius: 15px; padding: 15px; margin-bottom: 15px; background: rgba(0,255,65,0.03); }
-        .money-card { border: 2px solid var(--gold); background: rgba(255,204,0,0.05); }
-        .gold-text { color: var(--gold); font-weight: bold; }
+        /* الواجهة الرئيسية */
+        #main-app { display: none; padding: 20px; animation: fadeIn 1s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
-        .radar { width: 60px; height: 60px; border: 2px solid var(--neon); border-radius: 50%; margin: 0 auto 10px; position: relative; }
-        .radar::after { content: ''; position: absolute; width: 50%; height: 2px; background: var(--neon); top: 50%; left: 50%; transform-origin: left; animation: s 3s linear infinite; }
-        @keyframes s { to { transform: rotate(360deg); } }
+        .header { text-align: center; border-bottom: 2px solid var(--neon); padding-bottom: 20px; margin-bottom: 25px; }
+        .radar { width: 80px; height: 80px; border: 3px solid var(--neon); border-radius: 50%; margin: 0 auto 15px; position: relative; box-shadow: 0 0 20px rgba(0,255,65,0.3); }
+        .radar::after { content: ''; position: absolute; width: 50%; height: 3px; background: var(--neon); top: 50%; left: 50%; transform-origin: left; animation: scan 2s linear infinite; }
+        @keyframes scan { to { transform: rotate(360deg); } }
 
-        .link-btn { display: block; border: 1px solid var(--neon); color: var(--neon); text-decoration: none; padding: 12px; margin: 10px 0; border-radius: 8px; text-align: center; transition: 0.3s; font-size: 14px; }
-        .link-btn:hover { background: var(--neon); color: #000; }
-        .pay-btn { background: var(--gold); color: #000; border: none; font-weight: bold; }
+        .card { border: 1px solid var(--neon); border-radius: 15px; padding: 20px; margin-bottom: 20px; background: rgba(0,255,65,0.02); position: relative; overflow: hidden; }
+        .gold-border { border: 2px solid var(--gold); background: rgba(255,204,0,0.05); box-shadow: 0 0 20px rgba(255,204,0,0.1); }
+        
+        .stat-box { display: flex; justify-content: space-around; margin: 15px 0; border: 1px dashed var(--neon); padding: 10px; border-radius: 10px; }
+        .stat-item { text-align: center; }
+        .stat-val { display: block; font-size: 18px; font-weight: bold; color: #fff; }
 
-        .news-ticker { position: fixed; bottom: 35px; width: 100%; background: #001a00; border-top: 1px solid var(--neon); padding: 8px 0; overflow: hidden; }
-        .news-slide { display: inline-block; white-space: nowrap; animation: scroll 25s linear infinite; font-weight: bold; color: var(--gold); }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .pay-box { background: #111; padding: 15px; border-radius: 10px; margin: 10px 0; border: 1px solid var(--gold); }
+        .pay-num { font-size: 24px; color: var(--gold); font-weight: bold; letter-spacing: 1px; display: block; margin: 5px 0; }
+        
+        .btn-link { display: block; border: 1px solid var(--neon); color: var(--neon); text-decoration: none; padding: 15px; margin: 10px 0; border-radius: 10px; text-align: center; font-weight: bold; transition: 0.3s; }
+        .btn-link:hover { background: var(--neon); color: #000; }
+        .btn-gold { background: var(--gold); color: #000; border: none; }
 
-        .footer { position: fixed; bottom: 0; width: 100%; background: var(--neon); color: #000; font-size: 10px; padding: 5px; display: flex; justify-content: space-around; font-weight: bold; }
+        /* شريط الأخبار */
+        .ticker-wrap { position: fixed; bottom: 40px; width: 100%; background: #001100; border-top: 1px solid var(--neon); padding: 10px 0; z-index: 10; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 30s linear infinite; font-weight: bold; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .footer { position: fixed; bottom: 0; width: 100%; background: var(--neon); color: #000; font-size: 11px; padding: 8px; display: flex; justify-content: space-around; font-weight: bold; z-index: 10; }
     </style>
 </head>
 <body>
 
-<div id="login-box">
-    <div class="auth-card">
-        <h1 style="margin:0; letter-spacing: 5px;">ATHEER 📡</h1>
-        <p style="color: var(--gold);">نظام السيادة وجلب الاستثمار</p>
-        <input type="password" id="p" placeholder="كود الدخول المالي">
-        <button class="btn-go" onclick="auth()">فتح المنصة والمالية 🔓</button>
+<div id="gate">
+    <div class="gate-card">
+        <h1 style="margin:0; letter-spacing: 8px; font-size: 35px;">ATHEER</h1>
+        <p style="color: var(--gold); font-weight: bold;">مركز سيادة القائد عصام الكومي</p>
+        <input type="password" id="access" placeholder="رمز الدخول السيادي">
+        <button class="btn-entry" onclick="openGate()">تفعيل النظام 🔓</button>
     </div>
 </div>
 
-<div id="main-ui">
-    <div class="card" style="text-align: center;">
+<div id="main-app">
+    <div class="header">
         <div class="radar"></div>
-        <h2 style="margin:5px;">عصام الكومي 🛡️</h2>
-        <p class="gold-text">مبادرة أثير للخير | Atheer Protocol</p>
+        <h1 style="margin:0;">بروتوكول أثير للخير</h1>
+        <p style="color: #888;">السيادة الرقمية | الشفافية المطلقة</p>
     </div>
 
-    <div class="card money-card">
-        <h3 style="margin:0; text-align: center;">💰 بوابة الدعم والاستثمار المباشر</h3>
-        <p style="font-size: 13px; text-align: center;">حول الآن للمساهمة في المبادرة عبر المحافظ الإلكترونية:</p>
+    <div class="card stat-box">
+        <div class="stat-item">
+            <span style="font-size:12px;">المستثمرين</span>
+            <span class="stat-val">247+</span>
+        </div>
+        <div class="stat-item">
+            <span style="font-size:12px;">قوة النظام</span>
+            <span class="stat-val" style="color: var(--neon);">100%</span>
+        </div>
+        <div class="stat-item">
+            <span style="font-size:12px;">حالة البث</span>
+            <span class="stat-val" style="color: #ff4444;">LIVE</span>
+        </div>
+    </div>
+
+    <div class="card gold-border">
+        <h3 style="margin:0; text-align:center; color: var(--gold);">💰 بوابة الاستثمار ودعم المبادرة</h3>
+        <p style="text-align:center; font-size: 14px;">لدعم المبادرة، التحويل متاح عبر المحافظ التالية:</p>
         
-        <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; text-align: center; margin: 10px 0;">
-            <span style="font-size: 12px; color: #fff;">الرقم الأساسي:</span><br>
-            <strong style="font-size: 20px; color: var(--gold);">01021664984</strong>
+        <div class="pay-box" style="text-align: center;">
+            <span style="font-size: 12px;">المحفظة الأساسية:</span>
+            <span class="pay-num">01021664984</span>
         </div>
 
-        <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; text-align: center; margin: 10px 0;">
-            <span style="font-size: 12px; color: #fff;">الرقم الإضافي:</span><br>
-            <strong style="font-size: 20px; color: var(--gold);">01017667875</strong>
+        <div class="pay-box" style="text-align: center;">
+            <span style="font-size: 12px;">المحفظة الاحتياطية:</span>
+            <span class="pay-num">01017667875</span>
         </div>
 
-        <a href="https://wa.me/201021664984?text=تم التحويل لدعم مبادرة أثير" class="link-btn pay-btn">إرسال إثبات التحويل (واتساب) 💸</a>
+        <a href="https://wa.me/201021664984?text=تم التحويل بنجاح، أريد الانضمام لسجل الشرف" class="btn-link btn-gold">إرسال إيصال الدفع (واتساب) 💸</a>
     </div>
 
     <div class="card">
-        <h3>📡 منصات الانتشار</h3>
-        <a href="https://www.facebook.com/share/18S97Fv2vT/" class="link-btn">فيسبوك (Facebook)</a>
-        <a href="https://www.tiktok.com/@atheer.live" class="link-btn">تيك توك (Atheer Live)</a>
+        <h3 style="margin:0;">📡 قنوات التأثير والانتشار</h3>
+        <a href="https://www.tiktok.com/@atheer.live" class="btn-link">🎬 تيك توك (بث أثير لايف)</a>
+        <a href="https://www.facebook.com/share/18S97Fv2vT/" class="btn-link">🔵 فيسبوك (مبادرة أثير)</a>
+        <a href="https://wa.me/201021664984" class="btn-link">🟢 المكتب الفني للقائد (واتساب)</a>
     </div>
 
-    <button onclick="location.reload()" style="width:100%; padding:10px; background:none; border:1px solid #ff4444; color:#ff4444; border-radius:8px;">خروج آمن</button>
+    <button onclick="location.reload()" style="width:100%; padding:15px; background:none; border:1px dashed #ff4444; color:#ff4444; border-radius:10px; cursor:pointer;">تشفير البيانات والخروج</button>
 </div>
 
-<div class="news-ticker" id="nt" style="display:none;">
-    <div class="news-slide">
-        📡 مبادرة أثير للخير: نظام السيادة الرقمية يعمل .. 💰 للاستثمار تواصل عبر أرقامنا: 01021664984 - 01017667875 .. 🏆 القائد عصام الكومي يرحب بكم .. ✨ الشفافية هي القوة ..
+<div class="ticker-wrap" id="tkr" style="display:none;">
+    <div class="ticker">
+        🔥 عاجل: انطلاق بروتوكول أثير للسيادة الرقمية .. 💰 للاستثمار ودعم المبادرة تواصل عبر الأرقام: 01021664984 - 01017667875 .. 📡 القائد عصام الكومي يعلن الشفافية المالية المطلقة .. 🌍 أثير لايف يغطي الحدث الآن ..
     </div>
 </div>
 
 <div class="footer">
-    <span>INVESTOR MODE ACTIVE</span>
-    <span>BY: ESSAM ELKOMY</span>
+    <span>SYSTEM ID: ESSAM-2026</span>
+    <span>ENCRYPTION: AES-512</span>
     <span>EGYPT 🇪🇬</span>
 </div>
 
 <script>
-    function auth() {
-        if(document.getElementById('p').value === '2026') {
-            document.getElementById('login-box').style.display = 'none';
-            document.getElementById('main-ui').style.display = 'block';
-            document.getElementById('nt').style.display = 'block';
-        } else { alert('كود غير صحيح!'); }
+    function openGate() {
+        const pin = document.getElementById('access').value;
+        if(pin === '2026') {
+            document.getElementById('gate').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            document.getElementById('tkr').style.display = 'block';
+        } else {
+            alert('رمز الدخول غير صحيح.. النظام مؤمن بالكامل!');
+        }
     }
 </script>
 
