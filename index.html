@@ -3,26 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية أثير | التحكم المطلق</title>
+    <title>بروتوكول أثير | القائد عصام الكومي</title>
     <style>
         :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; overflow-x: hidden; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
         
         /* شاشات النظام */
-        #gate, #admin-panel, #main-app { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+        #gate, #main-app, #admin-panel { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
         #main-app, #admin-panel { display: none; }
 
         .card { border: 2px solid var(--neon); padding: 30px; border-radius: 25px; text-align: center; width: 100%; max-width: 400px; background: rgba(0,0,0,0.9); box-shadow: 0 0 30px rgba(0,255,65,0.1); }
         input { width: 90%; padding: 15px; margin: 15px 0; background: #111; border: 1px solid var(--neon); color: var(--neon); border-radius: 12px; text-align: center; font-size: 20px; outline: none; }
-        .btn { background: var(--neon); color: #000; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 18px; }
-        
-        /* الرادار والواجهة */
-        .radar { width: 100px; height: 100px; border: 2px solid var(--neon); border-radius: 50%; position: relative; margin-bottom: 20px; }
-        .radar::after { content: ''; position: absolute; width: 50%; height: 2px; background: var(--neon); top: 50%; left: 50%; transform-origin: left; animation: scan 3s linear infinite; }
-        @keyframes scan { to { transform: rotate(360deg); } }
+        .btn { background: var(--neon); color: #000; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 18px; transition: 0.3s; }
+        .btn:hover { transform: scale(1.05); }
 
+        /* الرادار المتطور */
+        .radar { width: 110px; height: 110px; border: 2px solid var(--neon); border-radius: 50%; position: relative; margin-bottom: 20px; box-shadow: 0 0 15px var(--neon); }
+        .radar::after { content: ''; position: absolute; width: 50%; height: 2px; background: var(--neon); top: 50%; left: 50%; transform-origin: left; animation: scan 3s linear infinite; }
+        .point { position: absolute; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; top: 20%; left: 60%; box-shadow: 0 0 10px var(--gold); animation: pulse 1.5s infinite; }
+        @keyframes scan { to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* شريط الأخبار */
+        .ticker-wrap { position: fixed; bottom: 40px; width: 100%; background: #000; border-top: 1px solid var(--neon); padding: 8px 0; z-index: 10; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 25s linear infinite; font-size: 13px; color: var(--gold); font-weight: bold; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* الواجهة الاستثمارية */
         .gold-card { border-color: var(--gold); background: rgba(255,204,0,0.02); }
-        .pay-num { font-size: 26px; color: var(--gold); font-weight: bold; display: block; margin: 10px 0; letter-spacing: 2px; }
+        .pay-num { font-size: 24px; color: var(--gold); font-weight: bold; display: block; margin: 5px 0; letter-spacing: 1.5px; }
+        .social-btn { display: block; text-decoration: none; padding: 12px; margin: 8px 0; border: 1px solid var(--neon); color: var(--neon); border-radius: 10px; font-size: 14px; font-weight: bold; }
+
         .footer { position: fixed; bottom: 0; width: 100%; background: var(--neon); color: #000; font-size: 10px; padding: 10px; text-align: center; font-weight: bold; }
     </style>
 </head>
@@ -30,40 +41,50 @@
 
 <div id="gate">
     <div class="card">
-        <h1 style="letter-spacing: 8px; margin:0;">ATHEER</h1>
-        <p style="color: var(--gold); margin-bottom: 20px;">ادخل الكود للمتابعة</p>
-        <input type="password" id="entryCode" placeholder="••••••">
-        <button class="btn" onclick="verifyEntry()">دخول النظام 🔓</button>
-        <p onclick="openAdminGate()" style="font-size: 10px; margin-top: 20px; opacity: 0.3;">إدارة السيادة</p>
+        <h1 style="letter-spacing: 10px; margin:0;">ATHEER</h1>
+        <p style="color: var(--gold); font-size: 14px;">نظام السيادة الرقمية</p>
+        <input type="password" id="entryCode" placeholder="أدخل كود المرور">
+        <button class="btn" onclick="verifyEntry()">دخول مركز القيادة 🔓</button>
+        <p onclick="openAdmin()" style="font-size: 10px; margin-top: 25px; opacity: 0.2; cursor: pointer;">إدارة النظام السيادي</p>
     </div>
 </div>
 
 <div id="main-app">
-    <div class="radar"></div>
-    <h2 style="margin:0;">بروتوكول أثير للخير</h2>
-    <p style="color: #888; font-size: 12px;">DIGITAL SOVEREIGNTY SYSTEM</p>
-    
+    <div class="header" style="text-align: center;">
+        <div class="radar"><div class="point"></div></div>
+        <h2 style="margin:0; color: #fff;">بروتوكول أثير للخير</h2>
+        <p style="color: var(--neon); font-size: 12px; letter-spacing: 2px;">DIGITAL SOVEREIGNTY BY ESSAM ELKOMY</p>
+    </div>
+
     <div class="card gold-card" style="margin-top: 20px;">
-        <h3 style="color: var(--gold); margin:0;">💰 بوابة الاستثمار المباشر</h3>
-        <div style="margin: 20px 0;">
-            <span style="font-size: 12px; color: #fff;">المحفظة النشطة:</span>
+        <h3 style="color: var(--gold); margin:0;">💰 بوابة الاستثمار والمساهمة</h3>
+        <p style="font-size: 12px; color: #ccc;">حول الآن لدعم السيادة الرقمية والشفافية:</p>
+        <div style="margin: 15px 0; background: #111; padding: 10px; border-radius: 10px;">
+            <span style="font-size: 11px; color: #888;">المحفظة النشطة:</span>
             <span class="pay-num" id="displayNum">01021664984</span>
         </div>
-        <a href="https://wa.me/201021664984" class="btn" style="background: var(--gold); text-decoration: none; display: block;">تأكيد التحويل (واتساب) 💸</a>
+        <a href="https://wa.me/201021664984" class="btn" style="background: var(--gold); text-decoration: none; display: block;">تأكيد العملية (واتساب) 💸</a>
     </div>
-    <button onclick="location.reload()" style="background:none; border:none; color:#444; margin-top:20px; cursor:pointer;">تشفير الخروج</button>
+
+    <div class="card" style="margin-top: 15px; padding: 15px;">
+        <p style="margin:0 0 10px 0; font-size: 13px;">🔗 منصات التأثير والشفافية</p>
+        <a href="https://www.tiktok.com/@atheer.live" class="social-btn">تيك توك | ATHEER LIVE</a>
+        <a href="https://www.facebook.com/share/18S97Fv2vT/" class="social-btn">فيسبوك | ATHEER PROTOCOL</a>
+    </div>
+
+    <button onclick="location.reload()" style="background:none; border:none; color:#444; margin-top:15px; cursor:pointer; font-size: 12px;">تشفير الخروج والمغادرة</button>
 </div>
 
 <div id="admin-panel">
     <div class="card" style="border-color: #ff4444;">
-        <h2 style="color: #ff4444; margin:0;">لوحة تحكم القائد</h2>
-        <p style="font-size: 12px;">تعديل بيانات المنصة فوراً</p>
+        <h2 style="color: #ff4444; margin:0;">لوحة تحكم القائد عصام</h2>
+        <p style="font-size: 12px; color: #fff;">تحكم في بيانات النظام فوراً</p>
         
-        <div style="text-align: right; font-size: 12px;">
-            <label>كود دخول الجمهور الجديد:</label>
+        <div style="text-align: right; font-size: 12px; margin-top: 15px;">
+            <label>تغيير كود دخول الناس:</label>
             <input type="text" id="newPublicCode" placeholder="مثلاً: 2026">
             
-            <label>رقم المحفظة الجديد:</label>
+            <label>تغيير رقم المحفظة المعروض:</label>
             <input type="text" id="newWalletNum" placeholder="010XXXXXXXX">
         </div>
         
@@ -72,39 +93,52 @@
     </div>
 </div>
 
-<div class="footer">SYSTEM ID: ESSAM-2026 | SECURED BY ATHEER PROTOCOL</div>
+<div class="ticker-wrap" id="tkr" style="display:none;">
+    <div class="ticker">
+        📡 نظام أثير يعمل الآن بنجاح .. 💰 للاستثمار ودعم السيادة الرقمية تواصل عبر الأرقام الموضحة .. 🏆 الشفافية المطلقة هي غايتنا .. ✨ أثير للخير: مستقبل التكنولوجيا المجتمعية تحت إشراف القائد عصام الكومي ..
+    </div>
+</div>
+
+<div class="footer">VERSION 5.0.0 | SECURED BY ATHEER | EGYPT 🇪🇬</div>
 
 <script>
-    // جلب البيانات من الذاكرة المحلية أو استخدام الافتراضي
+    // تهيئة البيانات
     let publicCode = localStorage.getItem('atheer_public_code') || '2026';
     let walletNum = localStorage.getItem('atheer_wallet_num') || '01021664984';
 
-    // تحديث الواجهة بالبيانات الحالية
     document.getElementById('displayNum').innerText = walletNum;
 
-    // وظيفة دخول الجمهور
+    // الدخول العادي
     function verifyEntry() {
         const input = document.getElementById('entryCode').value;
         if(input === publicCode) {
-            document.getElementById('gate').style.display = 'none';
-            document.getElementById('main-app').style.display = 'flex';
+            showApp();
+        } else if(input === 'admin99') {
+            openAdmin();
         } else {
-            alert('الكود غير صحيح يا فندم!');
+            alert('الكود غير صحيح!');
         }
     }
 
-    // وظيفة فتح صفحة التعديل (سرية)
-    function openAdminGate() {
-        const adminPass = prompt("ادخل كلمة سر القائد لفتح صفحة التعديل:");
+    function showApp() {
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('main-app').style.display = 'flex';
+        document.getElementById('tkr').style.display = 'block';
+    }
+
+    // فتح الإدارة
+    function openAdmin() {
+        const adminPass = prompt("ادخل كلمة سر القائد (السرية):");
         if(adminPass === 'عصام2026') {
             document.getElementById('gate').style.display = 'none';
+            document.getElementById('main-app').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'flex';
         } else {
-            alert("صلاحية غير مصرح بها!");
+            alert("خطأ! محاولة دخول غير مصرح بها.");
         }
     }
 
-    // حفظ التعديلات من صفحة التعديل
+    // حفظ التعديلات
     function saveAdminChanges() {
         const newCode = document.getElementById('newPublicCode').value;
         const newNum = document.getElementById('newWalletNum').value;
@@ -112,7 +146,7 @@
         if(newCode) localStorage.setItem('atheer_public_code', newCode);
         if(newNum) localStorage.setItem('atheer_wallet_num', newNum);
 
-        alert('تم تحديث بروتوكول أثير بنجاح يا قائد عصام!');
+        alert('تم التحديث بنجاح يا قائد عصام!');
         location.reload();
     }
 </script>
