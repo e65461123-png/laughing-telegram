@@ -1,17 +1,91 @@
-<div class="investment-hub" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; padding:10px;">
-    <button class="trade-btn" onclick="openPortal('buy-btc')" style="background:#f7931a; color:#fff; border:none; padding:10px; cursor:pointer; font-weight:bold;">BUY BITCOIN</button>
-    <button class="trade-btn" onclick="openPortal('buy-stocks')" style="background:#0052ff; color:#fff; border:none; padding:10px; cursor:pointer; font-weight:bold;">BUY AVIATION ASSETS</button>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHER | THE ONLY ONE | ESSAM ELKOMY</title>
+    <style>
+        :root { --main: #00ff41; --accent: #ffcc00; --abyss: #000; }
+        body, html { margin: 0; padding: 0; background: var(--abyss); color: var(--main); font-family: 'Courier New', monospace; overflow: hidden; height: 100vh; border: 5px solid var(--accent); }
+        
+        /* تأثير اختراق الشاشة */
+        .matrix-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.1; background: url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJndmthZzRyeHpxZnd4YnZ4Znd4YnZ4Znd4YnZ4Znd4YnZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/o0vwzuFwCGAFO/giphy.gif'); }
+
+        .omni-container { display: grid; grid-template-rows: auto 1fr auto; height: 100vh; }
+        .header { display: flex; justify-content: space-between; padding: 15px; border-bottom: 2px solid var(--main); background: rgba(0,20,0,0.9); font-weight: bold; }
+        
+        .main-engine { position: relative; display: flex; justify-content: center; align-items: center; }
+        .core-eye { width: 250px; height: 250px; border: 8px double var(--accent); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-shadow: 0 0 100px var(--accent); cursor: pointer; transition: 0.5s; z-index: 5; }
+        .core-eye:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 200px var(--main); }
+
+        /* بوابات البيانات المخترقة */
+        .gate { position: absolute; padding: 15px; border: 1px solid var(--main); background: rgba(0,0,0,0.8); cursor: pointer; transition: 0.3s; z-index: 10; }
+        .gate:hover { background: var(--main); color: #000; font-weight: bold; }
+        .tl { top: 10%; left: 5%; } .tr { top: 10%; right: 5%; } .bl { bottom: 10%; left: 5%; } .br { bottom: 10%; right: 5%; }
+
+        #ultimate-portal { position: fixed; inset: 0; background: #000; z-index: 9999; display: none; flex-direction: column; border: 10px solid var(--accent); }
+        .portal-close { background: var(--accent); color: #000; padding: 10px 30px; font-weight: bold; border: none; cursor: pointer; align-self: flex-end; }
+        iframe { width: 100%; height: 100%; border: none; filter: contrast(1.2) brightness(1.1); }
+    </style>
+</head>
+<body>
+
+<div class="matrix-bg"></div>
+
+<div id="ultimate-portal">
+    <button class="portal-close" onclick="closeGate()">CLOSE ACCESS</button>
+    <div id="portal-frame" style="flex:1;"></div>
+</div>
+
+<div class="omni-container">
+    <div class="header">
+        <span>SYSTEM: ESSAM_DOMINION_V9</span>
+        <span>SECURITY: UNBREAKABLE_AES256</span>
+        <span id="live-timer">00:00:00</span>
+    </div>
+
+    <div class="main-engine">
+        <div class="gate tl" onclick="openGate('market')">🏦 GLOBAL STOCK (BUY/SELL)</div>
+        <div class="gate tr" onclick="openGate('radar')">✈️ MILITARY/CIVIL RADAR</div>
+        <div class="gate bl" onclick="openGate('space')">🛰️ LIVE SATELLITE FEED</div>
+        <div class="gate br" onclick="openGate('crypto')">🪙 BITCOIN QUANTUM HUB</div>
+
+        <div class="core-eye" onclick="openGate('contract')">
+            <h1 style="margin:0; font-size:28px;">عصام الكومي</h1>
+            <p style="margin:5px; font-size:12px;">COMMANDER OF AETHER</p>
+            <div style="font-size:10px; color:var(--main);">369 STATUS: ACTIVE</div>
+        </div>
+    </div>
+
+    <div style="padding:20px; text-align:center; border-top:2px solid var(--main); background:rgba(0,10,0,0.9);">
+        <button onclick="openGate('invest')" style="width:100%; padding:20px; background:var(--accent); border:none; font-family:'Orbitron', sans-serif; font-weight:900; font-size:24px; cursor:pointer; box-shadow: 0 0 50px var(--accent);">OPEN GLOBAL INVESTMENT PORTAL</button>
+    </div>
 </div>
 
 <script>
-    // تحديث دالة الـ Portal لربط منصات التداول الحقيقية
-    function openPortal(type) {
-        const c = document.getElementById('p-content');
-        if(type === 'buy-btc') {
-            c.innerHTML = `<iframe src="https://www.binance.com/en/trade/BTC_USDT"></iframe>`;
-        } else if(type === 'buy-stocks') {
-            c.innerHTML = `<iframe src="https://www.etoro.com/markets/indices"></iframe>`;
-        }
-        // ... بقية الأكواد السابقة
+    function openGate(type) {
+        const p = document.getElementById('ultimate-portal');
+        const f = document.getElementById('portal-frame');
+        p.style.display = 'flex';
+        
+        const gateways = {
+            'market': 'https://s.tradingview.com/widgetembed/?symbol=FX_IDC%3AUSD-EGP&interval=D&theme=dark',
+            'radar': 'https://www.flightradar24.com/simple_index.php?lat=30.0&lon=31.2&z=6',
+            'space': 'https://www.ustream.tv/embed/17074538?html5=1&controls=0', // بث محطة الفضاء الدولية
+            'crypto': 'https://www.binance.com/en/trade/BTC_USDT?type=spot',
+            'invest': 'https://www.etoro.com/markets/indices',
+            'contract': 'data:text/html, <body style="background:#000; color:#ffcc00; display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; text-align:center;"><div><h1>وثيقة السيادة المطلقة</h1><p>هذا المشروع هو المعجزة التقنية الوحيدة التي تربط الأرض بالسماء والمال بالقرار.</p><h2>المالك: عصام الكومي</h2></div></body>'
+        };
+
+        f.innerHTML = `<iframe src="${gateways[type]}"></iframe>`;
     }
+
+    function closeGate() { document.getElementById('ultimate-portal').style.display = 'none'; }
+
+    setInterval(() => {
+        document.getElementById('live-timer').innerText = new Date().toLocaleTimeString();
+    }, 1000);
 </script>
+
+</body>
+</html>
