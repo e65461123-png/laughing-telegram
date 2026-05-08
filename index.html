@@ -1,37 +1,30 @@
-<div id="sovereign-vault" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; border:10px solid #ffcc00; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-    <h1 style="color:#ffcc00; font-family:'Orbitron';">الخزنة السيادية | عصام الكومي</h1>
-    <p style="color:#00ff41;">الحالة: متصلة بالمحفظة الشخصية - تدفق الأرباح نشط</p>
-    <div style="width:300px; padding:20px; border:2px dashed #00ff41; margin-bottom:20px;">
-        <span style="font-size:12px;">BTC WALLET: </span><br>
-        <b style="word-break:break-all; font-size:14px;">[ADDRESS_LINKED_SUCCESSFULLY]</b>
-    </div>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-        <button onclick="executeTransfer('charity')" style="background:#ffcc00; padding:15px; border:none; font-weight:bold;">صرف مخصصات الفقراء</button>
-        <button onclick="document.getElementById('sovereign-vault').style.display='none'" style="background:#fff; padding:15px; border:none; font-weight:bold;">إغلاق الخزنة</button>
-    </div>
+<div class="aviation-stocks-panel" style="background:rgba(0,10,0,0.9); border:2px solid #ffcc00; padding:10px; margin-top:20px;">
+    <h3 style="color:#ffcc00; font-family:'Orbitron'; font-size:14px; text-align:center;">GLOBAL AVIATION STOCKS | بورصة الطيران العالمية</h3>
+    <marquee scrollamount="5" style="color:#00ff41; font-weight:bold;">
+        BOEING (BA): $185.20 ▲ +2.4% | AIRBUS (AIR): €142.10 ▲ +1.8% | DELTA (DAL): $45.30 ▲ +0.5% | EMIRATES: CONNECTED | ESSAM_AIR_INDEX: STABLE
+    </marquee>
 </div>
 
 <script>
-    // تفعيل الربط المباشر للمحفظة
-    function openVault() {
-        // هنا يتم استدعاء بروتوكول التشفير لفتح الخزنة
-        document.getElementById('sovereign-vault').style.display = 'flex';
-    }
+    // خوارزمية السيطرة على محركات البحث (SEO Injection)
+    const meta = document.createElement('meta');
+    meta.name = "description";
+    meta.content = "Aether Protocol by Essam Elkomy: The world's most powerful investment, aviation, and cosmic control center. The miracle of 2026.";
+    document.head.appendChild(meta);
 
-    function executeTransfer(type) {
-        alert("جاري تحويل الأرباح من البورصة العالمية إلى الخزنة المركزية للقائد عصام... تم تأمين المسار.");
+    // تحديث بوابة الطيران لتصبح شاملة للأسهم
+    function openAviationMaster() {
+        const p = document.getElementById('ultimate-portal');
+        const f = document.getElementById('portal-frame');
+        p.style.display = 'flex';
+        document.getElementById('p-label').innerText = "AVIATION & PRESS CONTROL CENTER";
+        
+        // دمج رادار الطيران مع أخبار الشركات في شاشة واحدة
+        f.innerHTML = `
+            <div style="display:grid; grid-template-columns: 2fr 1fr; height:100%;">
+                <iframe src="https://www.flightradar24.com/simple_index.php?lat=30.0&lon=31.2&z=6"></iframe>
+                <iframe src="https://www.reuters.com/business/aerospace-defense/"></iframe>
+            </div>
+        `;
     }
-    
-    // إضافة زر الخزنة في الواجهة الرئيسية
-    function createVaultButton() {
-        const btn = document.createElement('div');
-        btn.innerHTML = "🔐 THE VAULT";
-        btn.className = "gate"; // لتأخذ نفس ستايل الأيقونات الأخرى
-        btn.style.bottom = "45%";
-        btn.style.left = "50%";
-        btn.style.transform = "translateX(-50%)";
-        btn.onclick = openVault;
-        document.querySelector('.main-engine').appendChild(btn);
-    }
-    window.onload = createVaultButton;
 </script>
