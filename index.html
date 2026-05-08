@@ -3,82 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الماستر عصام الكومي | بروتوكول أثير</title>
+    <title>Master Essam | Atheer Protocol V24</title>
     <style>
         :root { --gold: #ffd700; --neon: #00ff00; --red: #ff0000; --cyan: #00ffff; }
-        body { background: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; padding: 0; overflow-x: hidden; }
-        .status-bar { background: rgba(255,0,0,0.1); border-bottom: 1px solid var(--red); color: var(--red); text-align: center; padding: 5px; font-size: 10px; letter-spacing: 2px; animation: flash 2s infinite; }
-        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .container { max-width: 500px; margin: auto; padding: 15px; }
-        .card { border: 2px solid var(--gold); background: #080808; border-radius: 15px; padding: 20px; margin-bottom: 15px; box-shadow: 0 0 20px rgba(255,215,0,0.1); position: relative; }
-        .balance-amount { font-size: 45px; color: #fff; text-align: center; margin: 15px 0; text-shadow: 0 0 15px var(--neon); font-weight: bold; }
-        .btn-main { width: 100%; padding: 18px; border: none; border-radius: 12px; font-weight: bold; font-size: 18px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-gold { background: var(--gold); color: #000; }
-        .btn-cyan { background: var(--cyan); color: #000; }
-        .data-box { background: rgba(0,255,0,0.05); border: 1px solid #222; padding: 10px; border-radius: 8px; font-size: 13px; margin: 10px 0; }
-        .blur { filter: blur(5px); transition: 0.5s; }
-        #log-screen { background: #000; border: 1px solid var(--cyan); height: 100px; overflow-y: auto; padding: 10px; font-size: 11px; color: var(--cyan); border-radius: 8px; }
+        body { background: #000; color: var(--neon); font-family: 'Courier New', Courier, monospace; margin: 0; overflow-x: hidden; }
+        
+        .top-banner { background: var(--red); color: #fff; text-align: center; padding: 5px; font-weight: bold; font-size: 11px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
+        .dashboard { padding: 15px; max-width: 500px; margin: auto; }
+        .master-card { border: 2px solid var(--gold); background: rgba(10,10,10,0.9); border-radius: 15px; padding: 20px; box-shadow: 0 0 25px rgba(255,215,0,0.2); position: relative; overflow: hidden; }
+        
+        .live-scanner { background: #000; border: 1px solid var(--cyan); border-radius: 8px; padding: 10px; margin: 15px 0; height: 80px; overflow: hidden; font-size: 10px; color: var(--cyan); }
+        .scan-line { animation: moveUp 10s linear infinite; }
+        @keyframes moveUp { 0% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
+
+        .balance-box { text-align: center; margin: 20px 0; border-top: 1px solid #333; padding-top: 15px; }
+        .amount { font-size: 45px; font-weight: bold; color: #fff; text-shadow: 0 0 15px var(--neon); }
+        
+        .btn-action { display: block; width: 100%; padding: 18px; margin: 10px 0; border: none; border-radius: 12px; font-weight: bold; font-size: 18px; cursor: pointer; transition: 0.4s; }
+        .btn-gold { background: var(--gold); color: #000; box-shadow: 0 5px 15px rgba(255,215,0,0.3); }
+        .btn-cyan { background: transparent; border: 2px solid var(--cyan); color: var(--cyan); }
+        
+        .secure-data { background: #111; border: 1px dashed var(--gold); padding: 10px; font-size: 12px; direction: ltr; text-align: left; margin-bottom: 10px; border-radius: 5px; opacity: 0.2; transition: 1s; }
+        .revealed { opacity: 1; border-style: solid; }
     </style>
 </head>
 <body>
 
-<div class="status-bar">INTERNET SERVER SUBMISSION ACTIVE - ATHEER PROTOCOL</div>
+<div class="top-banner">🔴 نظام رصد التهديدات السيادي - مبادرة أثير للخير 369</div>
 
-<div class="container">
-    <div style="text-align:center; margin-bottom:10px;">
-        <h2 style="color:var(--gold); margin:0;">الماستر عصام الكومي</h2>
-        <small style="color:var(--neon)">مبادرة أثير للخير - السيادة الرقمية</small>
-    </div>
+<div class="dashboard">
+    <div class="master-card">
+        <h2 style="margin:0; color:var(--gold);">الماستر عصام الكومي</h2>
+        <p style="font-size:12px; color:#888;">سيد الإنترنت - السيادة الرقمية المصرية</p>
 
-    <div class="card">
-        <div class="data-box">
-            🏦 MASHREQ: <span class="blur" id="d1">EG050046020300000059010105904</span><br>
-            📱 CASH 1: <span class="blur" id="d2">01021664984</span><br>
-            📱 CASH 2: <span class="blur" id="d3">01017667875</span>
+        <div class="live-scanner">
+            <div class="scan-line" id="live-data">
+                [SYSTEM]: فحص الثغرات العالمية...<br>
+                [TRACK]: رصد تحويل مشبوه من هكر صيني...<br>
+                [BLOCK]: تم حجب محفظة 1x992...<br>
+                [RECOVER]: استرداد أصول رقمية للغلابة...<br>
+                [LOG]: جاري تسييل البيتكوين لجنيهات...
+            </div>
         </div>
-        <button onclick="unlock()" style="width:100%; background:#111; color:var(--gold); border:1px solid var(--gold); padding:8px; border-radius:8px; cursor:pointer;">🔓 فك التشفير (369)</button>
 
-        <p style="text-align:center; color:var(--gold); margin-top:20px; font-size:14px;">إجمالي الخزنة السيادية</p>
-        <div class="balance-amount" id="balance">4,500,000 ج.م</div>
-        
-        <button class="btn-main btn-gold" onclick="payout()">تطهير وسحب الأموال للخير</button>
-    </div>
+        <div class="secure-data" id="bank-info">
+            VODAFONE: 01021664984<br>
+            ORANGE: 01017667875<br>
+            MASHREQ: EG050046020300000059010105904
+        </div>
+        <button class="btn-action btn-cyan" onclick="masterUnlock()">🔓 تفعيل بروتوكول 369</button>
 
-    <div class="card" style="border-color: var(--cyan);">
-        <h3 style="color:var(--cyan); margin:0;">🕵️ استرداد الأصول المسروقة</h3>
-        <div id="log-screen">[SYSTEM]: نظام الرصد جاهز لمطاردة الهكرز...</div>
-        <button class="btn-main btn-cyan" onclick="startRecovery()">تفعيل المطاردة الآن</button>
+        <div class="balance-box">
+            <span style="color:var(--gold)">خزنة الخير (ج.م)</span>
+            <div class="amount" id="main-bal">12,500,000 ج.م</div>
+        </div>
+
+        <button class="btn-action btn-gold" onclick="startPayout()">تطهير وسحب للغلابة (كاش)</button>
     </div>
 </div>
 
 <script>
-    function unlock() {
-        if(prompt("أدخل كود السيادة:") === "369") {
-            document.querySelectorAll('.blur').forEach(el => el.style.filter = "none");
-            alert("تم فك التشفير بنجاح يا ماستر.");
+    function masterUnlock() {
+        let code = prompt("أدخل كود السيادة:");
+        if(code === "369") {
+            document.getElementById('bank-info').classList.add('revealed');
+            alert("تم فك تشفير البيانات السرية للشركات المحمولة.");
         }
     }
 
-    function startRecovery() {
-        let log = document.getElementById('log-screen');
-        log.innerHTML += "<br>[SCAN]: جاري فحص البلوكتشين عن المحافظ السوداء...";
-        setTimeout(() => {
-            log.innerHTML += "<br>[HACK]: تم اختراق التشفير لاستعادة الحقوق...";
-            setTimeout(() => {
-                log.innerHTML += "<br>[DONE]: تم استرداد 12.5 مليون جنيه للخزنة.";
-                document.getElementById('balance').innerText = "17,000,000 ج.م";
-                alert("المعجزة تمت! الأصول عادت للغلابة.");
-            }, 2000);
-        }, 1500);
-    }
-
-    function payout() {
-        let amt = prompt("أدخل المبلغ المراد تحويله لفودافون كاش (بالجنيه):");
+    function startPayout() {
+        let amt = prompt("المبلغ المراد تحويله للمساعدة (بالجنيه):");
         if(amt && !isNaN(amt)) {
-            alert("جاري معالجة تحويل " + amt + " جنيه إلى فودافون كاش.. اذهب وساعد الغلابة يا ماستر!");
+            let bal = document.getElementById('main-bal');
+            let current = parseFloat(bal.innerText.replace(/,/g, '').replace(' ج.م', ''));
+            if(amt <= current) {
+                bal.innerText = (current - amt).toLocaleString() + " ج.م";
+                alert("جاري التحويل لشركات المحمول.. الخير في الطريق للغلابة يا ماستر!");
+            } else {
+                alert("الخزنة تحتاج لاسترداد المزيد من أموال الهكرز.");
+            }
         }
     }
-</script>
 
+    // إضافة حركة الرصد الحي
+    setInterval(() => {
+        const log = document.getElementById('live-data');
+        log.innerHTML += `<br>[RECOVER]: تم استرداد حق جديد للغلابة...`;
+    }, 5000);
+</script>
 </body>
 </html>
