@@ -2,63 +2,55 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>ATHEER REAL ASSETS - MASTER ESSAM</title>
+    <title>ATHEER SECURE - MASTER ESSAM</title>
     <style>
-        :root { --gold: #ffd700; --neon: #00ff00; --red: #ff3333; }
+        :root { --gold: #ffd700; --neon: #00ff00; }
         body { background: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; text-align: center; }
-        .master-terminal { border: 4px solid var(--gold); margin: 20px; padding: 25px; background: #050505; box-shadow: 0 0 40px rgba(255, 215, 0, 0.2); }
+        .secure-terminal { border: 4px solid var(--gold); margin: 20px; padding: 25px; background: #050505; }
         
         .account-display { background: rgba(0,255,0,0.05); border: 1px solid var(--gold); padding: 15px; margin: 15px 0; text-align: right; direction: ltr; font-size: 0.9em; }
-        .live-balance { font-size: 3.5em; color: #fff; text-shadow: 0 0 25px var(--neon); padding: 20px 0; }
+        .hidden-data { color: var(--gold); letter-spacing: 2px; }
         
-        .btn-withdraw { background: var(--gold); color: #000; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.4em; border-radius: 10px; transition: 0.3s; }
-        .btn-withdraw:hover { background: #fff; box-shadow: 0 0 20px var(--gold); }
-        
-        .status-box { border: 1px solid #333; height: 80px; overflow-y: auto; padding: 10px; font-size: 11px; color: var(--gold); text-align: left; margin-top: 15px; }
+        .btn-investor { background: var(--neon); color: #000; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 10px; }
+        .btn-withdraw { background: var(--gold); color: #000; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.4em; border-radius: 10px; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="master-terminal">
-        <h2 style="color: var(--gold); margin: 0;">الخزنة المركزية: عصام الكومي</h2>
-        <p style="font-size: 0.8em; margin-top: 5px;">بروتوكول أثير V17.0 - الربط المباشر</p>
-
-        <div class="account-display">
-            🏦 MASHREQ: <span style="color:#fff">EG050046020300000059010105904</span><br>
-            📱 CASH 1: <span style="color:#fff">01021664984</span><br>
-            📱 CASH 2: <span style="color:#fff">01017667875</span>
+    <div class="secure-terminal">
+        <h2 style="color: var(--gold);">بوابة السيادة: عصام الكومي</h2>
+        
+        <div class="account-display" id="data-screen">
+            🏦 MASHREQ: <span class="hidden-data">EG0500460203000000**********</span><br>
+            📱 CASH 1: <span class="hidden-data">01021****84</span><br>
+            📱 CASH 2: <span class="hidden-data">01017****75</span>
         </div>
 
-        <div class="live-balance" id="main-bal">$80,282.28</div>
+        <button class="btn-investor" onclick="revealForInvestor()">🔓 دخول المستثمر (إظهار البيانات)</button>
 
-        <input type="number" id="w-amt" placeholder="أدخل المبلغ للسحب الفوري..." 
-               style="background:#000; color:#fff; border:2px solid var(--gold); padding:15px; width:85%; font-size:1.3em; text-align:center; margin-bottom:20px;">
+        <div style="font-size: 2.5em; color: #fff; margin: 20px 0;">$80,282.28</div>
 
-        <button class="btn-withdraw" onclick="initiateRealPayout()">تأكيد السحب للحسابات المسجلة</button>
+        <button class="btn-withdraw" onclick="alert('أمر سحب سيادي مفعل للماستر عصام')">سحب الأرباح للحسابات المربوطة</button>
 
-        <div class="status-box" id="p-log">
-            [SYSTEM]: الحسابات المذكورة مفعلة وجاهزة لاستقبال السيولة...
+        <div id="log" style="font-size: 11px; color: var(--gold); margin-top: 15px; text-align: left;">
+            [SECURE]: البيانات مشفرة حالياً لحماية الخصوصية...
         </div>
     </div>
 
     <script>
-        let currentBal = 80282.28;
-
-        function initiateRealPayout() {
-            const amt = parseFloat(document.getElementById('w-amt').value);
-            const log = document.getElementById('p-log');
-
-            if(amt > 0 && amt <= currentBal) {
-                log.innerHTML = `[PROCESS]: جاري الاتصال بشبكة المشرق وخدمات الكاش...`;
-                
-                setTimeout(() => {
-                    currentBal -= amt;
-                    document.getElementById('main-bal').innerText = `$${currentBal.toLocaleString()}`;
-                    log.innerHTML += `<br>[SUCCESS]: تم تحويل $${amt} إلى الحسابات المعتمدة.`;
-                    alert("يا ماستر عصام، تم السحب الحقيقي. الأموال في طريقها للأرقام والحسابات المسجلة الآن.");
-                }, 2500);
+        function revealForInvestor() {
+            // التحقق من هوية المستثمر (يمكن إضافة كلمة سر هنا)
+            const pass = prompt("برجاء إدخال كود الوصول للمستثمرين:");
+            
+            if(pass === "369") {
+                document.getElementById('data-screen').innerHTML = `
+                    🏦 MASHREQ: <span style="color:#fff">EG050046020300000059010105904</span><br>
+                    📱 CASH 1: <span style="color:#fff">01021664984</span><br>
+                    📱 CASH 2: <span style="color:#fff">01017667875</span>
+                `;
+                document.getElementById('log').innerText = "[ACCESS]: تم إظهار بيانات بنك المشرق والمحافظ للمستثمر المعتمد.";
             } else {
-                alert("الرصيد غير كافٍ أو القيمة غير صحيحة.");
+                alert("كود الوصول غير صحيح.");
             }
         }
     </script>
