@@ -1,21 +1,106 @@
-// استبدل وظيفة السحب القديمة بهذا الكود المطور
-function payout() {
-    const amount = prompt("أدخل المبلغ المراد سحبه لأعمال الخير (بالدولار):");
-    if (amount && !isNaN(amount)) {
-        const currentBal = parseFloat(document.getElementById('balance').innerText.replace('$', '').replace(',', ''));
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Essam Elkomy | Atheer Protocol</title>
+    
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="بروتوكول أثير للسيادة الرقمية واسترداد الأصول - الماستر عصام الكومي">
+
+    <style>
+        :root { --gold: #ffd700; --neon: #00ff00; --red: #ff0000; --cyan: #00ffff; }
+        body { background: #000; color: var(--neon); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
-        if (amount <= currentBal) {
-            document.getElementById('log').innerHTML += `<br>[SENDING]: جاري تحويل $${amount} إلى محفظة فودافون كاش...`;
+        .status-bar { background: rgba(255,0,0,0.2); color: var(--red); padding: 10px; text-align: center; font-weight: bold; border-bottom: 2px solid var(--red); animation: flash 1s infinite; }
+        @keyframes flash { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+        .container { max-width: 500px; margin: 20px auto; padding: 20px; }
+        .card { border: 2px solid var(--gold); border-radius: 20px; background: #0a0a0a; padding: 25px; box-shadow: 0 0 30px rgba(255,215,0,0.1); margin-bottom: 20px; }
+        
+        .balance-title { color: var(--gold); font-size: 14px; margin-bottom: 5px; }
+        .balance-amount { font-size: 40px; font-weight: bold; color: #fff; text-shadow: 0 0 15px var(--neon); }
+        
+        .data-box { background: rgba(0,255,0,0.05); border: 1px solid #333; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: left; direction: ltr; }
+        .blur { filter: blur(6px); transition: 0.5s; }
+        
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 16px; transition: 0.3s; }
+        .btn-gold { background: var(--gold); color: #000; }
+        .btn-cyan { background: var(--cyan); color: #000; }
+        
+        #log { background: #000; border: 1px solid var(--cyan); height: 100px; overflow-y: auto; padding: 10px; font-size: 11px; color: var(--cyan); margin-top: 15px; border-radius: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <div class="status-bar">INTERNET SERVER SUBMISSION ACTIVE - ATHEER PROTOCOL</div>
+
+    <div class="container">
+        <div class="card">
+            <h2 style="margin:0; color: var(--gold);">الماستر عصام الكومي</h2>
+            <p style="font-size: 12px;">مبادرة أثير للخير - السيادة الرقمية</p>
             
-            // محاكاة الربط مع API فودافون كاش السيادي
-            setTimeout(() => {
-                const newBal = currentBal - amount;
-                document.getElementById('balance').innerText = `$${newBal.toLocaleString()}`;
-                document.getElementById('log').innerHTML += `<br>[SUCCESS]: تم التحويل بنجاح. تفقد هاتفك (01021664984) لاستلام التأكيد.`;
-                alert("تم إرسال الأموال لمبادرة أثير للخير. اذهب الآن وساعد الغلابة يا ماستر!");
-            }, 3000);
-        } else {
-            alert("العفو يا ماستر، الرصيد في الخزنة لا يكفي لهذا المبلغ.");
+            <div class="data-box" id="accounts">
+                🏦 MASHREQ: <span class="blur">EG050046020300000059010105904</span><br>
+                📱 CASH 1: <span class="blur">01021664984</span><br>
+                📱 CASH 2: <span class="blur">01017667875</span>
+            </div>
+            
+            <button class="btn" style="background:#222; color:var(--gold);" onclick="unlock()">🔓 فك التشفير (369)</button>
+            
+            <div style="margin-top:20px;">
+                <div class="balance-title">إجمالي الخزنة السيادية</div>
+                <div class="balance-amount" id="balance">$80,282.28</div>
+            </div>
+            
+            <button class="btn btn-gold" onclick="payout()">تطهير وسحب الأموال للخير</button>
+        </div>
+
+        <div class="card" style="border-color: var(--cyan);">
+            <h3 style="margin:0; color: var(--cyan);">🕵️ استرداد الأصول المسروقة</h3>
+            <div id="log">[SYSTEM]: نظام الرصد جاهز لمطاردة الهكرز...</div>
+            <button class="btn btn-cyan" onclick="startRecovery()">تفعيل المطاردة الآن</button>
+        </div>
+    </div>
+
+    <script>
+        function unlock() {
+            if(prompt("كود الوصول السيادي:") === "369") {
+                const blurs = document.querySelectorAll('.blur');
+                blurs.forEach(el => { el.style.filter = "none"; el.style.color = "#fff"; });
+            }
         }
-    }
-}
+
+        function startRecovery() {
+            const log = document.getElementById('log');
+            const steps = [
+                "[SCAN]: فحص البلوكشين عن المحافظ المنهوبة...",
+                "[TRACK]: تم رصد محفظة هكر مشبوهة...",
+                "[HACK]: اختراق التشفير لاستعادة الحقوق الأخلاقية...",
+                "[SUCCESS]: تم استرداد 12.5 BTC بنجاح لصالح الغلابة."
+            ];
+            let i = 0;
+            const interval = setInterval(() => {
+                if(i < steps.length) {
+                    log.innerHTML += `<br>${steps[i++]}`;
+                    log.scrollTop = log.scrollHeight;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('balance').innerText = "$1,580,282.28";
+                    alert("المعجزة تمت! الرصيد زاد في الخزنة.");
+                }
+            }, 1500);
+        }
+
+        function payout() {
+            const amount = prompt("المبلغ المراد تطهيره للخير ($):");
+            if(amount) {
+                alert(`جاري معالجة تحويل $${amount} إلى فودافون كاش.. اذهب وساعد الغلابة يا ماستر!`);
+                const balEl = document.getElementById('balance');
+                let current = parseFloat(balEl.innerText.replace('$', '').replace(',', ''));
+                balEl.innerText = `$${(current - amount).toLocaleString()}`;
+            }
+        }
+    </script>
+</body>
+</html>
