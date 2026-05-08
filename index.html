@@ -1,111 +1,17 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ATHEER OMNI-SYSTEM | ESSAM ELKOMY</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; }
-        * { box-sizing: border-box; margin: 0; padding: 0; overflow: hidden; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Share Tech Mono', monospace; height: 100vh; border: 4px solid var(--gold); }
-
-        /* حاوية النظام الشامل */
-        .omni-layout { display: grid; grid-template-rows: 60px 80px 1fr 100px; height: 100vh; position: relative; }
-
-        /* نافذة العرض الشاملة (Integrated Portal) */
-        #display-portal { position: fixed; inset: 0; z-index: 1000; display: none; background: #000; flex-direction: column; border: 5px solid var(--gold); }
-        .p-header { height: 50px; background: var(--gold); color: #000; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; font-weight: bold; font-family: 'Orbitron'; }
-        iframe { width: 100%; height: 100%; border: none; background: #000; }
-
-        /* تصميم الأيقونات السيادية */
-        .control-grid { position: relative; display: flex; justify-content: center; align-items: center; flex: 1; }
-        .omni-box { position: absolute; width: 140px; background: rgba(0,25,0,0.9); border: 1px solid var(--neon); padding: 10px; font-size: 10px; cursor: pointer; transition: 0.3s; z-index: 10; }
-        .omni-box:hover { border-color: var(--gold); transform: scale(1.1); box-shadow: 0 0 20px var(--gold); }
-        .tl { top: 20px; left: 10px; border-left: 4px solid var(--gold); }
-        .tr { top: 20px; right: 10px; border-right: 4px solid var(--gold); }
-        .bl { bottom: 20px; left: 10px; }
-        .br { bottom: 20px; right: 10px; }
-
-        /* عين الغراب المحدثة */
-        .omni-eye { width: 200px; height: 200px; border: 4px solid var(--gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 30px var(--gold); position: relative; animation: glow 2s infinite alternate; }
-        @keyframes glow { from { box-shadow: 0 0 20px var(--gold); } to { box-shadow: 0 0 50px var(--gold); } }
-
-        .btn-main { width: 95%; background: var(--gold); color: #000; padding: 18px; border: none; font-family: 'Orbitron'; font-weight: 900; font-size: 18px; cursor: pointer; box-shadow: 0 0 20px var(--gold); }
-    </style>
-</head>
-<body>
-
-<div id="display-portal">
-    <div class="p-header">
-        <span id="p-label">INTEGRATED SYSTEM</span>
-        <button onclick="closePortal()" style="background:#000; color:#fff; border:none; padding:5px 15px; cursor:pointer;">EXIT</button>
-    </div>
-    <div id="p-content" style="flex:1;"></div>
-</div>
-
-<div class="omni-layout">
-    <div style="display:grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--neon); text-align:center;">
-        <div style="padding:5px;"><label style="color:var(--gold); font-size:9px;">CAIRO</label><br><span id="c1">--:--</span></div>
-        <div style="padding:5px;"><label style="color:var(--gold); font-size:9px;">LONDON</label><br><span id="c2">--:--</span></div>
-        <div style="padding:5px;"><label style="color:var(--gold); font-size:9px;">NY</label><br><span id="c3">--:--</span></div>
-        <div style="padding:5px;"><label style="color:var(--gold); font-size:9px;">TOKYO</label><br><span id="c4">--:--</span></div>
-    </div>
-
-    <div style="display:grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--neon); background:rgba(0,15,0,1);">
-        <div style="padding:15px; text-align:center;" onclick="openPortal('market')"><label style="color:var(--gold); font-size:10px;">GOLD</label><br><b>$2,348.12</b></div>
-        <div style="padding:15px; text-align:center;"><label style="color:var(--gold); font-size:10px;">369 STATUS</label><br><b style="color:var(--neon)">TOTAL DOMINION</b></div>
-        <div style="padding:15px; text-align:center;" onclick="openPortal('market')"><label style="color:var(--gold); font-size:10px;">BTC LIVE</label><br><b id="btc-val">$80,284.00</b></div>
-    </div>
-
-    <div class="control-grid">
-        <div class="omni-box tl" onclick="openPortal('radar')">✈️ AIR RADAR<br>LIVE TRAFFIC</div>
-        <div class="omni-box tr" onclick="openPortal('space')">🌌 COSMOS GATE<br>STAR MONITOR</div>
-        <div class="omni-box bl" onclick="openPortal('security')">🛡️ SECURITY<br>AES-256_ON</div>
-        <div class="omni-box br" onclick="openPortal('contract')">📄 CONTRACT<br>ESSAM_OWNED</div>
-
-        <div class="omni-eye">
-            <div style="text-align:center; font-family:'Orbitron'; font-size:13px; color:var(--gold); font-weight:900;">OMNI-SYSTEM<br>V7.0 ACTIVE</div>
-        </div>
-    </div>
-
-    <div style="text-align:center; padding:15px; border-top:1px solid var(--neon);">
-        <button class="btn-main" onclick="openPortal('invest')">START GLOBAL INVESTMENT | عصام الكومي</button>
-    </div>
+<div class="investment-hub" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; padding:10px;">
+    <button class="trade-btn" onclick="openPortal('buy-btc')" style="background:#f7931a; color:#fff; border:none; padding:10px; cursor:pointer; font-weight:bold;">BUY BITCOIN</button>
+    <button class="trade-btn" onclick="openPortal('buy-stocks')" style="background:#0052ff; color:#fff; border:none; padding:10px; cursor:pointer; font-weight:bold;">BUY AVIATION ASSETS</button>
 </div>
 
 <script>
+    // تحديث دالة الـ Portal لربط منصات التداول الحقيقية
     function openPortal(type) {
-        const p = document.getElementById('display-portal');
         const c = document.getElementById('p-content');
-        const l = document.getElementById('p-label');
-        p.style.display = 'flex';
-
-        if(type === 'radar') {
-            l.innerText = "AIR RADAR | GLOBAL LIVE TRAFFIC";
-            c.innerHTML = `<iframe src="https://www.flightradar24.com/simple_index.php?lat=30.0&lon=31.2&z=6"></iframe>`;
-        } else if(type === 'market') {
-            l.innerText = "FINANCIAL TERMINAL | BTC/GOLD";
-            c.innerHTML = `<iframe src="https://s.tradingview.com/widgetembed/?symbol=BITSTAMP%3ABTCUSD&interval=1&theme=dark"></iframe>`;
-        } else if(type === 'space') {
-            l.innerText = "COSMIC GATE | LIVE STARS";
-            c.innerHTML = `<iframe src="https://sky.esa.int/"></iframe>`;
-        } else if(type === 'contract') {
-            l.innerText = "OWNERSHIP VERIFICATION";
-            c.innerHTML = `<div style="padding:50px; color:var(--gold); font-size:20px; text-align:center;">النظام الشامل ملكية مطلقة للقائد عصام الكومي. <br> جميع بوابات البيانات سخرت لسيادتك.</div>`;
-        } else {
-            l.innerText = "INVESTMENT PORTAL";
-            c.innerHTML = `<div style="padding:50px; color:var(--neon); font-size:22px; text-align:center;">جاري دمج بوابات الإيداع... <br> السيادة المالية قيد التنفيذ.</div>`;
+        if(type === 'buy-btc') {
+            c.innerHTML = `<iframe src="https://www.binance.com/en/trade/BTC_USDT"></iframe>`;
+        } else if(type === 'buy-stocks') {
+            c.innerHTML = `<iframe src="https://www.etoro.com/markets/indices"></iframe>`;
         }
+        // ... بقية الأكواد السابقة
     }
-
-    function closePortal() { document.getElementById('display-portal').style.display = 'none'; document.getElementById('p-content').innerHTML = ""; }
-
-    setInterval(() => {
-        const d = new Date();
-        document.getElementById('c1').innerText = d.toLocaleTimeString('en-GB', {timeZone:'Africa/Cairo'});
-        document.getElementById('btc-val').innerText = "$" + (80284 + Math.random()*10).toFixed(2);
-    }, 1000);
 </script>
-</body>
-</html>
