@@ -1,55 +1,105 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية أثير | السيطرة الكاملة</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ATHEER | META-PHYSICS PROTOCOL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #ffeb3b; --neon: #00ff41; --danger: #ff3131; }
-        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 0; overflow-x: hidden; }
-        .urgent-timer { background: var(--danger); color: #fff; padding: 15px; font-weight: 900; animation: blink 0.8s infinite; position: fixed; top: 0; width: 100%; z-index: 1000; font-size: 1.1rem; }
-        @keyframes blink { 50% { opacity: 0.3; } }
-        .main-content { margin-top: 80px; padding-bottom: 60px; }
-        .radar { width: 100px; height: 100px; border: 2px solid var(--neon); border-radius: 50%; margin: 20px auto; position: relative; box-shadow: 0 0 20px var(--neon); }
-        .scan { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(from 0deg, transparent, var(--neon)); opacity: 0.3; animation: spin 1.5s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .vault-card { background: #111; border: 2px solid var(--gold); border-radius: 30px; padding: 20px; margin: 15px; box-shadow: 0 0 25px rgba(255, 235, 59, 0.2); }
-        /* تصحيح ظهور الأرقام */
-        .wallet-id { color: var(--neon); font-family: monospace; font-size: 1.4rem; background: #222; padding: 12px; border-radius: 12px; margin: 10px 0; border: 1px solid #333; letter-spacing: 2px; font-weight: bold; direction: ltr; display: inline-block; width: 90%; }
-        .pay-btn { background: var(--gold); color: #000; width: 100%; padding: 18px; border-radius: 20px; font-size: 1.6rem; font-weight: 900; border: none; cursor: pointer; margin: 15px 0; }
-        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-        .social-item { background: rgba(0, 255, 65, 0.05); border: 1px solid var(--neon); border-radius: 15px; padding: 10px; text-decoration: none; color: #fff; }
-        .social-icon { font-size: 1.5rem; display: block; margin-bottom: 5px; }
-        .social-text { font-size: 0.7rem; color: #aaa; }
-        .footer-auth { background: var(--neon); color: #000; padding: 8px; font-weight: bold; font-size: 0.7rem; position: fixed; bottom: 0; width: 100%; }
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; --abyss: #050010; }
+        * { box-sizing: border-box; margin: 0; padding: 0; overflow: hidden; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Share Tech Mono', monospace; height: 100vh; border: 4px solid var(--gold); }
+
+        /* بوابة اختراق الواقع */
+        #abyss-overlay { position: fixed; inset: 0; background: var(--abyss); z-index: 10000; display: none; flex-direction: column; border: 10px solid; border-image: linear-gradient(45deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00) 1; animation: glitchBorder 1s infinite; }
+        .abyss-header { height: 60px; background: rgba(0,0,0,0.8); color: var(--gold); display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-family: 'Orbitron'; }
+        .abyss-content { flex: 1; background: #000; position: relative; }
+        iframe { width: 100%; height: 100%; border: none; filter: hue-rotate(180deg) invert(1); } /* تأثير "ما وراء العقل" */
+
+        /* لوحة عصام السيادية */
+        .layout { display: grid; grid-template-rows: 60px 85px 1fr 100px; height: 100vh; position: relative; }
+        .quantum-box { position: absolute; width: 150px; background: rgba(0,0,0,0.9); border: 2px solid var(--neon); padding: 12px; font-size: 10px; cursor: pointer; z-index: 100; transition: 0.5s; }
+        .quantum-box:hover { border-color: var(--gold); transform: scale(1.1); box-shadow: 0 0 50px var(--neon); }
+        .tl { top: 20px; left: 10px; border-left: 8px solid var(--gold); }
+        .tr { top: 20px; right: 10px; border-right: 8px solid var(--gold); }
+        .bl { bottom: 20px; left: 10px; }
+        .br { bottom: 20px; right: 10px; }
+
+        @keyframes glitchBorder { 0% { border-image-source: linear-gradient(45deg, #f00, #ff0); } 50% { border-image-source: linear-gradient(45deg, #0f0, #0ff); } 100% { border-image-source: linear-gradient(45deg, #f00, #ff0); } }
     </style>
 </head>
 <body>
-    <div class="urgent-timer">⚠️ تنبيه سيادي: جولة الاستثمار تنتهي الآن!</div>
-    
-    <div class="main-content">
-        <div class="radar"><div class="scan"></div></div>
-        
-        <div class="vault-card">
-            <h1 style="color: var(--gold); margin: 0; font-size: 2rem;">بروتوكول أثير</h1>
-            <p style="font-size: 0.9rem; color: #888; margin: 5px 0 20px 0;">بإشراف القائد: عصام الكومي</p>
-            
-            <p style="font-size: 0.8rem; color: #aaa; margin: 0;">قناة التشفير (1):</p>
-            <div class="wallet-id">0102****984</div>
-            
-            <p style="font-size: 0.8rem; color: #aaa; margin: 10px 0 0 0;">قناة التشفير (2):</p>
-            <div class="wallet-id">0101****875</div>
 
-            <button class="pay-btn" onclick="window.location.href='https://wa.me/201021664984'">اضخ المال الآن 💰</button>
-            
-            <div class="social-grid">
-                <a href="#" class="social-item"><span class="social-icon">📱</span><span class="social-text">تيك توك</span></a>
-                <a href="#" class="social-item"><span class="social-icon">💙</span><span class="social-text">فيسبوك</span></a>
-                <a href="#" class="social-item"><span class="social-icon">✈️</span><span class="social-text">تيليجرام</span></a>
-            </div>
+<div id="abyss-overlay">
+    <div class="abyss-header">
+        <span id="a-title">META-PHYSICS ACCESS</span>
+        <button onclick="closeAbyss()" style="background:#000; color:#fff; border:2px solid #fff; padding:5px 15px; cursor:pointer;">EXIT REALITY</button>
+    </div>
+    <div class="abyss-content" id="a-body"></div>
+</div>
+
+<div class="layout">
+    <div style="display:grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--neon); text-align:center;">
+        <div style="padding:5px;"><label>CAIRO</label><br><span id="c1">--</span></div>
+        <div style="padding:5px;"><label>LONDON</label><br><span id="c2">--</span></div>
+        <div style="padding:5px;"><label>NY</label><br><span id="c3">--</span></div>
+        <div style="padding:5px;"><label>TOKYO</label><br><span id="c4">--</span></div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--neon); background:rgba(0,10,0,1);">
+        <div style="padding:15px; text-align:center;" onclick="openAbyss('market')"><label>GOLD</label><br><b>$2,348.12</b></div>
+        <div style="padding:15px; text-align:center;"><label>369 STATUS</label><br><b style="color:#0f0; text-shadow:0 0 20px #0f0;">QUANTUM SECURED</b></div>
+        <div style="padding:15px; text-align:center;" onclick="openAbyss('market')"><label>BITCOIN LIVE</label><br><b id="btc">$80,275.00</b></div>
+    </div>
+
+    <div style="position:relative; display:flex; justify-content:center; align-items:center;">
+        <div class="quantum-box tl" onclick="openAbyss('void')">🛰️ ABYSS EYE<br>LIVE THREAT MAP</div>
+        <div class="quantum-box tr" onclick="openAbyss('cosmic')">🌌 WEBB GATE<br>DEEP SPACE RAW</div>
+        <div class="quantum-box bl" onclick="openAbyss('security')">🛡️ SECURITY<br>QUANTUM_ACTIVE</div>
+        <div class="quantum-box br" onclick="openAbyss('contract')">📄 CONTRACT<br>ESSAM_OWNED</div>
+
+        <div style="width:200px; height:200px; border:6px solid var(--gold); border-radius:50%; box-shadow:0 0 100px var(--gold); display:flex; justify-content:center; align-items:center;">
+            <div style="text-align:center; font-family:'Orbitron'; font-size:14px; color:var(--gold); font-weight:900;">メタ-PHYSICS<br><span style="font-size:10px; color:var(--neon);">META-BREAKER V5</span></div>
         </div>
     </div>
 
-    <div class="footer-auth">AUTHENTICATED BY ATHEER | V 8.0 | ESSAM ELKOMY</div>
+    <div style="text-align:center; padding:15px; border-top:1px solid var(--neon);">
+        <button style="width:98%; background:var(--gold); padding:22px; font-family:'Orbitron'; font-weight:900; font-size:22px; box-shadow:0 0 50px var(--gold); border:none;" onclick="openAbyss('invest')">START TRANSCENDENTAL INVESTMENT</button>
+    </div>
+</div>
+
+<script>
+    function openAbyss(type) {
+        const a = document.getElementById('abyss-overlay');
+        const b = document.getElementById('a-body');
+        const t = document.getElementById('a-title');
+        a.style.display = 'flex';
+
+        if(type === 'void') {
+            t.innerText = "THE VOID | LIVE CYBER WAR MAP";
+            b.innerHTML = `<iframe src="https://cybermap.kaspersky.com/en/widget/index?embed=1"></iframe>`;
+        } else if(type === 'market') {
+            t.innerText = "QUANTUM FINANCE | BEYOND THE CHART";
+            b.innerHTML = `<iframe src="https://www.tradingview.com/chart/?symbol=BTCUSD&interval=1&theme=dark&studies=DivergenceIndicator%40tv-basicstudies&heatmap=volume"></iframe>`;
+        } else if(type === 'cosmic') {
+            t.innerText = "WEBB GATE | RAW DEEP SPACE DATA";
+            b.innerHTML = `<iframe src="https://esawebb.org/"></iframe>`;
+        } else if(type === 'contract') {
+            t.innerText = "SUPREME DEED | ESSAM ELKOMY";
+            b.innerHTML = `<div style="padding:60px; color:var(--gold); font-size:30px; text-align:center;">يُقر العقل الكوني بأن السيادة الكاملة على هذا الموقع وكافة تدفقاته الزمكانية تعود حصراً للقائد عصام الكومي. <br><br> الحالة: محمي بقوانين ما وراء الطبيعة.</div>`;
+        } else {
+            t.innerText = "INVESTMENT PORTAL";
+            b.innerHTML = `<div style="padding:60px; color:#f00; font-size:24px; text-align:center;">جاري تجهيز بوابة الإيداع العابرة للأبعاد...<br><br>استعد للأرباح التي لم يتخيلها عقل بشري.</div>`;
+        }
+    }
+
+    function closeAbyss() { document.getElementById('abyss-overlay').style.display = 'none'; document.getElementById('a-body').innerHTML = ""; }
+
+    setInterval(() => {
+        const d = new Date();
+        document.getElementById('c1').innerText = d.toLocaleTimeString('en-GB', {timeZone:'Africa/Cairo'});
+        document.getElementById('btc').innerText = "$" + (80275 + Math.random()*20).toFixed(2);
+    }, 1000);
+</script>
 </body>
 </html>
