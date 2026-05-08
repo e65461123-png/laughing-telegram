@@ -1,19 +1,13 @@
-// بروتوكول الربط النهائي بين الشاشة والشبح
-const GHOST_VAULT_ALGORITHM = {
-    syncWithScreen: function() {
-        console.log("جاري ربط الشاشة الفيزيائية بمركز سيطرة عصام الكومي...");
-        // تفعيل التنبيهات المرئية على شاشة الـ Smart Panel
-        document.body.style.border = "10px solid #00ff41"; // وميض أخضر عند النجاح
-    },
-    onGoogleIndex: function(data) {
-        alert("تنبيه سيادي: جوجل أرشف بيانات جديدة لبروتوكول أثير!");
-    },
-    liveFinancialFeed: function() {
-        // تحديث أرقام البورصة كل 5 ثوانٍ قسرياً
-        setInterval(() => {
-            fetchMarketData(); 
-        }, 5000);
-    }
-};
+# كود جلب البيانات الحقيقية 100% وربطها بالواجهة
+import requests
 
-GHOST_VAULT_ALGORITHM.syncWithScreen();
+def get_real_world_data(self):
+    # 1. جلب أسعار العملات الحية
+    ticker = requests.get('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT').json()
+    self.ids.crypto_price.text = f"BTC: ${ticker['price']}"
+    
+    # 2. جلب إحداثيات قمر صناعي (كمثال)
+    sat_data = requests.get('https://api.wheretheiss.at/v1/satellites/25544').json()
+    self.ids.radar_target.text = f"ISS LOC: {sat_data['latitude']}, {sat_data['longitude']}"
+
+    print("V6000: Data Stream Synchronized.")
