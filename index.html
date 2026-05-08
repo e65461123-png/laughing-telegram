@@ -2,95 +2,119 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>ATHEER SYSTEM V7000 - MASTER ESSAM ELKOMY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATHEER SYSTEM V8000 - SUPREME COMMAND</title>
     <style>
-        body { background-color: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; padding: 20px; border: 5px solid gold; min-height: 90vh; }
-        .header { color: gold; text-shadow: 2px 2px #ff0000; font-size: 24px; margin-bottom: 20px; }
+        :root { --main-green: #00ff00; --gold: #ffd700; --danger: #ff0000; }
+        body { background: #000; color: var(--main-green); font-family: 'Courier New', monospace; margin: 0; overflow-x: hidden; }
         
-        /* الرادار الأسطوري */
-        .radar { border: 3px solid #00ff00; border-radius: 50%; width: 180px; height: 180px; margin: 20px auto; position: relative; background: radial-gradient(circle, #004400 0%, #000 70%); }
-        .radar-line { width: 50%; height: 2px; background: #00ff00; position: absolute; top: 50%; left: 50%; transform-origin: 0% 0%; animation: scan 2s linear infinite; }
-        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* نظام الحقوق الثابت */
+        .watermark { position: fixed; bottom: 10px; right: 10px; color: var(--gold); font-size: 12px; z-index: 1000; opacity: 0.6; }
 
-        /* حاويات البيانات */
-        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
-        .box { border: 1px solid gold; padding: 15px; background: rgba(0,255,0,0.05); min-width: 250px; box-shadow: 0 0 10px rgba(255,215,0,0.2); }
+        /* غرفة التحكم العلوية - البث الحي */
+        .command-center { border-bottom: 2px solid var(--gold); padding: 15px; background: rgba(0,20,0,0.9); display: flex; justify-content: space-around; font-size: 0.8em; }
         
-        /* خانة الإضافة */
-        .add-section { margin-top: 30px; border-top: 2px solid gold; padding-top: 20px; }
-        input { background: #000; color: #00ff00; border: 1px solid gold; padding: 10px; width: 60%; }
-        button { background: gold; color: #000; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; }
+        /* الرادار والكرة الأرضية (الفضاء) */
+        .space-sector { position: relative; height: 300px; background: radial-gradient(circle, #001a00 0%, #000 80%); overflow: hidden; }
+        .radar { border: 2px solid var(--main-green); border-radius: 50%; width: 200px; height: 200px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+        .radar-sweep { width: 50%; height: 2px; background: var(--main-green); position: absolute; top: 50%; left: 50%; transform-origin: 0% 0%; animation: scan 3s linear infinite; }
         
-        .status-active { color: #00ff00; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
+        /* شبكة المدن والبيانات (الأرض) */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; padding: 20px; }
+        .module { border: 1px solid var(--gold); padding: 10px; background: rgba(0,255,0,0.05); position: relative; }
+        .module h4 { color: var(--gold); margin: 0 0 10px 0; border-bottom: 1px solid var(--gold); }
+
+        /* بوابة الاختراق السرية (المخفية) */
+        .hidden-gate { position: fixed; top: 0; left: 0; width: 5px; height: 5px; cursor: crosshair; z-index: 9999; }
+        #admin-panel { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 80%; background: #000; border: 3px solid var(--danger); z-index: 10000; padding: 20px; overflow-y: auto; }
+
+        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .pulse { animation: pulse-red 1s infinite; }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0px var(--danger); } 50% { box-shadow: 0 0 15px var(--danger); } 100% { box-shadow: 0 0 0px var(--danger); } }
     </style>
 </head>
-<body>
+<body onclick="playBeep()">
 
-    <div class="header">SYSTEM V7000: GLOBAL SOVEREIGNTY</div>
-    <p>MASTER: عصام الكومي</p>
+    <div class="watermark">تأليف عصام الكومي - بروتوكول أثير © 2026</div>
 
-    <div class="radar"><div class="radar-line"></div></div>
+    <div class="command-center">
+        <div>📡 الفضاء: <span id="sat-status">تتبع...</span></div>
+        <div>💰 البورصة: <span id="btc-live">00.00</span></div>
+        <div>🛡️ الدفاع: <span class="status-active">V8000 SECURED</span></div>
+    </div>
 
-    <div class="container">
-        <div class="box">
-            <h3 style="color: gold;">💳 الحسابات المالية</h3>
-            <p>فودافون كاش: <span id="v-cash">تحديث...</span></p>
-            <p>بنك المشرق: <span id="mashreq">تحديث...</span></p>
+    <div class="space-sector">
+        <div class="radar"><div class="radar-line"></div><div class="radar-sweep"></div></div>
+        <div style="position: absolute; bottom: 10px; left: 10px;">إحداثيات المدن: <span id="city-coords">30.04, 31.23</span></div>
+    </div>
+
+    <div class="grid-container">
+        <div class="module">
+            <h4>💹 تداول السيادة</h4>
+            <div id="market-feed">جاري سحب البيانات...</div>
         </div>
-
-        <div class="box">
-            <h3 style="color: gold;">📈 البورصة (بث حي)</h3>
-            <p id="btc-price">BTC: Loading...</p>
-            <p id="gold-price">Status: <span class="status-active">CONNECTED</span></p>
+        <div class="module">
+            <h4>🌍 رصد المدن</h4>
+            <div id="city-feed">القاهرة - لندن - نيويورك (Live)</div>
         </div>
-
-        <div class="box">
-            <h3 style="color: gold;">🛰️ رصد الأقمار الصناعية</h3>
-            <p id="sat-coords">تتبع ISS: جاري الرصد...</p>
+        <div class="module pulse">
+            <h4>🚨 إنذار حقيقي</h4>
+            <div id="alert-system">لا توجد تهديدات حالية</div>
         </div>
     </div>
 
-    <div class="add-section">
-        <input type="text" id="newInput" placeholder="أدخل قطاع جديد أو أمر غزو...">
-        <button onclick="addSector()">إضافة +</button>
-        <div id="dynamic-content" style="margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></div>
+    <div style="padding: 20px; border-top: 1px solid var(--gold);">
+        <input type="text" id="masterCmd" placeholder="أدخل كود التحديث أو أمر الغزو..." style="width:70%; background:#000; color:var(--main-green); border:1px solid var(--gold); padding:10px;">
+        <button onclick="executeMasterCmd()" style="padding:10px; background:var(--gold); color:#000; border:none; font-weight:bold;">تنفيذ</button>
+    </div>
+
+    <div class="hidden-gate" title="Master Access" onclick="toggleAdmin()"></div>
+    <div id="admin-panel">
+        <h2 style="color:var(--danger)">⚠️ منطقة المحظورات - عصام الكومي فقط</h2>
+        <p>مواقع حساسة | فك تشفير | ولوج محجوب</p>
+        <textarea id="hiddenLogs" style="width:100%; height:300px; background:#050505; color:var(--main-green); border:1px solid var(--danger);"></textarea>
+        <button onclick="toggleAdmin()" style="background:var(--danger); color:#fff; border:none; padding:10px;">إغلاق البوابة</button>
     </div>
 
     <script>
-        // وظيفة جلب البيانات الحية 100%
-        async function updateData() {
+        // 1. ربط الواقع 100% (بورصة وأقمار)
+        async function syncGlobalData() {
             try {
-                // جلب البيتكوين
-                const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-                const data = await res.json();
-                document.getElementById('btc-price').innerText = `BTC: $${parseFloat(data.price).toLocaleString()}`;
-                
-                // جلب القمر الصناعي
+                const btcRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+                const btc = await btcRes.json();
+                document.getElementById('btc-live').innerText = `$${parseFloat(btc.price).toLocaleString()}`;
+                document.getElementById('market-feed').innerHTML = `Bitcoin: $${btc.price}<br>Gold Index: Active`;
+
                 const satRes = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
-                const satData = await satRes.json();
-                document.getElementById('sat-coords').innerText = `LAT: ${satData.latitude.toFixed(2)} | LON: ${satData.longitude.toFixed(2)}`;
-
-                // أرصدة افتراضية ثابتة كما طلبت
-                document.getElementById('v-cash').innerText = "150,000 EGP";
-                document.getElementById('mashreq').innerText = "500,000 USD";
-            } catch (e) { console.log("System Link Error"); }
+                const sat = await satRes.json();
+                document.getElementById('sat-status').innerText = `ALT: ${sat.altitude.toFixed(0)}km`;
+                document.getElementById('city-coords').innerText = `${sat.latitude.toFixed(2)}, ${sat.longitude.toFixed(2)}`;
+            } catch (e) { console.log("Re-linking V8000..."); }
         }
 
-        // وظيفة الإضافة بدون تغيير القديم
-        function addSector() {
-            let val = document.getElementById('newInput').value;
-            if(val) {
-                let div = document.createElement("div");
-                div.className = "box";
-                div.innerHTML = `<h3 style="color:gold;">📡 ${val}</h3><p class="status-active">ONLINE</p>`;
-                document.getElementById('dynamic-content').appendChild(div);
-                document.getElementById('newInput').value = "";
+        // 2. محرك المستحيل (إضافة أي شيء من لمسة)
+        function executeMasterCmd() {
+            let cmd = document.getElementById('masterCmd').value;
+            if(cmd === "اختراق") {
+                toggleAdmin();
+            } else if(cmd) {
+                let newModule = document.createElement("div");
+                newModule.className = "module";
+                newModule.innerHTML = `<h4>📡 ${cmd}</h4><div class='status-active'>تم الدمج حياً</div>`;
+                document.querySelector('.grid-container').appendChild(newModule);
             }
+            document.getElementById('masterCmd').value = "";
         }
 
-        setInterval(updateData, 2000); // تحديث كل ثانيتين
-        updateData();
+        // 3. البوابة السرية
+        function toggleAdmin() {
+            let panel = document.getElementById('admin-panel');
+            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+        }
+
+        setInterval(syncGlobalData, 2000);
+        syncGlobalData();
+        function playBeep() { /* إضافة صوت تقني عند اللمس */ }
     </script>
 </body>
 </html>
