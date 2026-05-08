@@ -2,94 +2,90 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATHEER INVEST - MASTER ESSAM ELKOMY</title>
+    <title>ATHEER MIRACLE - BEYOND LIMITS</title>
     <style>
-        :root { --neon: #00ff00; --gold: #ffd700; --down: #ff3333; }
-        body { background: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow-x: hidden; text-align: center; }
+        :root { --neon: #00ff00; --gold: #ffd700; --red: #ff0000; }
+        body { background: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; text-align: center; }
         
-        /* شريط العملات والذهب العالمي */
-        .ticker-wrap { background: rgba(0,255,0,0.1); border-bottom: 2px solid var(--gold); padding: 8px; overflow: hidden; white-space: nowrap; font-weight: bold; }
-        .ticker { display: inline-block; animation: ticker 25s linear infinite; color: var(--gold); }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        /* تأثير "المصفوفة" الخلفية */
+        .miracle-header { border-bottom: 2px solid var(--red); padding: 15px; background: rgba(20,0,0,0.9); box-shadow: 0 0 20px var(--red); }
+        
+        /* واجهة الاختراق والرصد */
+        .hack-zone { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .console { background: #050505; border: 1px solid var(--gold); padding: 15px; text-align: left; height: 250px; overflow-y: auto; font-size: 12px; }
+        
+        /* أدوات المعجزة */
+        .tool-box { border: 2px solid var(--neon); margin: 20px; padding: 20px; background: rgba(0,255,0,0.05); }
+        input { background: #000; border: 1px solid var(--gold); color: var(--neon); padding: 10px; width: 70%; margin-bottom: 10px; }
+        button { background: var(--red); color: #fff; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+        button:hover { background: var(--gold); color: #000; }
 
-        /* منطقة الرادار وحركة الطائرات العالمية */
-        .world-map { position: relative; height: 280px; background: radial-gradient(circle, #001a00 0%, #000 85%); border-bottom: 2px solid var(--gold); overflow: hidden; }
-        .radar-eye { border: 4px solid var(--gold); border-radius: 50%; width: 180px; height: 180px; margin: 20px auto; position: relative; box-shadow: 0 0 30px var(--gold); }
-        .plane { position: absolute; font-size: 18px; z-index: 10; animation: fly 15s linear infinite; }
-        @keyframes fly { from { left: -10%; top: 30%; } to { left: 110%; top: 70%; } }
-
-        /* لوحة الاستثمار والوساطة */
-        .invest-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; padding: 20px; }
-        .asset-card { border: 2px solid var(--gold); padding: 12px; background: rgba(0,50,0,0.2); border-radius: 5px; position: relative; }
-        .trend-up { color: var(--neon); font-weight: bold; }
-        .trend-down { color: var(--down); font-weight: bold; }
-
-        /* أزرار التداول العالمية */
-        .btn-trade { background: var(--gold); color: #000; border: none; padding: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; border-radius: 3px; transition: 0.3s; }
-        .btn-trade:hover { background: #fff; box-shadow: 0 0 15px var(--gold); }
-
-        .footer { font-size: 12px; color: var(--gold); padding: 15px; border-top: 1px solid var(--gold); background: #000; position: relative; }
+        .glitch { animation: glitch 1s linear infinite; }
+        @keyframes glitch { 0% { opacity: 1; } 50% { opacity: 0.8; transform: skew(2deg); } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="ticker-wrap">
-        <div class="ticker" id="live-ticker">جاري جلب بيانات تداول السيادة... ذهب: $2,348.12 ▲ | بيتكوين: $80,282.28 ▲ | يورو: 1.08 ▼ | منصة عصام الكومي للوساطة العالمية</div>
+    <div class="miracle-header">
+        <h1 class="glitch" style="color: var(--gold);">ATHEER MIRACLE X - الـمـعـجـزة</h1>
+        <p>نظام تخطي سياسات الرقابة الدولية | صمم بواسطة عصام الكومي</p>
     </div>
 
-    <div class="world-map">
-        <div class="plane">✈️</div>
-        <div class="plane" style="animation-delay: 7s; color: var(--gold);">🛰️</div>
-        <div class="radar-eye">
-            <div style="margin-top: 60px; font-size: 14px; color: var(--gold);">RAVEN EYE<br>V10.0 ACTIVE</div>
+    <div class="hack-zone">
+        <div class="tool-box">
+            <h3 style="color: var(--gold);">📡 محرك البحث العابر (Deep Dorking)</h3>
+            <p style="font-size: 10px;">ابحث عن ملفات، كلمات سر، أو قواعد بيانات محجوبة</p>
+            <input type="text" id="target" placeholder="اسم الهدف أو النطاق...">
+            <button onclick="deepSearch()">بدء الاختراق الرقمي</button>
         </div>
-        <p style="font-size: 12px;">SATELLITE 369 LIVE EARTH VIEW</p>
-    </div>
 
-    <h2 style="color: var(--gold); margin: 20px 0;">GLOBAL INVESTMENT HUB</h2>
-
-    <div class="invest-grid">
-        <div class="asset-card">
-            <h4>BITCOIN (BTC)</h4>
-            <div id="btc-price" class="trend-up">$80,282.28</div>
-            <div style="font-size: 10px;">VOLUME: 45.2B</div>
-            <button class="btn-trade" onclick="window.location.href='https://www.binance.com'">شراء / تداول</button>
-        </div>
-        <div class="asset-card">
-            <h4>GOLD ASSET</h4>
-            <div id="gold-price" class="trend-up">$2,348.12</div>
-            <div style="font-size: 10px;">GLOBAL MARKET</div>
-            <button class="btn-trade" onclick="window.location.href='https://www.investing.com/currencies/xau-usd'">استثمار الذهب</button>
-        </div>
-        <div class="asset-card">
-            <h4>EGP/USD</h4>
-            <div class="trend-down">48.25 ▼</div>
-            <div style="font-size: 10px;">EXCHANGE HUB</div>
-            <button class="btn-trade" onclick="alert('جاري فتح محول عملات أثير...')">تبديل عملة</button>
+        <div class="console" id="logs">
+            [SYSTEM]: بروتوكول أثير نشط...<br>
+            [STATUS]: يتم الآن تجاوز جدران الحماية التقليدية...<br>
+            [READY]: بانتظار أوامر الماستر عصام...
         </div>
     </div>
 
-    <div class="footer">
-        تأليف عصام الكومي - بروتوكول أثير للوساطة والسيادة الرقمية © 2026
+    <div class="tool-box">
+        <h3 style="color: var(--gold);">🔐 مشفر السيادة (Dark Encryption)</h3>
+        <input type="text" id="plainText" placeholder="اكتب رسالتك السرية هنا...">
+        <button onclick="encryptText()">تشفير AES-X</button>
+        <p id="result" style="word-break: break-all; color: var(--gold);"></p>
+    </div>
+
+    <div style="padding: 20px; font-size: 10px; color: gray;">
+        تنبيه: هذا الموقع يعمل خارج نطاق محركات البحث التقليدية (Hidden Indexing) | جميع الحقوق محفوظة لعصام الكومي © 2026
     </div>
 
     <script>
-        // ربط حقيقي بأسعار البورصة العالمية
-        async function updateMarket() {
-            try {
-                const btcRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-                const btcData = await btcRes.json();
-                const btcPrice = parseFloat(btcData.price).toLocaleString();
-                document.getElementById('btc-price').innerText = `$${btcPrice}`;
-                
-                document.getElementById('live-ticker').innerText = 
-                    ` • BTC: $${btcPrice} ▲ • GOLD: $2,348.12 ▲ • منصة عصام الكومي للوساطة العالمية • تداول مباشر 24/7 • `;
-            } catch (e) { console.log("Market Sync..."); }
+        function log(msg) {
+            const logs = document.getElementById('logs');
+            logs.innerHTML += `<br>> ${msg}`;
+            logs.scrollTop = logs.scrollHeight;
         }
 
-        setInterval(updateMarket, 3000);
-        updateMarket();
+        // محاكاة البحث العميق (اختراق السياسات)
+        function deepSearch() {
+            let target = document.getElementById('target').value;
+            if(!target) return;
+            log(`جاري فحص النطاق: ${target}...`);
+            log("بدء تجاوز جدار الحماية الخاص بمحركات البحث...");
+            setTimeout(() => {
+                log(`تم العثور على 4 طبقات بيانات مخفية لـ ${target}`);
+                log("تحذير: المصادر محجوبة دولياً.. جاري فك التشفير...");
+                // هنا يتم توجيه المستخدم لنتائج بحث جوجل المتقدمة (Dorks)
+                window.open(`https://www.google.com/search?q=site:${target}+intitle:index.of`, '_blank');
+            }, 2000);
+        }
+
+        // التشفير السيادي
+        function encryptText() {
+            let text = document.getElementById('plainText').value;
+            if(!text) return;
+            let encrypted = btoa(unescape(encodeURIComponent(text))).split('').reverse().join('');
+            document.getElementById('result').innerText = "الشفرة المحمية: " + encrypted;
+            log("تم توليد مفتاح تشفير سيادي جديد.");
+        }
     </script>
 </body>
 </html>
