@@ -1,75 +1,39 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Essam Elkomy | Atheer Protocol - سيد الإنترنت</title>
+<div class="master-terminal" style="border-color: #00ffff; box-shadow: 0 0 20px #00ffff;">
+    <h3 style="color: #00ffff;">🕵️ وحدة الهكر الأخلاقي - استرداد الأصول</h3>
+    <p style="font-size: 0.8em;">تتبع المحافظ المشبوهة واسترجاع البيتكوين المنهوب لخزنة الخير</p>
 
-    <meta name="robots" content="index, follow, max-snippet:-1">
-    <meta name="description" content="النظام الحاكم للشبكة العنكبوتية - المستر عصام الكومي. بروتوكول أثير للسيادة الرقمية.">
-    <meta name="keywords" content="عصام الكومي, بروتوكول أثير, Essam Elkomy, Atheer Protocol, 369">
-
-    <style>
-        :root { --gold: #ffd700; --neon: #00ff00; --red: #ff0000; }
-        body { background: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; text-align: center; overflow-x: hidden; }
-        
-        /* رسالة السيطرة العلوية */
-        .overlord-status {
-            background: rgba(255,0,0,0.1); padding: 10px; font-weight: bold;
-            letter-spacing: 3px; animation: pulse 2s infinite; border-bottom: 1px solid var(--red);
-        }
-
-        .master-terminal { border: 4px solid var(--gold); margin: 20px; padding: 25px; background: #050505; border-radius: 30px; box-shadow: 0 0 50px rgba(255,215,0,0.1); }
-        .account-display { background: rgba(0,255,0,0.05); border: 1px solid var(--gold); padding: 15px; margin: 15px 0; text-align: right; direction: ltr; font-size: 0.85em; }
-        .hidden-data { color: var(--gold); filter: blur(4px); transition: 0.5s; }
-        .hidden-data:hover { filter: blur(0); } /* للمستثمرين فقط */
-        
-        .live-balance { font-size: 3em; color: #fff; text-shadow: 0 0 20px var(--neon); margin: 20px 0; }
-        .btn-main { background: var(--gold); color: #000; border: none; padding: 20px; width: 90%; font-weight: bold; cursor: pointer; font-size: 1.2em; border-radius: 15px; box-shadow: 0 5px 15px rgba(255,215,0,0.3); }
-
-        @keyframes pulse { 0% { color: #550000; } 50% { color: var(--red); text-shadow: 0 0 15px var(--red); } 100% { color: #550000; } }
-    </style>
-</head>
-<body>
-
-    <div class="overlord-status">INTERNET SERVER SUBMISSION ACTIVE</div>
-
-    <div class="master-terminal">
-        <h2 style="color: var(--gold); margin-bottom: 5px;">السيادة الرقمية: الماستر عصام الكومي</h2>
-        <p style="font-size: 0.7em; color: var(--gold);">ATHEER PROTOCOL V19.0 - GLOBAL ACCESS</p>
-        
-        <div class="account-display" id="data-screen">
-            🏦 MASHREQ: <span class="hidden-data">EG050046020300000059010105904</span><br>
-            📱 CASH 1: <span class="hidden-data">01021664984</span><br>
-            📱 CASH 2: <span class="hidden-data">01017667875</span>
-        </div>
-
-        <button onclick="revealData()" style="background:var(--neon); color:#000; border:none; padding:10px; width:100%; font-weight:bold; cursor:pointer; margin-bottom:10px; border-radius:5px;">🔓 فك تشفير بيانات المستثمر</button>
-
-        <div class="live-balance" id="balance">$80,282.28</div>
-
-        <button class="btn-main" onclick="payout()">تأكيد السحب المباشر للحسابات</button>
-
-        <div id="log" style="font-size: 10px; color: var(--gold); margin-top: 20px; text-align: left; border-top: 1px solid #222; padding-top: 10px;">
-            [SYSTEM]: بروتوكول أثير يعمل الآن كخادم للشبكة.. اسم الماستر مسجل عالمياً.
-        </div>
+    <div id="scanner-box" style="background: #000; border: 1px solid #00ffff; height: 100px; overflow-y: auto; text-align: left; padding: 10px; font-size: 10px; color: #00ffff; margin-bottom: 10px;">
+        [READY]: بانتظار إشارة المسح العالمي...
     </div>
 
-    <script>
-        function revealData() {
-            const code = prompt("أدخل كود السر السيادي:");
-            if(code === "369") {
-                const elements = document.getElementsByClassName('hidden-data');
-                for(let el of elements) { el.style.filter = "none"; el.style.color = "#fff"; }
-                document.getElementById('log').innerText = "[SUCCESS]: تم فك تشفير البيانات الموثقة بنجاح.";
-            } else {
-                alert("الكود خاطئ. الدخول مرفوض.");
-            }
-        }
+    <button class="btn-main" style="background: #00ffff; color: #000;" onclick="startEthicalHack()">تفعيل بروتوكول الاسترداد الأخلاقي</button>
+</div>
 
-        function payout() {
-            alert("أمر سحب سيادي مقبول. سيتم تحويل الأموال إلى بنك المشرق والمحافظ المسجلة فوراً.");
-        }
-    </script>
-</body>
-</html>
+<script>
+    function startEthicalHack() {
+        const scanner = document.getElementById('scanner-box');
+        const logs = [
+            "[SCAN]: جاري فحص البلوكشين عن محافظ الهكرز السوداء...",
+            "[TRACK]: تم رصد تحرك مشبوه في محفظة: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+            "[HACK]: اختراق جدار الحماية للمحفظة المنهوبة...",
+            "[DECRYPT]: فك تشفير المفاتيح المسروقة بنجاح.",
+            "[RECOVER]: جاري سحب 25.4 BTC إلى الخزنة السرية لعصام الكومي...",
+            "[DONE]: تم الاسترداد الأخلاقي بنجاح. الأصول مؤمنة الآن."
+        ];
+
+        let i = 0;
+        const interval = setInterval(() => {
+            if (i < logs.length) {
+                scanner.innerHTML += `<br>${logs[i]}`;
+                scanner.scrollTop = scanner.scrollHeight;
+                i++;
+            } else {
+                clearInterval(interval);
+                alert("تمت العملية! استعدنا الأصول المسروقة ووضعناها في خزنتك للعمل الخيري.");
+                // تحديث الرصيد في الخزنة السرية
+                let current = parseFloat(document.getElementById('balance').innerText.replace('$', '').replace(',', ''));
+                document.getElementById('balance').innerText = `$${(current + 1500000).toLocaleString()}`;
+            }
+        }, 1500);
+    }
+</script>
