@@ -1,29 +1,50 @@
-import requests
-from kivy.clock import Clock
-from kivy.animation import Animation
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>ATHEER 369 - V7000</title>
+    <style>
+        body { background-color: #000; color: #00ff00; font-family: monospace; text-align: center; }
+        .radar { border: 2px solid #00ff00; border-radius: 50%; width: 200px; height: 200px; margin: 20px auto; position: relative; overflow: hidden; }
+        .radar-line { width: 50%; height: 2px; background: #00ff00; position: absolute; top: 50%; left: 50%; transform-origin: 0% 0%; animation: rotate 2s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .data-box { border: 1px solid #gold; padding: 10px; margin: 10px; display: inline-block; min-width: 200px; }
+    </style>
+</head>
+<body>
+    <h1>ATHEER 369 - MASTER: ESSAM ELKOMY</h1>
+    <div class="radar"><div class="radar-line"></div></div>
+    
+    <div class="data-box">
+        <h3>البورصة العالمية (حقيقي)</h3>
+        <p id="btc-price">جاري الاتصال بالسوق...</p>
+    </div>
 
-class AtheerSystemV7000:
-    def __init__(self):
-        self.sovereignty_level = "V7000 - ACTIVE"
-        # بدء نبض النظام كل 5 ثوانٍ لتحديث كل شيء حياً
-        Clock.schedule_interval(self.update_global_status, 5)
+    <div class="data-box">
+        <h3>رصد الأقمار الصناعية (حقيقي)</h3>
+        <p id="sat-coords">جاري تتبع القمر الصناعي...</p>
+    </div>
 
-    def update_global_status(self, dt):
-        try:
-            # 1. جلب بيانات البورصة والعملات (حقيقي 100%)
-            crypto = requests.get('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT').json()
-            self.update_ui_element('btc_price', f"BTC: ${float(crypto['price']):,.2f}")
+    <script>
+        async function updateV7000() {
+            try {
+                // جلب سعر البيتكوين لايف
+                const btcRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+                const btcData = await btcRes.json();
+                document.getElementById('btc-price').innerText = `BTC: $${parseFloat(btcData.price).toLocaleString()}`;
 
-            # 2. رصد الأقمار الصناعية (محطة الفضاء الدولية كمثال)
-            sat = requests.get('https://api.wheretheiss.at/v1/satellites/25544').json()
-            self.update_ui_element('radar_coords', f"LAT: {sat['latitude']:.2f} | LON: {sat['longitude']:.2f}")
+                // جلب موقع محطة الفضاء الدولية لايف
+                const satRes = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
+                const satData = await satRes.json();
+                document.getElementById('sat-coords').innerText = `LAT: ${satData.latitude.toFixed(2)} | LON: ${satData.longitude.toFixed(2)}`;
+            } catch (e) {
+                console.log("Reconnecting to V7000...");
+            }
+        }
 
-            # 3. جلب الأخبار العاجلة (العناوين الحية)
-            # ملاحظة: سنستخدم NewsAPI هنا لربط الواقع
-            print("V7000: Global Synchronization Complete.")
-        except:
-            print("V7000: Emergency Shield Active - Reconnecting...")
-
-    def update_ui_element(self, element_id, value):
-        # هنا يتم تحديث الواجهة فوراً عند تغير البيانات في الواقع
-        pass
+        // تحديث كل ثانية ليكون "بث حي"
+        setInterval(updateV7000, 1000);
+        updateV7000();
+    </script>
+</body>
+</html>
