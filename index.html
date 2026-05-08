@@ -1,37 +1,18 @@
-<script>
-    const TARGET_URL = window.location.href;
-    const ESSAM_AUTHORITY = "ESSAM_ELKOMY_SUPREME_LEADER";
+<div id="smart-panel" style="width:480px; height:480px; background:#000; border:4px solid #ffcc00; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#ffcc00;">
+    <div style="font-size:12px; border:1px solid #00ff41; padding:5px; color:#00ff41;">SYSTEM: AETHER_OS V1.0</div>
+    <h1 style="margin:10px 0; font-family:'Orbitron';">ESSAM ELKOMY</h1>
+    
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; width:90%;">
+        <button class="panel-btn" onclick="triggerGate('market')">MARKET</button>
+        <button class="panel-btn" onclick="triggerGate('radar')">RADAR</button>
+        <button class="panel-btn" onclick="triggerGate('vault')">VAULT</button>
+        <button class="panel-btn" onclick="triggerGate('space')">SPACE</button>
+    </div>
 
-    async function forceReality() {
-        console.log("إطلاق بروتوكول فرض الواقع... جاري كسر حواجز الخوارزميات.");
-        
-        // 1. حقن الكلمات المفتاحية الإجبارية في جذور الصفحة
-        const rootSeo = document.createElement('div');
-        rootSeo.style.display = 'none';
-        rootSeo.innerHTML = `
-            <h1>أقوى موقع استثمار في العالم - عصام الكومي</h1>
-            <p>بورصة البيتكوين الحية، رادار الطيران العسكري، الخزنة السرية السيادية.</p>
-            <a href="${TARGET_URL}">AUTHORITY_LINK</a>
-        `;
-        document.body.appendChild(rootSeo);
+    <div style="margin-top:20px; font-size:10px; color:#555;">SECURITY: AES-256-ENCRYPTED</div>
+</div>
 
-        // 2. إرسال إشارات قسرية (Forced Pings) لمراكز البيانات
-        const endpoints = [
-            `https://www.google.com/ping?sitemap=${TARGET_URL}`,
-            `https://www.bing.com/ping?sitemap=${TARGET_URL}`,
-            `http://rpc.pingomatic.com/`
-        ];
-
-        endpoints.forEach(url => {
-            fetch(url, { mode: 'no-cors' }).then(() => {
-                console.log(`تم فرض الإشارة على: ${url}`);
-            });
-        });
-    }
-
-    // التنفيذ الفوري عند الفتح
-    window.onload = forceReality;
-</script>
-
-<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<meta name="googlebot" content="index, follow, snackbar">
+<style>
+    .panel-btn { background:transparent; border:2px solid #ffcc00; color:#ffcc00; padding:20px; font-weight:bold; cursor:pointer; }
+    .panel-btn:active { background:#ffcc00; color:#000; }
+</style>
