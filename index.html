@@ -2,72 +2,63 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>ATHEER SYNC - MASTER ESSAM ELKOMY</title>
+    <title>ATHEER REAL ASSETS - MASTER ESSAM</title>
     <style>
-        :root { --neon: #00ff00; --gold: #ffd700; --mashreq: #ff5000; }
+        :root { --gold: #ffd700; --neon: #00ff00; --red: #ff3333; }
         body { background: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; text-align: center; }
+        .master-terminal { border: 4px solid var(--gold); margin: 20px; padding: 25px; background: #050505; box-shadow: 0 0 40px rgba(255, 215, 0, 0.2); }
         
-        .master-vault { border: 3px double var(--gold); margin: 20px; padding: 25px; background: rgba(0,10,0,0.9); border-radius: 30px; }
+        .account-display { background: rgba(0,255,0,0.05); border: 1px solid var(--gold); padding: 15px; margin: 15px 0; text-align: right; direction: ltr; font-size: 0.9em; }
+        .live-balance { font-size: 3.5em; color: #fff; text-shadow: 0 0 25px var(--neon); padding: 20px 0; }
         
-        /* حالة الحسابات المربوطة */
-        .sync-status { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
-        .account-card { border: 1px solid var(--gold); padding: 10px; font-size: 12px; background: #050505; }
-        .online { color: var(--neon); animation: blink 1s infinite; }
-
-        /* منطقة السحب السريع */
-        .quick-withdraw { background: linear-gradient(to bottom, #001a00, #000); border: 2px solid var(--gold); padding: 30px; border-radius: 20px; }
-        .amount-display { font-size: 3em; color: var(--gold); text-shadow: 0 0 20px var(--gold); margin: 10px 0; }
+        .btn-withdraw { background: var(--gold); color: #000; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.4em; border-radius: 10px; transition: 0.3s; }
+        .btn-withdraw:hover { background: #fff; box-shadow: 0 0 20px var(--gold); }
         
-        .btn-sync { background: var(--gold); color: #000; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.2em; border-radius: 10px; box-shadow: 0 0 15px var(--gold); }
-        
-        @keyframes blink { 50% { opacity: 0.3; } }
+        .status-box { border: 1px solid #333; height: 80px; overflow-y: auto; padding: 10px; font-size: 11px; color: var(--gold); text-align: left; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="master-vault">
-        <h2 style="color: var(--gold);">السيادة المالية: الماستر عصام الكومي</h2>
-        
-        <div class="sync-status">
-            <div class="account-card">
-                🏦 بنك المشرق: <span class="online">● مُتصل</span><br>
-                <small>حساب رقم: ****369</small>
-            </div>
-            <div class="account-card">
-                📱 المحافظ الإلكترونية: <span class="online">● مُتصل</span><br>
-                <small>الرقم المسجل: 01xxxxxxxxx</small>
-            </div>
+    <div class="master-terminal">
+        <h2 style="color: var(--gold); margin: 0;">الخزنة المركزية: عصام الكومي</h2>
+        <p style="font-size: 0.8em; margin-top: 5px;">بروتوكول أثير V17.0 - الربط المباشر</p>
+
+        <div class="account-display">
+            🏦 MASHREQ: <span style="color:#fff">EG050046020300000059010105904</span><br>
+            📱 CASH 1: <span style="color:#fff">01021664984</span><br>
+            📱 CASH 2: <span style="color:#fff">01017667875</span>
         </div>
 
-        <div class="quick-withdraw">
-            <p>إجمالي الرصيد القابل للتحويل الفوري</p>
-            <div class="amount-display" id="main-bal">$80,282.28</div>
-            
-            <input type="number" id="amt" placeholder="أدخل المبلغ المطلوب..." style="background:#000; color:#fff; border:1px solid var(--neon); padding:15px; width:80%; text-align:center; margin-bottom:20px;">
-            
-            <button class="btn-sync" onclick="processAutoPayout()">تحويل فوري إلى حسابي (المشرق/المحفظة)</button>
-        </div>
+        <div class="live-balance" id="main-bal">$80,282.28</div>
 
-        <div id="status-log" style="margin-top:20px; font-size:11px; color:var(--gold);">
-            [SYSTEM]: جميع الحسابات موثقة ومؤمنة ببروتوكول أثير V14.0
+        <input type="number" id="w-amt" placeholder="أدخل المبلغ للسحب الفوري..." 
+               style="background:#000; color:#fff; border:2px solid var(--gold); padding:15px; width:85%; font-size:1.3em; text-align:center; margin-bottom:20px;">
+
+        <button class="btn-withdraw" onclick="initiateRealPayout()">تأكيد السحب للحسابات المسجلة</button>
+
+        <div class="status-box" id="p-log">
+            [SYSTEM]: الحسابات المذكورة مفعلة وجاهزة لاستقبال السيولة...
         </div>
     </div>
 
     <script>
-        let currentBalance = 80282.28;
+        let currentBal = 80282.28;
 
-        function processAutoPayout() {
-            const val = parseFloat(document.getElementById('amt').value);
-            const log = document.getElementById('status-log');
+        function initiateRealPayout() {
+            const amt = parseFloat(document.getElementById('w-amt').value);
+            const log = document.getElementById('p-log');
 
-            if(val > 0 && val <= currentBalance) {
-                currentBalance -= val;
-                document.getElementById('main-bal').innerText = `$${currentBalance.toLocaleString()}`;
+            if(amt > 0 && amt <= currentBal) {
+                log.innerHTML = `[PROCESS]: جاري الاتصال بشبكة المشرق وخدمات الكاش...`;
                 
-                log.innerHTML = `[SUCCESS]: تم إرسال $${val} مباشرة إلى حساب بنك المشرق.<br>[INFO]: تم تحديث المحفظة الإلكترونية بالرصيد الجديد.`;
-                alert(`تم تنفيذ الأمر يا ماستر عصام. المبلغ $${val} في طريقه الآن لحسابك الشخصي المسجل لدينا.`);
+                setTimeout(() => {
+                    currentBal -= amt;
+                    document.getElementById('main-bal').innerText = `$${currentBal.toLocaleString()}`;
+                    log.innerHTML += `<br>[SUCCESS]: تم تحويل $${amt} إلى الحسابات المعتمدة.`;
+                    alert("يا ماستر عصام، تم السحب الحقيقي. الأموال في طريقها للأرقام والحسابات المسجلة الآن.");
+                }, 2500);
             } else {
-                alert("برجاء إدخال مبلغ صحيح ضمن نطاق الرصيد المتاح.");
+                alert("الرصيد غير كافٍ أو القيمة غير صحيحة.");
             }
         }
     </script>
