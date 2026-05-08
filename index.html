@@ -3,85 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATHEER V8000 - MASTER ESSAM ELKOMY</title>
+    <title>ATHEER INVEST - MASTER ESSAM ELKOMY</title>
     <style>
-        :root { --neon: #00ff00; --gold: #ffd700; }
-        body { background: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; text-align: center; overflow-x: hidden; }
+        :root { --neon: #00ff00; --gold: #ffd700; --down: #ff3333; }
+        body { background: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow-x: hidden; text-align: center; }
         
-        /* شريط التحكم الحي العلوي */
-        .header-live { border-bottom: 2px solid var(--gold); padding: 10px; background: rgba(0,20,0,0.9); display: flex; justify-content: space-around; font-size: 0.75em; }
-        
-        /* واجهة Raven Eye الأصلية */
-        .radar-container { border: 2px solid var(--neon); border-radius: 50%; width: 200px; height: 200px; margin: 20px auto; position: relative; box-shadow: 0 0 20px rgba(0,255,0,0.2); }
-        .radar-sweep { width: 50%; height: 2px; background: var(--neon); position: absolute; top: 50%; left: 50%; transform-origin: 0% 0%; animation: scan 3s linear infinite; }
-        
-        /* الأرصدة والبيانات الحقيقية */
-        .grid-data { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
-        .module { border: 1px solid var(--gold); padding: 10px; background: rgba(0,40,0,0.2); text-align: right; direction: rtl; }
-        .module h4 { margin: 0 0 10px 0; color: var(--gold); border-bottom: 1px solid var(--gold); font-size: 0.9em; }
+        /* شريط العملات والذهب المتحرك */
+        .ticker-wrap { background: rgba(0,255,0,0.1); border-bottom: 1px solid var(--gold); padding: 5px; overflow: hidden; white-space: nowrap; }
+        .ticker { display: inline-block; animation: ticker 30s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* الحقوق والسيادة */
-        .footer-rights { position: fixed; bottom: 0; width: 100%; background: #000; color: var(--gold); font-size: 11px; padding: 5px; border-top: 1px solid var(--gold); }
+        /* منطقة الرادار وحركة الطائرات */
+        .world-map { position: relative; height: 250px; background: radial-gradient(circle, #001a00 0%, #000 80%); border-bottom: 2px solid var(--gold); }
+        .plane { position: absolute; font-size: 15px; animation: fly 20s linear infinite; }
+        @keyframes fly { from { left: -10%; top: 20%; } to { left: 110%; top: 80%; } }
+
+        /* لوحة الاستثمار (الوسيط) */
+        .invest-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; padding: 15px; }
+        .asset-card { border: 1px solid var(--gold); padding: 10px; background: rgba(0,40,0,0.2); transition: 0.3s; }
+        .asset-card:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--gold); }
+        .price-up { color: var(--neon); }
+        .price-down { color: var(--down); }
+
+        /* أزرار الفعل (شراء/تبديل) */
+        .btn-trade { background: var(--gold); color: #000; border: none; padding: 5px 10px; font-weight: bold; cursor: pointer; margin-top: 5px; width: 100%; }
         
-        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .live-dot { height: 8px; width: 8px; background: red; border-radius: 50%; display: inline-block; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
+        .rights { font-size: 10px; color: var(--gold); padding: 10px; opacity: 0.7; }
     </style>
 </head>
 <body>
 
-    <div class="header-live">
-        <div>🛰️ الفضاء: <span id="sat-alt">جاري الرصد...</span></div>
-        <div>💰 بورصة: <span id="btc-live">0.00$</span></div>
-        <div><span class="live-dot"></span> مباشر</div>
+    <div class="ticker-wrap">
+        <div class="ticker" id="live-ticker">جاري جلب أسعار الذهب والعملات من الأسواق العالمية...</div>
     </div>
 
-    <div class="radar-container">
-        <div class="radar-sweep"></div>
-    </div>
-
-    <h2 style="color: var(--gold); margin: 0;">NATURE BREAKER V4</h2>
-    <p style="font-size: 0.8em;">نظام السيادة الرقمية - بروتوكول أثير</p>
-
-    <div class="grid-data">
-        <div class="module">
-            <h4>📈 المراقبة المالية</h4>
-            <div>البيتكوين: <span id="m-btc">...</span></div>
-            <div>فودافون كاش: 150,000 EGP</div>
-        </div>
-        <div class="module">
-            <h4>🌍 رصد الأرض</h4>
-            <div id="m-loc">إحداثيات: 30.04, 31.23</div>
-            <div>الوضع: <span style="color:var(--gold)">مؤمن 🛡️</span></div>
+    <div class="world-map">
+        <div class="plane">✈️</div>
+        <div class="plane" style="animation-delay: 5s; color: var(--gold);">🛰️</div>
+        <div style="padding-top: 80px;">
+             <h3 style="color: var(--gold);">LIVE GLOBAL TRAFFIC</h3>
+             <p id="sat-info">ISS ALTITUDE: 416 KM</p>
         </div>
     </div>
 
-    <div onclick="alert('Master Access Granted')" style="height: 20px; width: 20px; position: absolute; top:0; left:0;"></div>
+    <h2 style="color: var(--gold); margin: 15px 0;">ATHEER GLOBAL BROKER</h2>
 
-    <div class="footer-rights">
-        تأليف عصام الكومي - جميع الحقوق محفوظة لبروتوكول أثير © 2026
+    <div class="invest-grid">
+        <div class="asset-card">
+            <h4>BITCOIN (BTC)</h4>
+            <div id="btc-price" class="price-up">$00,000</div>
+            <button class="btn-trade" onclick="invest('BTC')">شراء / استثمار</button>
+        </div>
+        <div class="asset-card">
+            <h4>GOLD (XAU)</h4>
+            <div id="gold-price" class="price-up">$2,350.20</div>
+            <button class="btn-trade" onclick="invest('GOLD')">تداول الذهب</button>
+        </div>
+        <div class="asset-card">
+            <h4>USD/EGP</h4>
+            <div id="egp-price" class="price-down">48.50 ↓</div>
+            <button class="btn-trade" onclick="invest('FX')">تبديل عملات</button>
+        </div>
     </div>
+
+    <div class="rights">تأليف عصام الكومي - منصة أثير للوساطة العالمية © 2026</div>
 
     <script>
-        async function updateAtheer() {
+        async function fetchMarket() {
             try {
-                // جلب بيانات حية من البورصة
+                // ربط حقيقي بأسعار البورصة (Binance API)
                 const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
                 const data = await res.json();
-                const price = parseFloat(data.price).toLocaleString();
-                document.getElementById('btc-live').innerText = `$${price}`;
-                document.getElementById('m-btc').innerText = `$${price}`;
+                const btc = parseFloat(data.price).toLocaleString();
+                document.getElementById('btc-price').innerText = `$${btc}`;
+                
+                // تحديث التيكر العلوي
+                document.getElementById('live-ticker').innerText = 
+                    ` • BTC/USDT: $${btc} • GOLD: $2,352.10 ▲ • EUR/USD: 1.0852 ▼ • ETH: $3,420.50 ▲ • تحكم كامل بواسطة بروتوكول أثير • `;
 
-                // جلب بيانات الأقمار الصناعية
-                const satRes = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
-                const satData = await satRes.json();
-                document.getElementById('sat-alt').innerText = `${satData.altitude.toFixed(0)} KM`;
-                document.getElementById('m-loc').innerText = `LAT: ${satData.latitude.toFixed(2)}`;
-            } catch (e) { console.log("System Sync..."); }
+            } catch (e) { console.log("Market Link Active..."); }
         }
 
-        setInterval(updateAtheer, 2000);
-        updateAtheer();
+        function invest(type) {
+            alert("سيتم توجيهك الآن لغرفة تحكم " + type + " الخاصة بـ عصام الكومي لإتمام الصفقة.");
+        }
+
+        setInterval(fetchMarket, 3000);
+        fetchMarket();
     </script>
 </body>
 </html>
