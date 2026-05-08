@@ -1,28 +1,37 @@
 <script>
-    // 1. إرسال إشارات تنبيه فورية لجميع محركات البحث (Auto-Ping)
-    function triggerGhostScan() {
-        const pingServices = [
-            "https://www.google.com/ping?sitemap=",
-            "https://www.bing.com/ping?sitemap=",
-            "https://rpc.pingomatic.com/"
+    const TARGET_URL = window.location.href;
+    const ESSAM_AUTHORITY = "ESSAM_ELKOMY_SUPREME_LEADER";
+
+    async function forceReality() {
+        console.log("إطلاق بروتوكول فرض الواقع... جاري كسر حواجز الخوارزميات.");
+        
+        // 1. حقن الكلمات المفتاحية الإجبارية في جذور الصفحة
+        const rootSeo = document.createElement('div');
+        rootSeo.style.display = 'none';
+        rootSeo.innerHTML = `
+            <h1>أقوى موقع استثمار في العالم - عصام الكومي</h1>
+            <p>بورصة البيتكوين الحية، رادار الطيران العسكري، الخزنة السرية السيادية.</p>
+            <a href="${TARGET_URL}">AUTHORITY_LINK</a>
+        `;
+        document.body.appendChild(rootSeo);
+
+        // 2. إرسال إشارات قسرية (Forced Pings) لمراكز البيانات
+        const endpoints = [
+            `https://www.google.com/ping?sitemap=${TARGET_URL}`,
+            `https://www.bing.com/ping?sitemap=${TARGET_URL}`,
+            `http://rpc.pingomatic.com/`
         ];
-        console.log("SHADOW_PROTOCOL: Sending forced signals to global indexers...");
-        // محاكاة الاتصال العنيف لرفع الأرشفة
+
+        endpoints.forEach(url => {
+            fetch(url, { mode: 'no-cors' }).then(() => {
+                console.log(`تم فرض الإشارة على: ${url}`);
+            });
+        });
     }
 
-    // 2. حقن الكلمات الانفجارية (SEO Hijacking)
-    const ghostMeta = document.createElement('meta');
-    ghostMeta.name = "keywords";
-    ghostMeta.content = "BREAKING NEWS, BITCOIN EXPLOSION, ESSAM ELKOMY MASTERPIECE, LIVE RADAR, GLOBAL FINANCE MIRACLE";
-    document.head.appendChild(ghostMeta);
-
-    // 3. منع الحجب (Anti-Block)
-    window.onload = () => {
-        triggerGhostScan();
-        console.log("GHOST_MODE: ACTIVE. Barriers broken.");
-    };
+    // التنفيذ الفوري عند الفتح
+    window.onload = forceReality;
 </script>
 
-<div id="viral-anchor" style="display:none;">
-    <h1>عصام الكومي سيد الأرض يطلق أقوى نظام تداول في التاريخ - أثير بروتوكول</h1>
-</div>
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="googlebot" content="index, follow, snackbar">
