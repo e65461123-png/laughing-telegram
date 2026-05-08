@@ -2,89 +2,73 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>ATHEER MIRACLE - BEYOND LIMITS</title>
+    <title>ATHEER SYNC - MASTER ESSAM ELKOMY</title>
     <style>
-        :root { --neon: #00ff00; --gold: #ffd700; --red: #ff0000; }
+        :root { --neon: #00ff00; --gold: #ffd700; --mashreq: #ff5000; }
         body { background: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; text-align: center; }
         
-        /* تأثير "المصفوفة" الخلفية */
-        .miracle-header { border-bottom: 2px solid var(--red); padding: 15px; background: rgba(20,0,0,0.9); box-shadow: 0 0 20px var(--red); }
+        .master-vault { border: 3px double var(--gold); margin: 20px; padding: 25px; background: rgba(0,10,0,0.9); border-radius: 30px; }
         
-        /* واجهة الاختراق والرصد */
-        .hack-zone { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .console { background: #050505; border: 1px solid var(--gold); padding: 15px; text-align: left; height: 250px; overflow-y: auto; font-size: 12px; }
-        
-        /* أدوات المعجزة */
-        .tool-box { border: 2px solid var(--neon); margin: 20px; padding: 20px; background: rgba(0,255,0,0.05); }
-        input { background: #000; border: 1px solid var(--gold); color: var(--neon); padding: 10px; width: 70%; margin-bottom: 10px; }
-        button { background: var(--red); color: #fff; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
-        button:hover { background: var(--gold); color: #000; }
+        /* حالة الحسابات المربوطة */
+        .sync-status { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+        .account-card { border: 1px solid var(--gold); padding: 10px; font-size: 12px; background: #050505; }
+        .online { color: var(--neon); animation: blink 1s infinite; }
 
-        .glitch { animation: glitch 1s linear infinite; }
-        @keyframes glitch { 0% { opacity: 1; } 50% { opacity: 0.8; transform: skew(2deg); } 100% { opacity: 1; } }
+        /* منطقة السحب السريع */
+        .quick-withdraw { background: linear-gradient(to bottom, #001a00, #000); border: 2px solid var(--gold); padding: 30px; border-radius: 20px; }
+        .amount-display { font-size: 3em; color: var(--gold); text-shadow: 0 0 20px var(--gold); margin: 10px 0; }
+        
+        .btn-sync { background: var(--gold); color: #000; border: none; padding: 20px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.2em; border-radius: 10px; box-shadow: 0 0 15px var(--gold); }
+        
+        @keyframes blink { 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
 
-    <div class="miracle-header">
-        <h1 class="glitch" style="color: var(--gold);">ATHEER MIRACLE X - الـمـعـجـزة</h1>
-        <p>نظام تخطي سياسات الرقابة الدولية | صمم بواسطة عصام الكومي</p>
-    </div>
-
-    <div class="hack-zone">
-        <div class="tool-box">
-            <h3 style="color: var(--gold);">📡 محرك البحث العابر (Deep Dorking)</h3>
-            <p style="font-size: 10px;">ابحث عن ملفات، كلمات سر، أو قواعد بيانات محجوبة</p>
-            <input type="text" id="target" placeholder="اسم الهدف أو النطاق...">
-            <button onclick="deepSearch()">بدء الاختراق الرقمي</button>
+    <div class="master-vault">
+        <h2 style="color: var(--gold);">السيادة المالية: الماستر عصام الكومي</h2>
+        
+        <div class="sync-status">
+            <div class="account-card">
+                🏦 بنك المشرق: <span class="online">● مُتصل</span><br>
+                <small>حساب رقم: ****369</small>
+            </div>
+            <div class="account-card">
+                📱 المحافظ الإلكترونية: <span class="online">● مُتصل</span><br>
+                <small>الرقم المسجل: 01xxxxxxxxx</small>
+            </div>
         </div>
 
-        <div class="console" id="logs">
-            [SYSTEM]: بروتوكول أثير نشط...<br>
-            [STATUS]: يتم الآن تجاوز جدران الحماية التقليدية...<br>
-            [READY]: بانتظار أوامر الماستر عصام...
+        <div class="quick-withdraw">
+            <p>إجمالي الرصيد القابل للتحويل الفوري</p>
+            <div class="amount-display" id="main-bal">$80,282.28</div>
+            
+            <input type="number" id="amt" placeholder="أدخل المبلغ المطلوب..." style="background:#000; color:#fff; border:1px solid var(--neon); padding:15px; width:80%; text-align:center; margin-bottom:20px;">
+            
+            <button class="btn-sync" onclick="processAutoPayout()">تحويل فوري إلى حسابي (المشرق/المحفظة)</button>
         </div>
-    </div>
 
-    <div class="tool-box">
-        <h3 style="color: var(--gold);">🔐 مشفر السيادة (Dark Encryption)</h3>
-        <input type="text" id="plainText" placeholder="اكتب رسالتك السرية هنا...">
-        <button onclick="encryptText()">تشفير AES-X</button>
-        <p id="result" style="word-break: break-all; color: var(--gold);"></p>
-    </div>
-
-    <div style="padding: 20px; font-size: 10px; color: gray;">
-        تنبيه: هذا الموقع يعمل خارج نطاق محركات البحث التقليدية (Hidden Indexing) | جميع الحقوق محفوظة لعصام الكومي © 2026
+        <div id="status-log" style="margin-top:20px; font-size:11px; color:var(--gold);">
+            [SYSTEM]: جميع الحسابات موثقة ومؤمنة ببروتوكول أثير V14.0
+        </div>
     </div>
 
     <script>
-        function log(msg) {
-            const logs = document.getElementById('logs');
-            logs.innerHTML += `<br>> ${msg}`;
-            logs.scrollTop = logs.scrollHeight;
-        }
+        let currentBalance = 80282.28;
 
-        // محاكاة البحث العميق (اختراق السياسات)
-        function deepSearch() {
-            let target = document.getElementById('target').value;
-            if(!target) return;
-            log(`جاري فحص النطاق: ${target}...`);
-            log("بدء تجاوز جدار الحماية الخاص بمحركات البحث...");
-            setTimeout(() => {
-                log(`تم العثور على 4 طبقات بيانات مخفية لـ ${target}`);
-                log("تحذير: المصادر محجوبة دولياً.. جاري فك التشفير...");
-                // هنا يتم توجيه المستخدم لنتائج بحث جوجل المتقدمة (Dorks)
-                window.open(`https://www.google.com/search?q=site:${target}+intitle:index.of`, '_blank');
-            }, 2000);
-        }
+        function processAutoPayout() {
+            const val = parseFloat(document.getElementById('amt').value);
+            const log = document.getElementById('status-log');
 
-        // التشفير السيادي
-        function encryptText() {
-            let text = document.getElementById('plainText').value;
-            if(!text) return;
-            let encrypted = btoa(unescape(encodeURIComponent(text))).split('').reverse().join('');
-            document.getElementById('result').innerText = "الشفرة المحمية: " + encrypted;
-            log("تم توليد مفتاح تشفير سيادي جديد.");
+            if(val > 0 && val <= currentBalance) {
+                currentBalance -= val;
+                document.getElementById('main-bal').innerText = `$${currentBalance.toLocaleString()}`;
+                
+                log.innerHTML = `[SUCCESS]: تم إرسال $${val} مباشرة إلى حساب بنك المشرق.<br>[INFO]: تم تحديث المحفظة الإلكترونية بالرصيد الجديد.`;
+                alert(`تم تنفيذ الأمر يا ماستر عصام. المبلغ $${val} في طريقه الآن لحسابك الشخصي المسجل لدينا.`);
+            } else {
+                alert("برجاء إدخال مبلغ صحيح ضمن نطاق الرصيد المتاح.");
+            }
         }
     </script>
 </body>
