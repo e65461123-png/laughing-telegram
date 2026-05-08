@@ -3,74 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATHEER V8000 - SUPREME COMMAND</title>
+    <title>ATHEER V8000 - MASTER ESSAM ELKOMY</title>
     <style>
         :root { --neon: #00ff00; --gold: #ffd700; }
-        body { background: #000; color: var(--neon); font-family: monospace; text-align: center; margin: 0; padding: 10px; }
-        .header { border-bottom: 2px solid var(--gold); padding: 10px; display: flex; justify-content: space-around; font-size: 0.8em; background: rgba(0,20,0,0.9); }
+        body { background: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; text-align: center; overflow-x: hidden; }
         
-        /* الواجهة الأساسية (Raven Eye) */
-        .radar-box { border: 2px solid var(--neon); border-radius: 50%; width: 220px; height: 220px; margin: 20px auto; position: relative; box-shadow: 0 0 20px rgba(0,255,0,0.2); }
+        /* شريط التحكم الحي العلوي */
+        .header-live { border-bottom: 2px solid var(--gold); padding: 10px; background: rgba(0,20,0,0.9); display: flex; justify-content: space-around; font-size: 0.75em; }
+        
+        /* واجهة Raven Eye الأصلية */
+        .radar-container { border: 2px solid var(--neon); border-radius: 50%; width: 200px; height: 200px; margin: 20px auto; position: relative; box-shadow: 0 0 20px rgba(0,255,0,0.2); }
         .radar-sweep { width: 50%; height: 2px; background: var(--neon); position: absolute; top: 50%; left: 50%; transform-origin: 0% 0%; animation: scan 3s linear infinite; }
         
-        .main-title { color: var(--gold); font-size: 1.2em; margin-top: 10px; letter-spacing: 2px; }
-        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .module { border: 1px solid var(--gold); padding: 10px; background: rgba(0,30,0,0.3); text-align: left; }
-        .module h4 { margin: 0; color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 5px; }
+        /* الأرصدة والبيانات الحقيقية */
+        .grid-data { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
+        .module { border: 1px solid var(--gold); padding: 10px; background: rgba(0,40,0,0.2); text-align: right; direction: rtl; }
+        .module h4 { margin: 0 0 10px 0; color: var(--gold); border-bottom: 1px solid var(--gold); font-size: 0.9em; }
 
+        /* الحقوق والسيادة */
+        .footer-rights { position: fixed; bottom: 0; width: 100%; background: #000; color: var(--gold); font-size: 11px; padding: 5px; border-top: 1px solid var(--gold); }
+        
         @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .status-secured { color: var(--neon); animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.3; } }
-        .rights { position: fixed; bottom: 5px; width: 100%; font-size: 10px; color: var(--gold); opacity: 0.7; }
+        .live-dot { height: 8px; width: 8px; background: red; border-radius: 50%; display: inline-block; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div>📡 الفضاء: <span id="sat">CONNECTING...</span></div>
-        <div>💰 البورصة: <span id="btc">0.00$</span></div>
-        <div>🛡️ الدفاع: <span class="status-secured">V8000 SECURED</span></div>
+    <div class="header-live">
+        <div>🛰️ الفضاء: <span id="sat-alt">جاري الرصد...</span></div>
+        <div>💰 بورصة: <span id="btc-live">0.00$</span></div>
+        <div><span class="live-dot"></span> مباشر</div>
     </div>
 
-    <div class="radar-box">
+    <div class="radar-container">
         <div class="radar-sweep"></div>
     </div>
-    
-    <div class="main-title">RAVEN EYE - NATURE BREAKER V4</div>
-    <div style="font-size: 0.7em;">إحداثيات المدن: <span id="coords">30.04, 31.23</span></div>
 
-    <div class="data-grid">
+    <h2 style="color: var(--gold); margin: 0;">NATURE BREAKER V4</h2>
+    <p style="font-size: 0.8em;">نظام السيادة الرقمية - بروتوكول أثير</p>
+
+    <div class="grid-data">
         <div class="module">
-            <h4>💹 تداول السيادة</h4>
-            <div id="m1">Bitcoin: Loading...</div>
-            <div id="m2">Gold Index: Active</div>
+            <h4>📈 المراقبة المالية</h4>
+            <div>البيتكوين: <span id="m-btc">...</span></div>
+            <div>فودافون كاش: 150,000 EGP</div>
         </div>
         <div class="module">
             <h4>🌍 رصد الأرض</h4>
-            <div>القاهرة - لندن - طوكيو</div>
-            <div id="m3" style="font-size: 0.8em;">Syncing...</div>
+            <div id="m-loc">إحداثيات: 30.04, 31.23</div>
+            <div>الوضع: <span style="color:var(--gold)">مؤمن 🛡️</span></div>
         </div>
     </div>
 
-    <div class="rights">تأليف عصام الكومي - بروتوكول أثير © 2026</div>
+    <div onclick="alert('Master Access Granted')" style="height: 20px; width: 20px; position: absolute; top:0; left:0;"></div>
+
+    <div class="footer-rights">
+        تأليف عصام الكومي - جميع الحقوق محفوظة لبروتوكول أثير © 2026
+    </div>
 
     <script>
-        async function updateV8000() {
+        async function updateAtheer() {
             try {
-                const btcRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-                const btcData = await btcRes.json();
-                document.getElementById('btc').innerText = `$${parseFloat(btcData.price).toLocaleString()}`;
-                document.getElementById('m1').innerText = `Bitcoin: $${btcData.price}`;
+                // جلب بيانات حية من البورصة
+                const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+                const data = await res.json();
+                const price = parseFloat(data.price).toLocaleString();
+                document.getElementById('btc-live').innerText = `$${price}`;
+                document.getElementById('m-btc').innerText = `$${price}`;
 
+                // جلب بيانات الأقمار الصناعية
                 const satRes = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
                 const satData = await satRes.json();
-                document.getElementById('sat').innerText = `ALT: ${satData.altitude.toFixed(0)}km`;
-                document.getElementById('coords').innerText = `${satData.latitude.toFixed(2)}, ${satData.longitude.toFixed(2)}`;
-                document.getElementById('m3').innerText = `ISS Position: ${satData.visibility}`;
-            } catch (e) { console.log("Linking..."); }
+                document.getElementById('sat-alt').innerText = `${satData.altitude.toFixed(0)} KM`;
+                document.getElementById('m-loc').innerText = `LAT: ${satData.latitude.toFixed(2)}`;
+            } catch (e) { console.log("System Sync..."); }
         }
-        setInterval(updateV8000, 2000);
-        updateV8000();
+
+        setInterval(updateAtheer, 2000);
+        updateAtheer();
     </script>
 </body>
 </html>
