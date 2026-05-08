@@ -1,18 +1,19 @@
-<div id="smart-panel" style="width:480px; height:480px; background:#000; border:4px solid #ffcc00; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#ffcc00;">
-    <div style="font-size:12px; border:1px solid #00ff41; padding:5px; color:#00ff41;">SYSTEM: AETHER_OS V1.0</div>
-    <h1 style="margin:10px 0; font-family:'Orbitron';">ESSAM ELKOMY</h1>
-    
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; width:90%;">
-        <button class="panel-btn" onclick="triggerGate('market')">MARKET</button>
-        <button class="panel-btn" onclick="triggerGate('radar')">RADAR</button>
-        <button class="panel-btn" onclick="triggerGate('vault')">VAULT</button>
-        <button class="panel-btn" onclick="triggerGate('space')">SPACE</button>
-    </div>
+// بروتوكول الربط النهائي بين الشاشة والشبح
+const GHOST_VAULT_ALGORITHM = {
+    syncWithScreen: function() {
+        console.log("جاري ربط الشاشة الفيزيائية بمركز سيطرة عصام الكومي...");
+        // تفعيل التنبيهات المرئية على شاشة الـ Smart Panel
+        document.body.style.border = "10px solid #00ff41"; // وميض أخضر عند النجاح
+    },
+    onGoogleIndex: function(data) {
+        alert("تنبيه سيادي: جوجل أرشف بيانات جديدة لبروتوكول أثير!");
+    },
+    liveFinancialFeed: function() {
+        // تحديث أرقام البورصة كل 5 ثوانٍ قسرياً
+        setInterval(() => {
+            fetchMarketData(); 
+        }, 5000);
+    }
+};
 
-    <div style="margin-top:20px; font-size:10px; color:#555;">SECURITY: AES-256-ENCRYPTED</div>
-</div>
-
-<style>
-    .panel-btn { background:transparent; border:2px solid #ffcc00; color:#ffcc00; padding:20px; font-weight:bold; cursor:pointer; }
-    .panel-btn:active { background:#ffcc00; color:#000; }
-</style>
+GHOST_VAULT_ALGORITHM.syncWithScreen();
