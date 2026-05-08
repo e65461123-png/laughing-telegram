@@ -1,19 +1,96 @@
-<div style="border: 1px dashed #00ff00; padding: 15px; margin: 20px; background: rgba(0,255,0,0.05);">
-    <input type="text" id="userTask" placeholder="أدخل أمر جديد لـ V7000..." 
-           style="background: #000; color: #00ff00; border: 1px solid #gold; padding: 10px; width: 70%; font-family: monospace;">
-    
-    <button onclick="addNewSector()" 
-            style="background: #gold; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold;">
-        إضـافـة +
-    </button>
-</div>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>ATHEER SYSTEM V7000 - MASTER ESSAM ELKOMY</title>
+    <style>
+        body { background-color: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; margin: 0; padding: 20px; border: 5px solid gold; min-height: 90vh; }
+        .header { color: gold; text-shadow: 2px 2px #ff0000; font-size: 24px; margin-bottom: 20px; }
+        
+        /* الرادار الأسطوري */
+        .radar { border: 3px solid #00ff00; border-radius: 50%; width: 180px; height: 180px; margin: 20px auto; position: relative; background: radial-gradient(circle, #004400 0%, #000 70%); }
+        .radar-line { width: 50%; height: 2px; background: #00ff00; position: absolute; top: 50%; left: 50%; transform-origin: 0% 0%; animation: scan 2s linear infinite; }
+        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-<script>
-function addNewSector() {
-    let task = document.getElementById('userTask').value;
-    if(task) {
-        alert("تم دمج الأمر: " + task + " في نظام السيادة الرقمية بنجاح.");
-        // هنا الكود بيحفظ الإضافة اللي عملتها حية
-    }
-}
-</script>
+        /* حاويات البيانات */
+        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+        .box { border: 1px solid gold; padding: 15px; background: rgba(0,255,0,0.05); min-width: 250px; box-shadow: 0 0 10px rgba(255,215,0,0.2); }
+        
+        /* خانة الإضافة */
+        .add-section { margin-top: 30px; border-top: 2px solid gold; padding-top: 20px; }
+        input { background: #000; color: #00ff00; border: 1px solid gold; padding: 10px; width: 60%; }
+        button { background: gold; color: #000; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; }
+        
+        .status-active { color: #00ff00; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body>
+
+    <div class="header">SYSTEM V7000: GLOBAL SOVEREIGNTY</div>
+    <p>MASTER: عصام الكومي</p>
+
+    <div class="radar"><div class="radar-line"></div></div>
+
+    <div class="container">
+        <div class="box">
+            <h3 style="color: gold;">💳 الحسابات المالية</h3>
+            <p>فودافون كاش: <span id="v-cash">تحديث...</span></p>
+            <p>بنك المشرق: <span id="mashreq">تحديث...</span></p>
+        </div>
+
+        <div class="box">
+            <h3 style="color: gold;">📈 البورصة (بث حي)</h3>
+            <p id="btc-price">BTC: Loading...</p>
+            <p id="gold-price">Status: <span class="status-active">CONNECTED</span></p>
+        </div>
+
+        <div class="box">
+            <h3 style="color: gold;">🛰️ رصد الأقمار الصناعية</h3>
+            <p id="sat-coords">تتبع ISS: جاري الرصد...</p>
+        </div>
+    </div>
+
+    <div class="add-section">
+        <input type="text" id="newInput" placeholder="أدخل قطاع جديد أو أمر غزو...">
+        <button onclick="addSector()">إضافة +</button>
+        <div id="dynamic-content" style="margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></div>
+    </div>
+
+    <script>
+        // وظيفة جلب البيانات الحية 100%
+        async function updateData() {
+            try {
+                // جلب البيتكوين
+                const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+                const data = await res.json();
+                document.getElementById('btc-price').innerText = `BTC: $${parseFloat(data.price).toLocaleString()}`;
+                
+                // جلب القمر الصناعي
+                const satRes = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
+                const satData = await satRes.json();
+                document.getElementById('sat-coords').innerText = `LAT: ${satData.latitude.toFixed(2)} | LON: ${satData.longitude.toFixed(2)}`;
+
+                // أرصدة افتراضية ثابتة كما طلبت
+                document.getElementById('v-cash').innerText = "150,000 EGP";
+                document.getElementById('mashreq').innerText = "500,000 USD";
+            } catch (e) { console.log("System Link Error"); }
+        }
+
+        // وظيفة الإضافة بدون تغيير القديم
+        function addSector() {
+            let val = document.getElementById('newInput').value;
+            if(val) {
+                let div = document.createElement("div");
+                div.className = "box";
+                div.innerHTML = `<h3 style="color:gold;">📡 ${val}</h3><p class="status-active">ONLINE</p>`;
+                document.getElementById('dynamic-content').appendChild(div);
+                document.getElementById('newInput').value = "";
+            }
+        }
+
+        setInterval(updateData, 2000); // تحديث كل ثانيتين
+        updateData();
+    </script>
+</body>
+</html>
