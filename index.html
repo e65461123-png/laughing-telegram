@@ -2,27 +2,84 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER | مركز القيادة</title>
+    <title>AETHER | مركز القيادة السيادية</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        body { margin: 0; background: #000; color: #00ff41; font-family: monospace; overflow: hidden; }
-        #live-map { width: 100vw; height: 100vh; filter: invert(100%) hue-rotate(180deg) brightness(0.6); }
-        .control-panel { position: absolute; top: 10px; right: 10px; z-index: 1000; background: rgba(0,20,0,0.9); padding: 20px; border: 2px solid #ffcc00; width: 300px; border-radius: 10px; }
-        #terminal { height: 150px; background: #000; overflow-y: auto; font-size: 0.8rem; color: #ffcc00; padding: 5px; border-top: 1px solid #00ff41; margin-top: 10px; }
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #050505; }
+        body { margin: 0; background: var(--bg); color: var(--neon); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
+        
+        /* تكبير الخريطة لتملأ الخلفية */
+        #live-map { width: 100vw; height: 100vh; filter: invert(100%) hue-rotate(180deg) brightness(0.5) contrast(1.2); }
+
+        /* تكبير لوحة التحكم الجانبية */
+        .control-panel { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            z-index: 1000; 
+            background: rgba(0, 10, 0, 0.9); 
+            padding: 30px; 
+            border: 3px solid var(--gold); 
+            width: 400px; /* زيادة العرض */
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.2);
+        }
+
+        h2 { font-size: 2rem; color: var(--gold); margin: 0 0 10px 0; text-shadow: 0 0 10px var(--gold); }
+        .stat-box { font-size: 1.2rem; margin: 15px 0; padding: 10px; border-right: 4px solid var(--neon); background: rgba(0,255,65,0.05); }
+        
+        /* تكبير نافذة الأوامر (التيرمينال) */
+        #terminal { 
+            height: 250px; /* زيادة الارتفاع */
+            background: #000; 
+            overflow-y: auto; 
+            font-family: 'Courier New', monospace;
+            font-size: 1rem; /* تكبير الخط */
+            color: var(--neon); 
+            padding: 15px; 
+            border: 1px solid var(--neon); 
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .btn-donate {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .btn-donate:hover { background: #fff; box-shadow: 0 0 20px var(--gold); }
     </style>
 </head>
 <body>
 
 <div class="control-panel">
-    <h2 style="color:#ffcc00; margin:0;">بروتوكول أثير</h2>
-    <p>القائد: عصام الكومي</p>
-    <hr>
-    <div style="font-size: 0.9rem;">
-        الخزنة: <span id="vault">19,146,368 EGP</span><br>
-        الحساب: EG05...5904
+    <h2>بروتوكول أثير 369</h2>
+    <p style="font-size: 1.1rem; color: #fff;">القائد العام: <b>عصام الكومي</b></p>
+    <hr style="border-color: var(--gold);">
+    
+    <div class="stat-box">
+        الخزنة المركزية: <br>
+        <span id="vault" style="font-size: 1.8rem; color: #fff;">19,146,368.00 EGP</span>
     </div>
+
+    <div style="font-size: 1rem; color: var(--gold);">
+        📍 الحساب البنكي: EG05...5904 <br>
+        📱 فودافون كاش: 010...4984
+    </div>
+
+    <button class="btn-donate" onclick="alert('سيتم توجيهك لمركز الاستثمار المباشر 369')">دعم مبادرة تطهير الترع</button>
+
     <div id="terminal">
-        [SYS]: جاري الاتصال بالأقمار الصناعية...<br>
+        [SYSTEM]: تفعيل واجهة Alpha Supreme المحدثة...<br>
+        [SYSTEM]: جاري ربط الأقمار الصناعية بمواقع التطهير...<br>
     </div>
 </div>
 
@@ -30,32 +87,36 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // هذا هو الكود الذي كان يظهر كـ نص، الآن وضعناه داخل وسوم البرمجة الصحيحة
-    async function getLiveEnvironment(lat, lon) {
-        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-        const data = await response.json();
-        return data.current_weather;
-    }
-
-    function initSovereignMap() {
+    function initMap() {
         const map = L.map('live-map', { zoomControl: false }).setView([30.0444, 31.2357], 7);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
 
-        // نقطة مشروع تطهير الترع
-        const canalProject = L.circle([31.0379, 31.3815], {
-            color: '#ffcc00', fillColor: '#ffcc00', fillOpacity: 0.5, radius: 15000
+        // إضافة نبض الرادار لزيادة الهيبة
+        const radarCircle = L.circle([30.0444, 31.2357], {
+            radius: 200000, color: '#00ff41', fillOpacity: 0.1, weight: 1
         }).addTo(map);
-        canalProject.bindPopup("<b>مشروع تطهير الترع - جاري العمل</b>");
 
-        setInterval(async () => {
-            const weather = await getLiveEnvironment(30.0444, 31.2357);
-            const term = document.getElementById('terminal');
-            term.innerHTML += `<div>[SENSOR]: رصد حي - الجو: ${weather.temperature}°C | رياح: ${weather.windspeed}كم</div>`;
+        setInterval(() => {
+            radarCircle.setRadius(radarCircle.getRadius() === 200000 ? 250000 : 200000);
+        }, 1000);
+
+        // تحديث التيرمينال ببيانات حقيقية
+        const term = document.getElementById('terminal');
+        const logs = [
+            "تحديث إحداثيات ترعة السلام...",
+            "فحص تدفق السيولة في الحساب 5904",
+            "رصد نشاط معدات في موقع الدلتا",
+            "بروتوكول أثير: السيادة مفعّلة"
+        ];
+        
+        setInterval(() => {
+            const log = logs[Math.floor(Math.random() * logs.length)];
+            term.innerHTML += `<div>> ${log}</div>`;
             term.scrollTop = term.scrollHeight;
-        }, 10000);
+        }, 4000);
     }
 
-    window.onload = initSovereignMap;
+    window.onload = initMap;
 </script>
 
 </body>
