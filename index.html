@@ -3,88 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aether Omni-Protocol 369</title>
+    <title>Aether | Operational Control</title>
     <style>
-        :root { --neon: #00ff41; --gold: #ffd700; --bg: #000; }
-        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; padding-bottom: 120px; overflow-x: hidden; }
+        :root { --neon: #00ff41; --gold: #ffd700; --bg: #000; --danger: #ff003c; }
+        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; padding-bottom: 150px; }
         
-        /* شريط المعلومات العلوي */
-        .top-nav { display: grid; grid-template-columns: repeat(4, 1fr); padding: 10px; border-bottom: 2px solid var(--neon); background: #000; position: sticky; top: 0; z-index: 1000; font-size: 0.65rem; text-align: center; }
-        .val { color: var(--neon); font-weight: bold; display: block; font-size: 0.8rem; }
+        /* شريط الأرصدة العلوي */
+        .top-nav { display: flex; justify-content: space-around; padding: 10px; border-bottom: 2px solid var(--neon); background: #000; position: sticky; top: 0; z-index: 1000; font-size: 0.7rem; }
+        .val { color: var(--neon); font-weight: bold; display: block; }
 
-        /* شريط الأخبار المتحرك (التطوير الجديد) */
-        .news-ticker { background: rgba(0,255,65,0.1); color: var(--neon); padding: 5px; font-size: 0.7rem; white-space: nowrap; overflow: hidden; border-bottom: 1px solid #1a1a1a; }
-        .news-ticker span { display: inline-block; padding-left: 100%; animation: ticker 25s linear infinite; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        /* لوحة العمليات المالية (الجديدة) */
+        .action-hub { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
+        .btn-action { 
+            background: rgba(255, 215, 0, 0.1); 
+            border: 2px solid var(--gold); 
+            border-radius: 12px; 
+            padding: 20px 10px; 
+            text-align: center; 
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-action:active { transform: scale(0.95); background: var(--gold); color: black; }
+        .icon { font-size: 2rem; display: block; margin-bottom: 5px; }
+        .btn-label { font-weight: bold; font-size: 0.8rem; }
 
-        /* منطقة الرصد */
-        .main-display { padding: 10px; text-align: center; }
-        #liveRadar { width: 100%; height: 250px; border: 1px solid var(--neon); border-radius: 10px; box-shadow: 0 0 10px var(--neon); }
-        
-        /* عين الغراب وحالة النظام */
-        .core-circle { width: 120px; height: 120px; border: 4px double var(--gold); border-radius: 50%; margin: 15px auto; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 15px var(--gold); background: rgba(255,215,0,0.05); }
-        .sys-status { font-size: 0.6rem; color: var(--neon); margin: 10px 0; line-height: 1.4; text-align: left; display: inline-block; border-left: 2px solid var(--gold); padding-left: 10px; }
+        /* منطقة الرادار */
+        #mapView { width: 90%; height: 200px; border: 1px solid var(--neon); border-radius: 10px; margin: 10px auto; display: block; }
 
-        /* مركز الأوامر العائم */
-        .cmd-center { position: fixed; bottom: 20px; left: 5%; width: 90%; background: #111; border: 2px solid var(--gold); border-radius: 15px; padding: 12px; z-index: 99999; box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); }
+        /* مركز الأوامر السفلي */
+        .cmd-center { position: fixed; bottom: 20px; left: 5%; width: 90%; background: #111; border: 2px solid var(--neon); border-radius: 15px; padding: 15px; z-index: 9999; box-shadow: 0 0 20px var(--neon); }
         #cmdInput { background: transparent; border: none; color: white; width: 100%; font-size: 1.1rem; outline: none; text-align: center; }
-        #log { color: var(--neon); font-size: 0.7rem; margin-bottom: 5px; }
+        #log { color: var(--neon); font-size: 0.7rem; text-align: center; margin-bottom: 5px; }
 
-        #liveGate { width: 100%; height: 380px; border: 2px solid var(--gold); display: none; margin-top: 10px; }
+        /* شاشة السحب */
+        #withdrawScreen { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #111; border: 3px solid var(--gold); padding: 20px; z-index: 10000; width: 80%; border-radius: 15px; text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
-        <div>CAIRO<span id="clock" class="val">--:--</span></div>
+        <div>BALANCE<span class="val">$42,900.00</span></div>
         <div>BITCOIN<span class="val">$84,312</span></div>
-        <div>GOLD<span class="val" style="color:var(--gold)">$2,684</span></div>
-        <div>369 STATUS<span class="val">SECURED</span></div>
+        <div>369 STATUS<span class="val">ACTIVE</span></div>
     </div>
 
-    <div class="news-ticker">
-        <span>[LIVE] AI NEWS: AETHER V4 CORE DEPLOYED | CYBER SECURITY: AES-256 ACTIVE | GLOBAL NODE: STABLE | MASTER ESSAM IDENTIFIED...</span>
+    <div style="text-align: center; padding: 10px;">
+        <h2 style="color: var(--gold); margin: 5px;">AETHER CONTROL PANEL</h2>
+        <small style="color: var(--neon);">Operational Status: Master Authenticated</small>
     </div>
 
-    <div class="main-display">
-        <iframe id="liveRadar" src="https://www.windy.com/?30.044,31.236,6"></iframe>
-        
-        <div class="core-circle">
-            <h3 style="color:var(--gold); margin:0; font-size: 0.8rem;">RAVEN EYE</h3>
-            <small style="color:var(--neon); font-size: 0.5rem;">ESSAM_OWNED</small>
+    <div class="action-hub">
+        <div class="btn-action" onclick="showWithdraw()">
+            <span class="icon">💰</span>
+            <span class="btn-label">سحب الأرصدة</span>
         </div>
-
-        <div class="sys-status">
-            SYSTEM STATUS : ONLINE<br>
-            AETHER CORE   : ACTIVE<br>
-            SECURITY LAYER: ENABLED<br>
-            GLOBAL NODE   : STABLE
+        <div class="btn-action" onclick="startWork()">
+            <span class="icon">🚀</span>
+            <span class="btn-label">مباشرة العمل</span>
         </div>
+        <div class="btn-action" onclick="toggleRadar()">
+            <span class="icon">🛰️</span>
+            <span class="btn-label">رادار الرصد</span>
+        </div>
+        <div class="btn-action" onclick="openVault()">
+            <span class="icon">🔒</span>
+            <span class="btn-label">الخزنة المشفرة</span>
+        </div>
+    </div>
 
-        <iframe id="liveGate" src=""></iframe>
+    <iframe id="mapView" src="https://www.windy.com/?30.044,31.236,6"></iframe>
+
+    <div id="withdrawScreen">
+        <h3 style="color: var(--gold);">Withdraw Portal</h3>
+        <p>Current Balance: $42,900</p>
+        <input type="number" placeholder="Enter Amount" style="width: 80%; padding: 10px; margin-bottom: 10px;">
+        <button onclick="alert('جاري معالجة الطلب عبر فودافون كاش...')" style="background: var(--neon); padding: 10px 20px; border: none; font-weight: bold;">تأكيد السحب</button>
+        <button onclick="hideWithdraw()" style="background: var(--danger); color: white; padding: 10px 20px; border: none; margin-left: 10px;">إلغاء</button>
     </div>
 
     <div class="cmd-center">
-        <div id="log">SYSTEM READY. AWAITING MASTER COMMAND...</div>
-        <input type="text" id="cmdInput" placeholder="اكتب /master أو /cosmos هنا" onkeypress="run(event)">
+        <div id="log">SYSTEM ONLINE | READY FOR OPERATIONS</div>
+        <input type="text" id="cmdInput" placeholder="اكتب أمرك هنا..." onkeypress="run(event)">
     </div>
 
     <script>
-        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB'); }, 1000);
+        function showWithdraw() { document.getElementById('withdrawScreen').style.display = 'block'; }
+        function hideWithdraw() { document.getElementById('withdrawScreen').style.display = 'none'; }
+        
+        function startWork() {
+            const log = document.getElementById('log');
+            log.innerText = "OPENING WORK CHANNELS... SYNCING DATA...";
+            log.style.color = "var(--gold)";
+            setTimeout(() => { alert("تم فتح قنوات العمل المباشرة. النظام جاهز للتنفيذ."); }, 500);
+        }
+
+        function toggleRadar() {
+            const map = document.getElementById('mapView');
+            map.style.display = (map.style.display === 'none') ? 'block' : 'none';
+        }
 
         function run(e) {
             if (e.key === "Enter") {
                 const cmd = document.getElementById('cmdInput').value.toLowerCase();
-                const gate = document.getElementById('liveGate');
                 const log = document.getElementById('log');
-
-                if (cmd === "/cosmos") {
-                    log.innerText = "COSMOS GATE OPENED. SCANNING SECTOR 369...";
-                    gate.src = "https://sky.esa.int/esasky-embed/?target=NGC%201300&zoom=0.5";
-                    gate.style.display = "block";
-                    gate.scrollIntoView({ behavior: 'smooth' });
-                } else if (cmd === "/master") {
-                    log.innerText = "IDENTITY VERIFIED: WELCOME MASTER ESSAM ELKOMY.";
+                if (cmd === "/master") {
+                    log.innerText = "WELCOME MASTER ESSAM. FULL ACCESS GRANTED.";
                     log.style.color = "var(--gold)";
                 }
                 document.getElementById('cmdInput').value = "";
