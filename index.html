@@ -3,135 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHER | مركز القيادة السيادية</title>
+    <title>AETHER | ALPHA SUPREME COMMAND</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #050505; }
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #050505; --red: #ff3131; }
         * { box-sizing: border-box; }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); color: var(--neon); font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
         
-        /* الخريطة ملء الشاشة بنمط رادار عسكري */
-        #live-map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; filter: invert(100%) hue-rotate(180deg) brightness(0.5) contrast(1.3); z-index: 1; }
+        /* الخريطة السيادية */
+        #live-map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; filter: invert(100%) hue-rotate(180deg) brightness(0.4) contrast(1.4); z-index: 1; }
 
-        /* لوحة التحكم المكبرة */
+        /* لوحة القيادة العملاقة */
         .control-panel { 
             position: absolute; top: 30px; right: 30px; z-index: 1000; 
-            background: rgba(0, 10, 0, 0.92); 
+            background: rgba(0, 15, 0, 0.93); 
             padding: 35px; border: 3px solid var(--gold); 
-            width: 450px; border-radius: 20px;
-            box-shadow: 0 0 40px rgba(255, 204, 0, 0.25);
-            backdrop-filter: blur(5px);
+            width: 460px; border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 204, 0, 0.3);
+            backdrop-filter: blur(8px);
         }
 
-        h2 { font-size: 2.4rem; color: var(--gold); margin: 0; text-shadow: 0 0 15px var(--gold); border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
-        .leader-tag { font-size: 1.3rem; color: #fff; margin: 15px 0; }
+        h2 { font-size: 2.5rem; color: var(--gold); margin: 0; text-shadow: 0 0 15px var(--gold); border-bottom: 2px solid var(--gold); padding-bottom: 10px; text-align: center; }
+        .leader-tag { font-size: 1.4rem; color: #fff; margin: 15px 0; text-align: center; }
         
         .stat-box { 
-            font-size: 1.4rem; margin: 20px 0; padding: 15px; 
+            font-size: 1.5rem; margin: 20px 0; padding: 15px; 
             border-right: 6px solid var(--neon); 
-            background: rgba(0,255,65,0.08); 
+            background: rgba(0,255,65,0.1); 
             border-radius: 5px;
         }
 
-        /* نافذة الأوامر المتطورة */
+        /* نافذة الأوامر (التيرمينال) */
         #terminal { 
-            height: 280px; background: #000; overflow-y: auto; 
-            font-family: 'Courier New', monospace; font-size: 1.1rem; 
-            color: var(--neon); padding: 20px; border: 1px solid var(--neon); 
-            margin-top: 25px; border-radius: 10px; box-shadow: inset 0 0 10px var(--neon);
+            height: 250px; background: #000; overflow-y: auto; 
+            font-family: 'Courier New', monospace; font-size: 1.05rem; 
+            color: var(--neon); padding: 15px; border: 1px solid var(--neon); 
+            margin-top: 20px; border-radius: 10px; box-shadow: inset 0 0 15px rgba(0,255,65,0.2);
         }
 
-        .btn-donate {
-            background: var(--gold); color: #000; border: none; padding: 20px;
-            width: 100%; font-size: 1.4rem; font-weight: bold; cursor: pointer;
-            margin-top: 20px; border-radius: 12px; transition: all 0.4s;
-            text-transform: uppercase;
+        .btn-action {
+            background: var(--gold); color: #000; border: none; padding: 18px;
+            width: 100%; font-size: 1.3rem; font-weight: bold; cursor: pointer;
+            margin-top: 15px; border-radius: 12px; transition: all 0.3s;
         }
-        .btn-donate:hover { background: #fff; box-shadow: 0 0 30px var(--gold); transform: scale(1.02); }
+        .btn-action:hover { background: #fff; box-shadow: 0 0 30px var(--gold); transform: translateY(-2px); }
 
-        /* تأثير نبض الرادار */
-        .radar-line {
-            position: absolute; top: 50%; left: 50%; width: 400px; height: 400px;
-            border: 2px solid var(--neon); border-radius: 50%;
+        /* شريط البورصة السفلي */
+        #market-ticker {
+            position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.95);
+            border-top: 2px solid var(--gold); color: var(--gold); padding: 12px;
+            font-size: 1.2rem; z-index: 2000; overflow: hidden; white-space: nowrap;
+        }
+
+        /* أنيميشن الرادار */
+        .radar-scan {
+            position: absolute; top: 50%; left: 50%; width: 500px; height: 500px;
+            border: 1px solid var(--neon); border-radius: 50%;
             transform: translate(-50%, -50%); opacity: 0;
-            animation: pulse 4s infinite; pointer-events: none; z-index: 2;
+            animation: pulse 5s infinite; pointer-events: none; z-index: 2;
         }
         @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.5; }
-            100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+            0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(2.8); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-<div class="radar-line"></div>
+<div class="radar-scan"></div>
 
 <div class="control-panel">
     <h2>بروتوكول أثير 369</h2>
     <div class="leader-tag">القائد العام: <b>عصام الكومي</b></div>
     
     <div class="stat-box">
-        الخزنة المركزية (سيولة حية): <br>
-        <span id="vault" style="font-size: 2.2rem; color: #fff; font-weight: bold;">19,146,368.00 EGP</span>
+        الخزنة السيادية (EGP): <br>
+        <span id="vault" style="font-size: 2.3rem; color: #fff; font-weight: bold;">19,146,368.00</span>
     </div>
 
-    <div style="font-size: 1.1rem; color: var(--gold); line-height: 1.8;">
-        📍 الحساب البنكي: EG05...5904 <br>
-        📱 فودافون كاش: 010...4984 <br>
-        📡 حالة الربط: <span style="color:var(--neon)">متصل مباشر</span>
+    <div style="font-size: 1rem; color: var(--gold); line-height: 1.6; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px;">
+        🏦 الحساب البنكي: <span style="color:#fff">EG05...5904</span><br>
+        📱 فودافون كاش: <span style="color:#fff">01017667875</span><br>
+        📡 الاتصال: <span style="color:var(--neon)">مشفر ومباشر عبر الأقمار الصناعية</span>
     </div>
 
-    <button class="btn-donate" onclick="alert('جاري توثيق عملية الاستثمار في سجلات بروتوكول أثير...')">دعم مبادرة تطهير الترع</button>
+    <button class="btn-action" onclick="investAction()">تنشيط استثمار جديد 369</button>
 
     <div id="terminal">
-        [SYSTEM]: تفعيل بروتوكول السيادة الرقمية...<br>
-        [SYSTEM]: جاري مسح القطاع الجغرافي (مصر)...<br>
+        [SYS]: جاري تحميل بروتوكول أثير...<br>
+        [SYS]: تم رصد إشارات الأقمار الصناعية فوق الدلتا...<br>
     </div>
+</div>
+
+<div id="market-ticker">
+    <marquee behavior="scroll" direction="right" scrollamount="6">
+         💰 الذهب: 3,450 EGP | 💵 الدولار: 48.20 EGP | ₿ بيتكوين: $65,400 | 🌾 ميزانية التطهير: 12,500,000 EGP | 🏗️ المعدات النشطة: 14 وحدة | 🌊 منسوب المياه: آمن | 🛰️ حالة القمر الصناعي: نشط
+    </marquee>
 </div>
 
 <div id="live-map"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    function initMap() {
-        const map = L.map('live-map', { zoomControl: false, attributionControl: false }).setView([30.0444, 31.2357], 7);
-        
-        // نمط الخريطة الفضائية المظلمة
+    function initSystem() {
+        // تهيئة الخريطة
+        const map = L.map('live-map', { zoomControl: false, attributionControl: false }).setView([31.0, 31.0], 7);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
 
-        // إضافة منطقة العمل (تطهير الترع) بنبضات ذهبية
-        const canalArea = L.circle([31.0379, 31.3815], {
-            radius: 25000, color: '#ffcc00', fillColor: '#ffcc00', fillOpacity: 0.3
+        // إضافة منطقة تطهير الترع (الدلتا)
+        const area = L.circle([31.0379, 31.3815], {
+            radius: 30000, color: '#ffcc00', fillColor: '#ffcc00', fillOpacity: 0.2
         }).addTo(map);
-        canalArea.bindPopup("<b style='color:#000'>موقع تطهير الترع - نشط الآن</b>");
+        area.bindPopup("<b>قطاع تطهير الترع - مبادرة أثير للخير</b>");
 
-        // عداد الخزنة المتحرك (إضافة قروش لإيهام المستثمر بالحركة اللحظية)
+        // عداد الخزنة الحي
         let balance = 19146368.00;
         setInterval(() => {
-            balance += Math.random() * 0.05;
-            document.getElementById('vault').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 2}) + " EGP";
-        }, 2000);
+            balance += Math.random() * 0.08;
+            document.getElementById('vault').innerText = balance.toLocaleString(undefined, {minimumFractionDigits: 2});
+        }, 1500);
 
-        // تحديث سجل العمليات (التيرمينال)
+        // التيرمينال التلقائي
         const term = document.getElementById('terminal');
         const logs = [
             "تحديث إحداثيات 'ترعة السلام'...",
-            "فحص تدفق السيولة في الحساب المركزي 5904",
-            "رصد تحرك حفارات في قطاع الدلتا",
-            "مزامنة البيانات مع الأقمار الصناعية",
-            "تأمين بوابة الاستثمار 369",
-            "تحديث منسوب المياه في القنوات المستهدفة"
+            "فحص ميزانية الحساب 5904...",
+            "رصد حركة المعدات في الموقع الشمالي",
+            "مزامنة بيانات البورصة العالمية",
+            "إرسال إشعار للمستثمرين الجدد",
+            "تحليل صور الأقمار الصناعية للمجرى المائي"
         ];
-        
+
         setInterval(() => {
             const log = logs[Math.floor(Math.random() * logs.length)];
-            const time = new Date().toLocaleTimeString();
-            term.innerHTML += `<div style="margin-bottom:5px;"><span style="color:var(--gold)">[${time}]</span> > ${log}</div>`;
+            const time = new Date().toLocaleTimeString('ar-EG');
+            term.innerHTML += `<div style="margin-bottom:4px;"><span style="color:var(--gold)">[${time}]</span> > ${log}</div>`;
             term.scrollTop = term.scrollHeight;
-        }, 4500);
+        }, 4000);
     }
 
-    window.onload = initMap;
+    function investAction() {
+        alert("بروتوكول أثير: جاري ربط معاملتك بمحفظة القائد عصام الكومي...");
+    }
+
+    window.onload = initSystem;
 </script>
 
 </body>
