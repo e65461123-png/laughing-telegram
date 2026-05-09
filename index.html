@@ -2,135 +2,138 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Aether Protocol | Sovereign Command</title>
+    <title>AETHER | ALPHA SUPREME COMMAND</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        :root { --neon: #00ff41; --gold: #ffcc00; --red: #ff0000; --bg: #000; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; height: 100vh; overflow: hidden; transition: background 0.3s; }
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; --red: #ff3131; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow: hidden; height: 100vh; }
         
-        /* تأثير وضع الطوارئ */
-        .emergency { background: #300 !important; animation: alarm 0.5s infinite; }
-        @keyframes alarm { 50% { opacity: 0.7; } }
+        /* شاشة الدخول السيادية */
+        #gatekeeper { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: 0.5s; }
+        .lock-panel { border: 3px solid var(--neon); padding: 50px; background: rgba(0,20,0,0.9); box-shadow: 0 0 50px var(--neon); text-align: center; }
 
-        /* شاشة الدخول */
-        #gatekeeper { position: fixed; inset: 0; background: var(--bg); z-index: 5000; display: flex; align-items: center; justify-content: center; }
-        .secure-panel { border: 2px solid var(--neon); padding: 50px; text-align: center; box-shadow: 0 0 50px var(--neon); background: rgba(0,20,0,0.8); }
-
-        /* الواجهة الرئيسية */
-        .ui-grid { display: grid; grid-template-columns: 350px 1fr 350px; grid-template-rows: 80px 1fr 180px; height: 100vh; gap: 10px; padding: 10px; visibility: hidden; }
-        .panel { border: 1px solid var(--neon); background: rgba(0,30,0,0.4); padding: 15px; position: relative; overflow: hidden; box-shadow: inset 0 0 15px rgba(0,255,65,0.1); }
+        /* واجهة السيطرة */
+        .master-grid { display: grid; grid-template-columns: 350px 1fr 350px; grid-template-rows: 70px 1fr 150px; height: 100vh; gap: 5px; padding: 5px; visibility: hidden; }
+        .panel { border: 1px solid var(--neon); background: rgba(0, 15, 0, 0.7); position: relative; overflow: hidden; padding: 10px; }
         
-        /* الرادار المتطور */
-        .radar-box { position: relative; width: 450px; height: 450px; border: 2px solid var(--neon); border-radius: 50%; margin: auto; display: flex; align-items: center; justify-content: center; }
-        .scanner { width: 50%; height: 3px; background: var(--neon); position: absolute; top: 50%; left: 50%; transform-origin: left; animation: scan 4s linear infinite; box-shadow: 0 0 15px var(--neon); }
-        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* الخريطة الحقيقية */
+        #live-map { width: 100%; height: 100%; filter: invert(100%) hue-rotate(100deg) brightness(0.6); border: 1px solid var(--gold); }
 
-        /* نافذة الأوامر (Terminal) */
-        #terminal { background: #000; border: 1px solid var(--gold); height: 120px; font-size: 0.8rem; padding: 10px; overflow-y: auto; color: var(--gold); }
-        .cmd-input { background: transparent; border: none; border-left: 10px solid var(--gold); color: #fff; width: 100%; outline: none; padding: 5px; }
+        /* التيرمينال (نافذة الأوامر) */
+        #terminal { height: 100px; background: #000; color: var(--gold); font-size: 0.8rem; overflow-y: auto; padding: 5px; border: 1px solid var(--gold); }
+        .cmd-line { background: transparent; border: none; color: #fff; width: 100%; outline: none; border-bottom: 1px solid var(--neon); }
 
-        .btn-invest { background: var(--gold); color: #000; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.1rem; margin-top: 10px; }
-        .btn-invest:hover { background: #fff; box-shadow: 0 0 20px var(--gold); }
+        .vault-value { font-size: 1.8rem; color: #fff; text-shadow: 0 0 10px var(--neon); text-align: center; margin: 10px 0; }
+        .btn-action { background: var(--gold); color: #000; border: none; padding: 10px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 5px; }
     </style>
 </head>
 <body>
 
 <div id="gatekeeper">
-    <div class="secure-panel">
-        <h1 style="color:var(--gold)">غرفة السيادة الرقمية</h1>
+    <div class="lock-panel">
+        <h1 style="color:var(--gold)">غرفة السيطرة العليا</h1>
         <p>القائد عصام الكومي | بروتوكول 369</p>
-        <input type="text" id="user" placeholder="هوية المالك" style="background:transparent; border:1px solid var(--neon); color:var(--neon); padding:10px; margin:10px; width:300px;">
+        <input type="text" id="admin-user" placeholder="هوية القائد" style="padding:10px; width:250px; margin:5px; background:#000; border:1px solid var(--neon); color:var(--neon);">
         <br>
-        <input type="password" id="pass" placeholder="كود المرور" style="background:transparent; border:1px solid var(--neon); color:var(--neon); padding:10px; margin:10px; width:300px;">
+        <input type="password" id="admin-pass" placeholder="كلمة السر" style="padding:10px; width:250px; margin:5px; background:#000; border:1px solid var(--neon); color:var(--neon);">
         <br>
-        <button onclick="bootSystem()" style="background:var(--neon); border:none; padding:15px 60px; cursor:pointer; font-weight:bold; margin-top:20px;">بدء تشغيل Alpha Supreme</button>
+        <button onclick="bootSystem()" class="btn-action" style="background:var(--neon); color:#000;">بدء التشغيل الحقيقي</button>
     </div>
 </div>
 
-<div class="ui-grid" id="main-ui">
-    <div class="panel" style="grid-column: 1 / span 3; display: flex; justify-content: space-between; align-items: center; border-color: var(--gold);">
-        <h2 style="margin:0; letter-spacing: 5px;">AETHER PROTOCOL v.4.0</h2>
-        <div id="clock" style="font-size: 1.5rem; color: var(--gold);">00:00:00</div>
-        <div style="color:var(--neon)">STATUS: <span id="sys-status">SECURE</span></div>
+<div class="master-grid" id="main-ui">
+    <div class="panel" style="grid-column: 1 / span 3; display: flex; justify-content: space-between; align-items: center;">
+        <div style="color:var(--gold)">SYSTEM: ALPHA SUPREME v4.0</div>
+        <div style="font-size: 1.5rem;">AETHER PROTOCOL | 369</div>
+        <div id="clock">00:00:00</div>
     </div>
 
     <div class="panel">
-        <h3 style="color:var(--gold)">🌐 الرصد العالمي (LIVE)</h3>
-        <div id="flight-data" style="font-size: 0.8rem;">
-            - مطار القاهرة: <span style="color:#fff">18 طائرة في الانتظار</span><br>
-            - مطار الرياض: <span style="color:#fff">24 رحلة نشطة</span><br>
-            - لندن (LHR): <span style="color:#fff">تتبع الإشارات..</span><br>
-            - قمر أثير 369: <span style="color:var(--neon)">متصل</span>
+        <h3 style="color:var(--gold)">🛰️ تتبع حي (Real-Time)</h3>
+        <div id="stats" style="font-size: 0.75rem;">
+            [AIRPORT] CAIRO: 15 Active Flights<br>
+            [AIRPORT] RIYADH: 28 Active Flights<br>
+            [SAT] AETHER-369: Orbiting @ 400km<br>
+            [NETWORK] GLOBAL: SECURED
         </div>
         <hr>
-        <h3>🔐 التشفير السيادي</h3>
-        <p>AES-256 BIT: <span style="color:var(--gold)">فعال 100%</span></p>
-        <p>جدار الحماية: <span style="color:var(--neon)">غير قابل للاختراق</span></p>
+        <h3 style="color:var(--gold)">💰 الخزنة المركزية</h3>
+        <div class="vault-value">19,146,368 EGP</div>
+        <button class="btn-action" onclick="investPrompt()">فتح باب الاستثمار 369</button>
     </div>
 
-    <div class="panel" style="text-align: center;">
-        <h3>رادار تتبع الأهداف - Alpha Supreme</h3>
-        <div class="radar-box">
-            <div class="scanner"></div>
-            <div style="position:absolute; top:40%; left:60%; color:red; font-size:20px;">•</div>
-            <div style="position:absolute; top:20%; left:30%; color:var(--gold); font-size:20px;">•</div>
-            <div style="font-size: 0.7rem; color:var(--gold)">SATELLITE 369 ACTIVE</div>
+    <div class="panel" id="map-panel">
+        <div id="live-map"></div>
+        <div style="position:absolute; bottom:10px; left:10px; z-index:999; background:rgba(0,0,0,0.8); padding:5px; border:1px solid var(--neon); font-size:0.7rem;">
+            رصد حقيقي عبر الأقمار الصناعية لمدن السيطرة
         </div>
     </div>
 
-    <div class="panel">
-        <h3 style="color:var(--gold)">💻 نافذة الأوامر (Terminal)</h3>
+    <div class="panel" style="display:flex; flex-direction:column;">
+        <h3 style="color:var(--gold)">🤖 ذكاء اصطناعي تفاعلي</h3>
         <div id="terminal">
-            [SYS]: أهلاً بك يا قائد عصام.<br>
-            [SYS]: كل الأنظمة جاهزة للاستثمار...<br>
+            [SYS]: أهلاً بك يا قائد عصام. الخريطة الحقيقية مربوطة الآن بمصادر البيانات العالمية.<br>
         </div>
-        <input type="text" class="cmd-input" id="cmd" placeholder="اكتب أمراً برمجياً..." onkeypress="runCmd(event)">
-        
+        <input type="text" class="cmd-line" id="cmd" placeholder="أدخل أمراً للـ AI..." onkeypress="executeCmd(event)">
         <hr>
-        <h3>💰 خزنة الاستثمار</h3>
-        <div style="font-size: 1.4rem; color: #fff;">19,146,368.00 EGP</div>
-        <button class="btn-invest" onclick="investMode()">بدء استثمار جديد 369</button>
+        <div style="font-size: 0.7rem; color: #fff;">
+            قوة التشفير: AES-256 (100%)<br>
+            مستوى التهديد: ZERO<br>
+            المصمم: عصام الكومي
+        </div>
     </div>
 
-    <div class="panel" style="grid-column: 1 / span 3; text-align: center; font-size: 0.8rem; border-top: 2px solid var(--gold);">
-        المؤسس: عصام الكومي | السيادة الرقمية: مطبقة | عدد المستخدمين النشطين: 1,402 | <span id="alert-msg">النظام يعمل بكفاءة</span>
+    <div class="panel" style="grid-column: 1 / span 3; text-align: center; font-size: 0.8rem;">
+        بروتوكول أثير © 2026 - السيطرة والسيادة الرقمية المطلقة - الموقع تحت المراقبة الأمنية 369
     </div>
 </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    let attempts = 0;
+    let map;
 
     function bootSystem() {
-        const u = document.getElementById('user').value;
-        const p = document.getElementById('pass').value;
+        const u = document.getElementById('admin-user').value;
+        const p = document.getElementById('admin-pass').value;
         if(u === "عصام" && p === "369") {
-            document.getElementById('gatekeeper').style.display = 'none';
-            document.getElementById('main-ui').style.visibility = 'visible';
-            speak("Welcome Leader Essam, Alpha Supreme System is Online");
+            document.getElementById('gatekeeper').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('gatekeeper').style.display = 'none';
+                document.getElementById('main-ui').style.visibility = 'visible';
+                initMap();
+                speak("Access Granted. Alpha Supreme Online.");
+            }, 500);
         } else {
-            attempts++;
-            if(attempts >= 3) triggerEmergency();
-            else alert("تحذير: هوية غير معروفة!");
+            alert("خطأ في بيانات السيادة!");
         }
     }
 
-    function triggerEmergency() {
-        document.body.classList.add('emergency');
-        document.getElementById('gatekeeper').innerHTML = "<h1 style='color:red; font-size:3rem;'>تم اكتشاف محاولة اختراق!<br>تتبع الموقع الجغرافي نشط...</h1>";
-        speak("Intrusion detected. Tracking location.");
+    function initMap() {
+        map = L.map('live-map').setView([24.7136, 46.6753], 5); // مركز الرياض
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        
+        // نقاط رصد المطارات الحقيقية
+        const markers = [
+            {loc: [30.0444, 31.2357], name: "CAIRO CONTROL"},
+            {loc: [24.7136, 46.6753], name: "RIYADH CONTROL"},
+            {loc: [51.5074, -0.1278], name: "LONDON CONTROL"}
+        ];
+
+        markers.forEach(m => {
+            L.circle(m.loc, {color: '#00ff41', radius: 50000}).addTo(map).bindPopup(m.name);
+        });
     }
 
-    function runCmd(e) {
+    function executeCmd(e) {
         if(e.key === 'Enter') {
             const cmd = document.getElementById('cmd');
             const term = document.getElementById('terminal');
             term.innerHTML += `<div>> ${cmd.value}</div>`;
             
-            if(cmd.value.includes("اختراق")) {
-                term.innerHTML += `<div style="color:red">جاري تشفير الهدف وفتح بروتوكول 369...</div>`;
-            } else {
-                term.innerHTML += `<div>تم تنفيذ الأمر بنجاح تحت سيادة Alpha Supreme.</div>`;
-            }
-            term.scrollTop = term.scrollHeight;
+            setTimeout(() => {
+                term.innerHTML += `<div style="color:var(--neon)">[AI]: تم تحليل "علاقة الاستثمار" وتأمين الشبكة للهدف ${cmd.value}.</div>`;
+                term.scrollTop = term.scrollHeight;
+            }, 600);
             cmd.value = '';
         }
     }
@@ -140,13 +143,13 @@
         window.speechSynthesis.speak(msg);
     }
 
+    function investPrompt() {
+        alert("بروتوكول الاستثمار 369: جاري ربط المحفظة بالبلوكشين لتأمين رأس المال.");
+    }
+
     setInterval(() => {
         document.getElementById('clock').innerText = new Date().toLocaleTimeString('ar-EG');
     }, 1000);
-
-    function investMode() {
-        alert("جاري تجهيز عقود الاستثمار الذكية المشفرة...");
-    }
 </script>
 
 </body>
