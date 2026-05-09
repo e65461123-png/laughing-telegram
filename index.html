@@ -2,69 +2,83 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Aether | Nature Breaker Ultimate</title>
     <style>
-        :root { --neon: #00ff41; --gold: #ffd700; --bg: #000; --danger: #ff003c; }
-        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; overflow-x: hidden; }
+        :root { --neon: #00ff41; --gold: #ffd700; --bg: #000; }
+        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
         
-        /* 1. لوحة الأرصدة والوقت (Header) */
-        .top-nav { display: flex; justify-content: space-around; padding: 10px; border-bottom: 2px solid var(--neon); background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 100; }
-        .stat { text-align: center; font-size: 0.8rem; }
+        /* شريط الأرصدة العلوي */
+        .top-nav { display: flex; justify-content: space-around; padding: 10px; border-bottom: 2px solid var(--neon); background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 1000; font-size: 0.7rem; }
         .val { color: var(--neon); font-weight: bold; display: block; }
 
-        /* 2. منطقة الرصد والطيارات (Earth/Radar) */
-        .main-display { padding: 20px; text-align: center; }
-        #mapView { width: 100%; height: 350px; border: 1px solid var(--neon); border-radius: 10px; margin-bottom: 20px; }
+        /* منطقة الرادار */
+        .main-display { padding: 10px; text-align: center; }
+        #mapView { width: 100%; height: 300px; border: 1px solid var(--neon); border-radius: 10px; }
         
-        /* 3. دائرة عين الغراب (Nature Breaker Core) */
-        .core-circle { width: 180px; height: 180px; border: 4px double var(--gold); border-radius: 50%; margin: 20px auto; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold); position: relative; }
-        .core-circle::after { content: ''; position: absolute; width: 100%; height: 100%; border: 1px solid var(--neon); border-radius: 50%; animation: pulse 2s infinite; }
+        /* عين الغراب */
+        .core-circle { width: 150px; height: 150px; border: 4px double var(--gold); border-radius: 50%; margin: 20px auto; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold); }
 
-        /* 4. البوابات (Cosmos/Satellite) */
-        #gateView { width: 100%; height: 500px; border: 3px solid var(--gold); display: none; margin-top: 20px; }
+        /* بوابة الكون */
+        #gateView { width: 100%; height: 400px; border: 3px solid var(--gold); display: none; margin-top: 10px; }
 
-        /* 5. مركز الأوامر (Command Input) */
-        .cmd-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 2px solid var(--neon); padding: 15px; display: flex; align-items: center; box-sizing: border-box; }
-        #cmdInput { background: transparent; border: none; color: var(--neon); width: 80%; font-size: 1.2rem; outline: none; padding-left: 15px; }
-        .prompt { color: var(--neon); font-weight: bold; font-size: 1.2rem; }
+        /* شريط الأوامر الجديد (واضح ومرتفع) */
+        .cmd-bar { 
+            position: fixed; 
+            bottom: 20px; /* رفعت الشريط لفوق شوية */
+            left: 5%;
+            width: 90%; 
+            background: #111; 
+            border: 2px solid var(--neon); 
+            border-radius: 50px; /* خليته شكل كبسولة عشان يبان */
+            padding: 10px 20px; 
+            display: flex; 
+            align-items: center; 
+            box-sizing: border-box; 
+            z-index: 9999;
+            box-shadow: 0 0 15px var(--neon);
+        }
+        #cmdInput { 
+            background: transparent; 
+            border: none; 
+            color: white; 
+            width: 100%; 
+            font-size: 1.1rem; 
+            outline: none; 
+            margin-left: 10px;
+        }
+        .prompt { color: var(--neon); font-weight: bold; }
 
-        @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.3); opacity: 0; } }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
-        <div class="stat">TIME (CAIRO)<span id="clock" class="val">--:--:--</span></div>
-        <div class="stat">BITCOIN<span class="val">$84,312.50</span></div>
-        <div class="stat">GOLD ASSET<span class="val" style="color:var(--gold)">$2,684.10</span></div>
-        <div class="stat">369 STATUS<span class="val">SECURED</span></div>
+        <div class="stat">TIME<span id="clock" class="val">--:--</span></div>
+        <div class="stat">BITCOIN<span class="val">$84.3K</span></div>
+        <div class="stat">GOLD<span class="val" style="color:var(--gold)">$2.6K</span></div>
+        <div class="stat">369<span class="val">LOCKED</span></div>
     </div>
 
     <div class="main-display">
-        <h3>GROUND & AIR RADAR (ACTIVE)</h3>
         <iframe id="mapView" src="https://www.windy.com/?30.044,31.236,6"></iframe>
-
+        
         <div class="core-circle">
-            <h2 style="color:var(--gold); margin:0;">RAVEN EYE</h2>
-            <small style="color:var(--neon)">NATURE BREAKER V4</small>
+            <h3 style="color:var(--gold); margin:0;">RAVEN EYE</h3>
+            <small style="color:var(--neon)">MASTER EDITION</small>
         </div>
 
-        <div id="log" style="color:var(--neon); font-size: 0.9rem;">READY FOR SOVEREIGN INPUT...</div>
-
+        <div id="log" style="color:var(--neon); font-size: 0.8rem; margin-bottom: 20px;">AWAITING COMMAND...</div>
         <iframe id="gateView" src=""></iframe>
     </div>
 
     <div class="cmd-bar">
-        <span class="prompt">MASTER_CMD></span>
-        <input type="text" id="cmdInput" placeholder="اكتب /master أو /cosmos أو /369..." onkeypress="run(event)">
+        <span class="prompt">></span>
+        <input type="text" id="cmdInput" placeholder="اكتب هنا: /master أو /cosmos" onkeypress="run(event)">
     </div>
 
     <script>
-        // ساعة حية دقيقة
-        setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB');
-        }, 1000);
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB'); }, 1000);
 
         function run(e) {
             if (e.key === "Enter") {
@@ -73,20 +87,16 @@
                 const gate = document.getElementById('gateView');
 
                 if (cmd === "/cosmos") {
-                    log.innerText = "OPENING COSMIC GATE... SCANNING SECTOR 369";
+                    log.innerText = "COSMOS PORTAL OPENED.";
                     gate.src = "https://sky.esa.int/esasky-embed/?target=NGC%201300&zoom=0.5";
                     gate.style.display = "block";
                     gate.scrollIntoView({ behavior: 'smooth' });
                 } else if (cmd === "/master") {
-                    log.innerText = "ACCESS GRANTED. WELCOME MASTER ESSAM ELKOMY. VAULT UNLOCKED.";
+                    log.innerText = "WELCOME MASTER ESSAM. SYSTEMS READY.";
                     log.style.color = "var(--gold)";
-                    alert("⚠️ السيادة الكاملة مفعلة: الخزنة والأرصدة تحت تصرفك الآن.");
+                    document.querySelector('.top-nav').style.borderColor = "var(--gold)";
                 } else if (cmd === "/369") {
-                    log.innerText = "FREQUENCY SYNCED. SYSTEM SECURED.";
-                    log.style.color = "var(--neon)";
-                } else {
-                    log.innerText = "UNKNOWN COMMAND. ACCESS DENIED.";
-                    log.style.color = "var(--danger)";
+                    log.innerText = "369 FREQUENCY SYNCED.";
                 }
                 document.getElementById('cmdInput').value = "";
             }
