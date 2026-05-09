@@ -1,13 +1,18 @@
-<div id="sovereign-status">
-    <p>CONTRACT STATUS: <span style="color: #00ff00;">ACTIVE</span></p>
-    <p>OWNER: <span id="master-id">ESSAM ELKOMY 369</span></p>
-</div>
-
-<button onclick="activateRadar()" class="master-btn">ACTIVATE SATELLITE 369</button>
-
-<script>
-function activateRadar() {
-    alert("System Initialized... Connecting to Aether Satellites.");
-    // هنا نربط الكود بخرائط حية أو بيانات رادارية
+/* ستايل زر السيادة */
+.master-btn {
+    background: transparent;
+    border: 2px solid #ffd700;
+    color: #ffd700;
+    padding: 15px 30px;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    transition: 0.3s;
 }
-</script>
+
+.master-btn:hover {
+    background: #ffd700;
+    color: #000;
+    box-shadow: 0 0 30px #ffd700;
+}
