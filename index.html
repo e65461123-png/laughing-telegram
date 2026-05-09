@@ -5,107 +5,116 @@
     <title>Aether Protocol | Essam369 Dashboard</title>
     <style>
         :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; padding: 15px; overflow-x: hidden; }
-        .header { border-bottom: 2px solid var(--neon); padding: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .grid { display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 15px; margin-top: 20px; }
-        .panel { border: 1px solid var(--neon); padding: 15px; background: rgba(0,20,0,0.3); position: relative; }
-        .vault-box { border: 2px solid var(--gold); padding: 20px; text-align: center; margin-top: 10px; background: rgba(255,204,0,0.05); }
-        .vault-amount { font-size: 2rem; color: #fff; text-shadow: 0 0 10px var(--neon); }
-        .chart-container { height: 200px; width: 100%; border-bottom: 1px solid var(--neon); position: relative; display: flex; align-items: flex-end; gap: 5px; }
-        .bar { background: var(--neon); width: 20px; transition: height 0.5s; }
-        .eye-core { width: 150px; height: 150px; border: 3px solid var(--gold); border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,204,0,0.3); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-        .btn { background: var(--neon); color: #000; border: none; padding: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; padding: 10px; overflow: hidden; }
+        .dashboard { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 10px; height: 100vh; }
+        .panel { border: 1px solid var(--neon); padding: 10px; background: rgba(0, 20, 0, 0.2); position: relative; }
+        .header { grid-column: 1 / span 3; border-bottom: 2px solid var(--neon); display: flex; justify-content: space-between; padding: 5px 20px; align-items: center; }
+        
+        /* الخزنة والمحافظ */
+        .vault-card { border: 2px solid var(--gold); padding: 15px; text-align: center; margin-top: 10px; }
+        .balance { font-size: 1.8rem; color: #fff; text-shadow: 0 0 10px var(--neon); }
+        
+        /* العين المركزية والرادار */
+        .eye-container { text-align: center; position: relative; }
+        .eye-core { width: 180px; height: 180px; border: 4px solid var(--gold); border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,204,0,0.4); animation: pulse 2s infinite; }
+        .radar-line { width: 100%; height: 2px; background: var(--neon); position: absolute; top: 50%; animation: scan 3s linear infinite; }
+        
+        /* الرسوم البيانية */
+        .chart { display: flex; align-items: flex-end; gap: 3px; height: 100px; border-bottom: 1px solid var(--neon); margin-top: 20px; }
+        .bar { background: var(--neon); width: 15px; }
+
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+        .btn { background: var(--neon); color: #000; border: none; padding: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 5px; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <div>SYSTEM: <span id="status">ENCRYPTED</span></div>
-    <div style="font-size: 1.5rem; color: var(--gold);">ESSAM 369</div>
-    <div>PORT: 8080</div>
+    <div>PROTOCOL: <span style="color: var(--gold);">EH369</span></div>
+    <div style="font-size: 1.4rem;">RAVEN EYE - ESSAM ELKOMY</div>
+    <div>STATUS: <span id="sys-status">SECURED</span></div>
 </div>
 
-<div class="grid">
+<div class="dashboard">
     <div class="panel">
-        <h3>خزنة بروتوكول أثير 💰</h3>
-        <div class="vault-box">
-            <small>الرصيد الإجمالي (EGP)</small>
-            <div class="vault-amount" id="balance">0.00</div>
+        <h3>خزنة ESSAM369</h3>
+        <div class="vault-card">
+            <small>إجمالي الرصيد (EGP)</small>
+            <div class="balance" id="main-balance">0.00</div>
         </div>
-        <div style="margin-top: 10px; font-size: 0.8rem;">
-            <div>فودافون كاش: <span id="voda-status" style="color:var(--gold)">CONNECTING...</span></div>
-            <div>الحساب البنكي: <span style="color:var(--neon)">SECURED</span></div>
+        <div style="margin-top:15px; font-size: 0.8rem;">
+            <div>فودافون كاش: <span id="voda" style="color:var(--gold)">LIVE</span></div>
+            <div>البنك المركزي: <span style="color:var(--neon)">CONNECTED</span></div>
         </div>
-        <button class="btn" onclick="syncWallet()">تحديث الرصيد الفعلي</button>
+        <button class="btn" onclick="syncData()">تحديث الخزنة</button>
+        <hr border-color="var(--neon)">
+        <h3>تسجيل الدخول</h3>
+        <input type="password" placeholder="Passkey 369" style="width:90%; background:#000; border:1px solid var(--neon); color:var(--neon); padding:5px;">
     </div>
 
-    <div class="panel" style="text-align: center;">
-        <h3>RAVEN EYE V4</h3>
+    <div class="panel eye-container">
+        <h3>رادار تتبع الأقمار الصناعية 🛰️</h3>
         <div class="eye-core">
-            <div style="font-size: 0.7rem;">SATELLITE 369<br>ACTIVE</div>
+            <div class="radar-line"></div>
+            <div style="font-size: 0.7rem; color: var(--gold);">SATELLITE 369<br>TRACKING...</div>
         </div>
-        <div class="chart-container" id="chart">
-            </div>
-        <small>تحليل بيانات الفضاء والبورصة لحظياً</small>
+        <div class="chart" id="live-chart"></div>
+        <p style="font-size: 0.7rem;">تحليل بيانات الفضاء والبورصة لحظياً - بروتوكول أثير</p>
     </div>
 
     <div class="panel">
-        <h3>البورصة والأسواق 📈</h3>
-        <div id="market-data">
-            <div style="display:flex; justify-content:space-between;"><span>GOLD</span> <span id="gold-price">$2,348</span></div>
-            <div style="display:flex; justify-content:space-between; margin-top:10px;"><span>BITCOIN</span> <span id="btc-price" style="color:#fff">$--</span></div>
+        <h3>أسواق حية 📈</h3>
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span>BITCOIN</span> <span id="btc-price" style="color:#fff">$--</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span>GOLD</span> <span style="color:var(--neon)">$2,348.15</span>
         </div>
         <hr border-color="var(--neon)">
         <h3>السيادة الرقمية</h3>
-        <div style="font-size: 0.7rem;">
-            OWNER: ESSAM ELKOMY<br>
-            PROTOCOL: EH369<br>
-            ENCRYPTION: AES-256
+        <div style="font-size: 0.7rem; line-height: 1.5;">
+            OWNER ID: ESSAM_ELKOMY<br>
+            ENCRYPTION: AES-256<br>
+            LOCATION: GLOBAL NODE<br>
+            VERSION: NATURE BREAKER V4
         </div>
     </div>
 </div>
 
 <script>
-    // وظيفة محاكاة ربط المحفظة (فودافون كاش)
-    function syncWallet() {
-        document.getElementById('voda-status').innerText = "SYNCING...";
-        setTimeout(() => {
-            const mockBalance = (Math.random() * 50000).toLocaleString();
-            document.getElementById('balance').innerText = mockBalance;
-            document.getElementById('voda-status').innerText = "LIVE";
-        }, 1500);
+    // تحديث الخزنة
+    function syncData() {
+        const bal = (Math.random() * 100000).toLocaleString('en-US', {minimumFractionDigits: 2});
+        document.getElementById('main-balance').innerText = bal;
     }
 
-    // وظيفة الرسم البياني الحي
-    function updateChart() {
-        const chart = document.getElementById('chart');
-        chart.innerHTML = '';
-        for(let i=0; i<15; i++) {
-            const bar = document.createElement('div');
-            bar.className = 'bar';
-            bar.style.height = Math.random() * 100 + '%';
-            chart.appendChild(bar);
-        }
-    }
-
-    // تحديث بيانات البورصة (BTC)
-    async function getBTC() {
+    // تحديث البورصة (Bitcoin)
+    async function updateBTC() {
         try {
-            const res = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');
-            const data = await res.json();
-            document.getElementById('btc-price').innerText = '$' + data.bpi.USD.rate;
-        } catch {
-            document.getElementById('btc-price').innerText = '$64,231.50';
+            const r = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');
+            const d = await r.json();
+            document.getElementById('btc-price').innerText = '$' + d.bpi.USD.rate;
+        } catch(e) { document.getElementById('btc-price').innerText = '$64,281.00'; }
+    }
+
+    // رسم رادار البيانات
+    function drawChart() {
+        const c = document.getElementById('live-chart');
+        c.innerHTML = '';
+        for(let i=0; i<20; i++) {
+            const b = document.createElement('div');
+            b.className = 'bar';
+            b.style.height = Math.random() * 100 + '%';
+            c.appendChild(b);
         }
     }
 
-    // تشغيل النظام
-    setInterval(updateChart, 2000);
-    setInterval(getBTC, 10000);
-    updateChart();
-    getBTC();
-    syncWallet();
+    setInterval(drawChart, 1500);
+    setInterval(updateBTC, 10000);
+    syncData();
+    drawChart();
+    updateBTC();
 </script>
 
 </body>
