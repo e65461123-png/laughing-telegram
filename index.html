@@ -1,6 +1,23 @@
 <!DOCTYPE html><div class="satellite-container">
     <div class="map-overlay">
-        <div class="sat-point" style="top: 20%; left: 30%;"></div>
+        <div class="sat-point"function handleCommand(event) {
+    if (event.key === "Enter") {
+        const cmd = document.getElementById('masterCommand').value.toLowerCase();
+        const log = document.getElementById('commandOutput');
+        
+        if (cmd === "/369") {
+            log.innerHTML = "SYSTEM: SEED OF LIFE ACTIVATED. SOVEREIGNTY SECURED.";
+        } else if (cmd === "/master") {
+            log.innerHTML = "SYSTEM: WELCOME MASTER ESSAM ELKOMY. STATUS: OWNER.";
+        } else if (cmd === "/sat") {
+            log.innerHTML = "SYSTEM: 3 SATELLITES TRACKING LIVE... ENCRYPTED DATA STREAMING.";
+        } else {
+            log.innerHTML = "SYSTEM: UNKNOWN COMMAND. TRY /369 OR /MASTER.";
+        }
+        document.getElementById('masterCommand').value = "";
+    }
+}
+ style="top: 20%; left: 30%;"></div>
         <div class="sat-point" style="top: 50%; left: 70%;"></div>
         <div class="sat-point" style="top: 80%; left: 40%;"></div>
     </div>
