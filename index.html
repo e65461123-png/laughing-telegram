@@ -2,145 +2,111 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raven Eye | Nature Breaker V4</title>
+    <title>Aether Protocol | Essam369 Dashboard</title>
     <style>
-        :root {
-            --neon-green: #00ff41;
-            --dark-bg: #000000;
-            --panel-border: #1a3a1a;
-            --gold: #ffcc00;
-        }
-
-        body {
-            background-color: var(--dark-bg);
-            color: var(--neon-green);
-            font-family: 'Orbitron', sans-serif; /* يفضل استدعاء خط تقني */
-            margin: 0;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* حاوية الساعات العالمية */
-        .clocks-container {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            font-size: 0.8rem;
-            margin-bottom: 20px;
-        }
-        .clock { text-align: center; }
-        .time { font-size: 1.2rem; display: block; margin-top: 5px; }
-
-        /* حالة الأصول والأسواق */
-        .assets-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            width: 100%;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .asset-val { font-size: 1.1rem; color: #fff; display: block; }
-        .status-secured { text-shadow: 0 0 10px var(--neon-green); }
-
-        /* الدائرة المركزية Raven Eye */
-        .main-eye {
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            border: 4px solid var(--gold);
-            box-shadow: 0 0 50px rgba(255, 204, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 40px 0;
-            background: radial-gradient(circle, rgba(255,204,0,0.1) 0%, transparent 70%);
-        }
-        .eye-title { color: var(--gold); font-size: 1.4rem; letter-spacing: 2px; }
-        .eye-subtitle { font-size: 0.7rem; margin-top: 5px; }
-
-        /* الصناديق الجانبية */
-        .info-box {
-            border: 1px solid var(--neon-green);
-            padding: 10px;
-            width: 140px;
-            font-size: 0.6rem;
-            position: relative;
-        }
-        .info-box::before {
-            content: ""; position: absolute; left: -2px; top: 0; 
-            height: 100%; width: 4px; background: var(--gold);
-        }
-
-        .row { display: flex; justify-content: space-between; width: 100%; max-width: 400px; }
-
-        footer {
-            margin-top: auto;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.7rem;
-            border-top: 1px solid var(--panel-border);
-            padding-top: 10px;
-        }
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; padding: 15px; overflow-x: hidden; }
+        .header { border-bottom: 2px solid var(--neon); padding: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .grid { display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 15px; margin-top: 20px; }
+        .panel { border: 1px solid var(--neon); padding: 15px; background: rgba(0,20,0,0.3); position: relative; }
+        .vault-box { border: 2px solid var(--gold); padding: 20px; text-align: center; margin-top: 10px; background: rgba(255,204,0,0.05); }
+        .vault-amount { font-size: 2rem; color: #fff; text-shadow: 0 0 10px var(--neon); }
+        .chart-container { height: 200px; width: 100%; border-bottom: 1px solid var(--neon); position: relative; display: flex; align-items: flex-end; gap: 5px; }
+        .bar { background: var(--neon); width: 20px; transition: height 0.5s; }
+        .eye-core { width: 150px; height: 150px; border: 3px solid var(--gold); border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,204,0,0.3); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        .btn { background: var(--neon); color: #000; border: none; padding: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="clocks-container">
-        <div class="clock">CAIRO <span class="time" id="cairo-time">--:--:--</span></div>
-        <div class="clock">LONDON <span class="time" id="london-time">--:--:--</span></div>
-        <div class="clock">NY <span class="time" id="ny-time">--:--:--</span></div>
-        <div class="clock">TOKYO <span class="time" id="tokyo-time">--:--:--</span></div>
+<div class="header">
+    <div>SYSTEM: <span id="status">ENCRYPTED</span></div>
+    <div style="font-size: 1.5rem; color: var(--gold);">ESSAM 369</div>
+    <div>PORT: 8080</div>
+</div>
+
+<div class="grid">
+    <div class="panel">
+        <h3>خزنة بروتوكول أثير 💰</h3>
+        <div class="vault-box">
+            <small>الرصيد الإجمالي (EGP)</small>
+            <div class="vault-amount" id="balance">0.00</div>
+        </div>
+        <div style="margin-top: 10px; font-size: 0.8rem;">
+            <div>فودافون كاش: <span id="voda-status" style="color:var(--gold)">CONNECTING...</span></div>
+            <div>الحساب البنكي: <span style="color:var(--neon)">SECURED</span></div>
+        </div>
+        <button class="btn" onclick="syncWallet()">تحديث الرصيد الفعلي</button>
     </div>
 
-    <div class="assets-grid">
-        <div>GOLD ASSET <span class="asset-val" style="color: var(--neon-green);">$2,348.12</span></div>
-        <div>369 STATUS <span class="asset-val status-secured">SECURED</span></div>
-        <div>BITCOIN LIVE <span class="asset-val" id="btc-val">$80,281.40</span></div>
+    <div class="panel" style="text-align: center;">
+        <h3>RAVEN EYE V4</h3>
+        <div class="eye-core">
+            <div style="font-size: 0.7rem;">SATELLITE 369<br>ACTIVE</div>
+        </div>
+        <div class="chart-container" id="chart">
+            </div>
+        <small>تحليل بيانات الفضاء والبورصة لحظياً</small>
     </div>
 
-    <div class="row">
-        <div class="info-box">🛰️ SATELLITE 369<br>LIVE EARTH VIEW</div>
-        <div class="info-box" style="text-align: right;">🌌 COSMOS PORTAL<br>GALAXY MONITOR</div>
+    <div class="panel">
+        <h3>البورصة والأسواق 📈</h3>
+        <div id="market-data">
+            <div style="display:flex; justify-content:space-between;"><span>GOLD</span> <span id="gold-price">$2,348</span></div>
+            <div style="display:flex; justify-content:space-between; margin-top:10px;"><span>BITCOIN</span> <span id="btc-price" style="color:#fff">$--</span></div>
+        </div>
+        <hr border-color="var(--neon)">
+        <h3>السيادة الرقمية</h3>
+        <div style="font-size: 0.7rem;">
+            OWNER: ESSAM ELKOMY<br>
+            PROTOCOL: EH369<br>
+            ENCRYPTION: AES-256
+        </div>
     </div>
+</div>
 
-    <div class="main-eye">
-        <div class="eye-title">RAVEN EYE</div>
-        <div class="eye-subtitle">NATURE BREAKER V4</div>
-    </div>
+<script>
+    // وظيفة محاكاة ربط المحفظة (فودافون كاش)
+    function syncWallet() {
+        document.getElementById('voda-status').innerText = "SYNCING...";
+        setTimeout(() => {
+            const mockBalance = (Math.random() * 50000).toLocaleString();
+            document.getElementById('balance').innerText = mockBalance;
+            document.getElementById('voda-status').innerText = "LIVE";
+        }, 1500);
+    }
 
-    <div class="row">
-        <div class="info-box">🛡️ SECURITY<br>AES-256_ACTIVE</div>
-        <div class="info-box" style="text-align: right;">📄 CONTRACT<br>ESSAM_OWNED</div>
-    </div>
-
-    <footer>
-        <span>SYSTEM: ONLINE</span>
-        <span>AETHER PROTOCOL © 2026</span>
-    </footer>
-
-    <script>
-        function updateAll() {
-            const now = new Date();
-            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-
-            document.getElementById('cairo-time').innerText = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Africa/Cairo' });
-            document.getElementById('london-time').innerText = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Europe/London' });
-            document.getElementById('ny-time').innerText = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'America/New_York' });
-            document.getElementById('tokyo-time').innerText = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Asia/Tokyo' });
-
-            // محاكاة تغير طفيف في سعر البيتكوين ليعطي إحساساً بالحياة
-            const baseBtc = 80281.40;
-            const drift = (Math.random() - 0.5) * 10;
-            document.getElementById('btc-val').innerText = `$${(baseBtc + drift).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+    // وظيفة الرسم البياني الحي
+    function updateChart() {
+        const chart = document.getElementById('chart');
+        chart.innerHTML = '';
+        for(let i=0; i<15; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            bar.style.height = Math.random() * 100 + '%';
+            chart.appendChild(bar);
         }
+    }
 
-        setInterval(updateAll, 1000);
-        updateAll();
-    </script>
+    // تحديث بيانات البورصة (BTC)
+    async function getBTC() {
+        try {
+            const res = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');
+            const data = await res.json();
+            document.getElementById('btc-price').innerText = '$' + data.bpi.USD.rate;
+        } catch {
+            document.getElementById('btc-price').innerText = '$64,231.50';
+        }
+    }
+
+    // تشغيل النظام
+    setInterval(updateChart, 2000);
+    setInterval(getBTC, 10000);
+    updateChart();
+    getBTC();
+    syncWallet();
+</script>
+
 </body>
 </html>
