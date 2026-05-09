@@ -1,128 +1,578 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aether | Operational Control</title>
-    <style>
-        :root { --neon: #00ff41; --gold: #ffd700; --bg: #000; --danger: #ff003c; }
-        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; padding-bottom: 160px; overflow-x: hidden; }
-        
-        /* شريط الأرصدة العلوي */
-        .top-nav { display: grid; grid-template-columns: repeat(3, 1fr); padding: 12px; border-bottom: 2px solid var(--neon); background: #000; position: sticky; top: 0; z-index: 1000; font-size: 0.7rem; text-align: center; }
-        .val { color: var(--neon); font-weight: bold; display: block; font-size: 0.85rem; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        /* لوحة أيقونات العمل والسحب */
-        .action-hub { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
-        .btn-action { 
-            background: rgba(255, 215, 0, 0.05); 
-            border: 2px solid var(--gold); 
-            border-radius: 15px; 
-            padding: 25px 10px; 
-            text-align: center; 
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
-        }
-        .btn-action:active { transform: scale(0.92); background: var(--gold); color: black; }
-        .icon { font-size: 2.2rem; display: block; margin-bottom: 8px; }
-        .btn-label { font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
+<title>AETHER X — Digital Intelligence System</title>
 
-        /* شاشة سحب الرصيد المنبثقة */
-        #withdrawScreen { 
-            display: none; 
-            position: fixed; 
-            top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); 
-            background: #0a0a0a; 
-            border: 3px solid var(--gold); 
-            padding: 25px; 
-            z-index: 10000; 
-            width: 85%; 
-            border-radius: 20px; 
-            text-align: center;
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
-        }
-        .withdraw-input { background: #000; border: 1px solid var(--neon); color: var(--neon); padding: 12px; width: 80%; margin: 15px 0; font-size: 1.2rem; text-align: center; border-radius: 8px; }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
-        /* مركز الأوامر السفلي */
-        .cmd-center { position: fixed; bottom: 20px; left: 5%; width: 90%; background: #000; border: 2px solid var(--neon); border-radius: 20px; padding: 15px; z-index: 9999; box-shadow: 0 0 20px var(--neon); }
-        #cmdInput { background: transparent; border: none; color: white; width: 100%; font-size: 1.1rem; outline: none; text-align: center; }
-        #log { color: var(--neon); font-size: 0.75rem; text-align: center; margin-bottom: 8px; font-weight: bold; }
-    </style>
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+body{
+background:#02040a;
+overflow-x:hidden;
+color:white;
+}
+
+/* ================= BACKGROUND ================= */
+
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at center,#00ffff22 0%,transparent 60%),
+linear-gradient(180deg,#000000,#020611,#000);
+z-index:-5;
+}
+
+/* Matrix */
+
+.matrix{
+position:fixed;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:-4;
+opacity:.12;
+}
+
+.matrix span{
+position:absolute;
+top:-100px;
+color:#00ffff;
+font-size:14px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(120vh);
+}
+}
+
+/* ================= NAVBAR ================= */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:20px 50px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,.4);
+backdrop-filter:blur(10px);
+z-index:999;
+border-bottom:1px solid #00ffff33;
+}
+
+.logo{
+font-size:30px;
+font-weight:900;
+color:#00ffff;
+text-shadow:0 0 20px #00ffff;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+}
+
+nav ul li a{
+text-decoration:none;
+color:white;
+transition:.3s;
+}
+
+nav ul li a:hover{
+color:#00ffff;
+text-shadow:0 0 10px #00ffff;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:40px;
+position:relative;
+}
+
+.hero-content{
+max-width:1000px;
+}
+
+.hero h1{
+font-size:90px;
+color:#00ffff;
+text-shadow:
+0 0 20px #00ffff,
+0 0 40px #00ffff,
+0 0 80px #00ffff;
+margin-bottom:20px;
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{
+text-shadow:0 0 10px #00ffff;
+}
+to{
+text-shadow:0 0 50px #00ffff;
+}
+}
+
+.hero p{
+font-size:22px;
+line-height:1.8;
+color:#ddd;
+margin-bottom:40px;
+}
+
+.btn{
+padding:18px 45px;
+background:transparent;
+border:2px solid #00ffff;
+color:#00ffff;
+font-size:18px;
+cursor:pointer;
+transition:.4s;
+border-radius:10px;
+box-shadow:0 0 15px #00ffff55;
+}
+
+.btn:hover{
+background:#00ffff;
+color:black;
+box-shadow:0 0 30px #00ffff;
+transform:scale(1.05);
+}
+
+/* ================= SECTION ================= */
+
+section{
+padding:120px 8%;
+position:relative;
+}
+
+.section-title{
+font-size:50px;
+margin-bottom:70px;
+text-align:center;
+color:#00ffff;
+text-shadow:0 0 15px #00ffff;
+}
+
+/* ================= GRID ================= */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+border:1px solid #00ffff33;
+padding:35px;
+border-radius:20px;
+backdrop-filter:blur(15px);
+transition:.4s;
+position:relative;
+overflow:hidden;
+}
+
+.card::before{
+content:"";
+position:absolute;
+width:100%;
+height:5px;
+top:0;
+left:0;
+background:#00ffff;
+box-shadow:0 0 20px #00ffff;
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.02);
+box-shadow:0 0 40px #00ffff22;
+}
+
+.card h3{
+font-size:24px;
+margin-bottom:20px;
+color:#00ffff;
+}
+
+.card p{
+line-height:1.8;
+color:#ccc;
+}
+
+/* ================= TERMINAL ================= */
+
+.terminal{
+background:black;
+padding:40px;
+border-radius:20px;
+border:1px solid #00ff99;
+box-shadow:0 0 40px #00ff9955;
+font-family:monospace;
+color:#00ff99;
+line-height:2;
+font-size:18px;
+overflow:auto;
+height:350px;
+}
+
+.typing{
+border-right:3px solid #00ffff;
+white-space:nowrap;
+overflow:hidden;
+width:0;
+animation:typing 6s steps(40,end) forwards,
+blink .8s infinite;
+}
+
+@keyframes typing{
+to{
+width:100%;
+}
+}
+
+@keyframes blink{
+50%{
+border-color:transparent;
+}
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:25px;
+}
+
+.stat{
+padding:35px;
+background:#08131f;
+border-radius:20px;
+border:1px solid #00ffff33;
+text-align:center;
+box-shadow:0 0 20px #00ffff11;
+}
+
+.stat h2{
+font-size:55px;
+color:#00ffff;
+margin-bottom:15px;
+}
+
+.stat span{
+color:#ccc;
+font-size:18px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+padding:40px;
+text-align:center;
+border-top:1px solid #00ffff33;
+background:#000;
+}
+
+footer h2{
+color:#00ffff;
+margin-bottom:10px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:50px;
+}
+
+nav{
+padding:15px 20px;
+}
+
+nav ul{
+display:none;
+}
+
+.section-title{
+font-size:35px;
+}
+
+}
+
+</style>
 </head>
+
 <body>
 
-    <div class="top-nav">
-        <div>BALANCE<span class="val">$42,900.00</span></div>
-        <div>BTC/USD<span class="val">$84,312</span></div>
-        <div>NODE<span class="val">369-ONLINE</span></div>
-    </div>
+<!-- MATRIX -->
 
-    <div style="text-align: center; padding: 20px 10px;">
-        <h2 style="color: var(--gold); margin: 0; text-shadow: 0 0 10px var(--gold);">MASTER DASHBOARD</h2>
-        <small style="color: var(--neon);">ESSAM ELKOMY | SECURE TERMINAL</small>
-    </div>
+<div class="matrix" id="matrix"></div>
 
-    <div class="action-hub">
-        <div class="btn-action" onclick="showWithdraw()">
-            <span class="icon">💰</span>
-            <span class="btn-label">سحب الأرصدة</span>
-        </div>
-        <div class="btn-action" onclick="startWork()">
-            <span class="icon">⚡</span>
-            <span class="btn-label">مباشرة العمل</span>
-        </div>
-        <div class="btn-action" onclick="alert('جاري مزامنة بيانات الرصد...')">
-            <span class="icon">🛰️</span>
-            <span class="btn-label">الرصد الحي</span>
-        </div>
-        <div class="btn-action" onclick="alert('الخزنة المشفرة AES-256 مفعلة')">
-            <span class="icon">🔐</span>
-            <span class="btn-label">مركز الأمان</span>
-        </div>
-    </div>
+<!-- NAVBAR -->
 
-    <div id="withdrawScreen">
-        <h3 style="color: var(--gold); margin-top: 0;">PORTAL WITHDRAWAL</h3>
-        <p style="font-size: 0.8rem;">رصيدك المتاح: <span style="color:var(--neon)">$42,900</span></p>
-        <input type="number" class="withdraw-input" placeholder="0.00">
-        <div style="display: flex; gap: 10px; justify-content: center;">
-            <button onclick="confirmWithdraw()" style="background: var(--neon); padding: 12px 20px; border: none; font-weight: bold; border-radius: 5px;">تأكيد السحب</button>
-            <button onclick="hideWithdraw()" style="background: var(--danger); color: white; padding: 12px 20px; border: none; border-radius: 5px;">إلغاء</button>
-        </div>
-    </div>
+<nav>
+<div class="logo">AETHER X</div>
 
-    <div class="cmd-center">
-        <div id="log">SYSTEM READY. AWAITING MASTER COMMAND...</div>
-        <input type="text" id="cmdInput" placeholder="أدخل الأوامر السيادية هنا..." onkeypress="run(event)">
-    </div>
+<ul>
+<li><a href="#">HOME</a></li>
+<li><a href="#">AI CORE</a></li>
+<li><a href="#">SYSTEM</a></li>
+<li><a href="#">NETWORK</a></li>
+<li><a href="#">CONTROL</a></li>
+</ul>
+</nav>
 
-    <script>
-        function showWithdraw() { document.getElementById('withdrawScreen').style.display = 'block'; }
-        function hideWithdraw() { document.getElementById('withdrawScreen').style.display = 'none'; }
-        
-        function confirmWithdraw() {
-            alert('جاري توجيه الدفع عبر شبكة فودافون كاش... الماستر عصام في انتظار التأكيد.');
-            hideWithdraw();
-        }
+<!-- HERO -->
 
-        function startWork() {
-            document.getElementById('log').innerText = "WORK CHANNELS INITIALIZED... DATA SYNC ACTIVE.";
-            document.getElementById('log').style.color = "var(--gold)";
-            alert("تم تفعيل قنوات العمل المباشرة بنجاح.");
-        }
+<section class="hero">
 
-        function run(e) {
-            if (e.key === "Enter") {
-                const cmd = document.getElementById('cmdInput').value.toLowerCase();
-                if (cmd === "/master") {
-                    document.getElementById('log').innerText = "ACCESS GRANTED: WELCOME ESSAM ELKOMY.";
-                    document.getElementById('log').style.color = "var(--gold)";
-                }
-                document.getElementById('cmdInput').value = "";
-            }
-        }
-    </script>
+<div class="hero-content">
+
+<h1>AETHER PROTOCOL</h1>
+
+<p class="typing">
+WELCOME TO THE DIGITAL INTELLIGENCE SYSTEM
+</p>
+
+<br><br>
+
+<p>
+منظومة رقمية مستقبلية تجمع الذكاء الاصطناعى،
+الأمن السيبرانى،
+البث المباشر،
+والتحكم الشبكى داخل واجهة Cyberpunk أسطورية.
+</p>
+
+<button class="btn">ENTER SYSTEM</button>
+
+</div>
+
+</section>
+
+<!-- AI CORE -->
+
+<section>
+
+<h2 class="section-title">AI CORE</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>NEURAL AI</h3>
+<p>
+نظام ذكاء اصطناعى متطور لتحليل البيانات والتفاعل الحى.
+</p>
+</div>
+
+<div class="card">
+<h3>CYBER SECURITY</h3>
+<p>
+طبقات حماية متقدمة وتشفير رقمى ومراقبة الشبكات.
+</p>
+</div>
+
+<div class="card">
+<h3>LIVE CONTROL</h3>
+<p>
+لوحة تحكم متكاملة لإدارة البث والأنظمة الحية.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- DASHBOARD -->
+
+<section>
+
+<h2 class="section-title">SYSTEM STATUS</h2>
+
+<div class="dashboard">
+
+<div class="stat">
+<h2 id="cpu">99%</h2>
+<span>CPU POWER</span>
+</div>
+
+<div class="stat">
+<h2 id="network">87%</h2>
+<span>NETWORK</span>
+</div>
+
+<div class="stat">
+<h2 id="shield">100%</h2>
+<span>SECURITY</span>
+</div>
+
+<div class="stat">
+<h2 id="ai">92%</h2>
+<span>AI STATUS</span>
+</div>
+
+</div>
+
+</section>
+
+<!-- TERMINAL -->
+
+<section>
+
+<h2 class="section-title">MATRIX TERMINAL</h2>
+
+<div class="terminal" id="terminal">
+
+> Initializing AETHER X...<br>
+> Connecting Neural Core...<br>
+> Encrypting Quantum Layers...<br>
+> AI System Activated...<br>
+> Live Broadcast Enabled...<br>
+> Threat Detection Online...<br>
+> Welcome Commander...<br>
+
+</div>
+
+</section>
+
+<!-- NETWORK -->
+
+<section>
+
+<h2 class="section-title">GLOBAL NETWORK</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>LIVE MONITORING</h3>
+<p>
+تتبع الشبكات والاتصالات والأنظمة الرقمية لحظة بلحظة.
+</p>
+</div>
+
+<div class="card">
+<h3>QUANTUM DATA</h3>
+<p>
+معالجة وتحليل البيانات الضخمة بسرعات فائقة.
+</p>
+</div>
+
+<div class="card">
+<h3>DIGITAL DOMINATION</h3>
+<p>
+واجهة سيطرة رقمية مستقبلية بطابع Cyberpunk.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+<h2>AETHER X</h2>
+
+<p>
+THE FUTURE OF DIGITAL INTELLIGENCE
+</p>
+
+</footer>
+
+<script>
+
+/* MATRIX EFFECT */
+
+const matrix = document.getElementById("matrix");
+
+for(let i=0;i<120;i++){
+
+let span=document.createElement("span");
+
+span.innerHTML=Math.random()>0.5?"1":"0";
+
+span.style.left=Math.random()*100+"vw";
+
+span.style.animationDuration=(Math.random()*5+3)+"s";
+
+span.style.fontSize=(Math.random()*20+10)+"px";
+
+matrix.appendChild(span);
+
+}
+
+/* LIVE STATS */
+
+function randomStat(id,min,max){
+
+setInterval(()=>{
+
+document.getElementById(id).innerText=
+Math.floor(Math.random()*(max-min)+min)+"%";
+
+},2000);
+
+}
+
+randomStat("cpu",80,100);
+randomStat("network",60,100);
+randomStat("shield",90,100);
+randomStat("ai",70,100);
+
+/* TERMINAL */
+
+const terminal=document.getElementById("terminal");
+
+const logs=[
+"> Scanning Network...",
+"> AI Learning...",
+"> Quantum Encryption Enabled...",
+"> Threat Neutralized...",
+"> Neural Pulse Synced...",
+"> Access Granted...",
+"> Monitoring Systems...",
+"> Cyber Defense Activated..."
+];
+
+setInterval(()=>{
+
+let line=document.createElement("div");
+
+line.innerHTML=logs[Math.floor(Math.random()*logs.length)];
+
+terminal.appendChild(line);
+
+terminal.scrollTop=terminal.scrollHeight;
+
+},2500);
+
+</script>
+
 </body>
 </html>
