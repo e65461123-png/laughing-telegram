@@ -1,4 +1,28 @@
-<!DOCTYPE html>
+<!DOCTYPE html>    <div class="card">
+        <div id="log">Waiting for Master Command...</div>
+        <input type="text" id="cmdInput" placeholder="Enter /master or /369" onkeypress="runCmd(event)">
+    </div>
+
+    <script>
+        function runCmd(e) {
+            if (e.key === "Enter") {
+                const val = document.getElementById('cmdInput').value;
+                const log = document.getElementById('log');
+                if (val === "/master") {
+                    log.innerText = "WELCOME MASTER ESSAM. ACCESS GRANTED.";
+                    log.style.color = "gold";
+                } else if (val === "/369") {
+                    log.innerText = "ENERGY SYNCED. PROTOCOL 369 ACTIVE.";
+                } else {
+                    log.innerText = "UNKNOWN COMMAND.";
+                }
+                document.getElementById('cmdInput').value = "";
+            }
+        }
+    </script>
+</body>
+</html>
+
 <html lang="ar">
 <head>
     <meta charset="UTF-8"><!DOCTYPE html>
