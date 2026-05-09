@@ -1,151 +1,210 @@
-<!DOCTYPE html><div class="satellite-container">
-    <div class="map-overlay">
-        <div class="sat-point"function handleCommand(event) {
-    if (event.key === "Enter") {
-        const cmd = document.getElementById('masterCommand').value.toLowerCase();
-        const log = document.getElementById('commandOutput');
-        
-        if (cmd === "/369") {
-            log.innerHTML = "SYSTEM: SEED OF LIFE ACTIVATED. SOVEREIGNTY SECURED.";
-        } else if (cmd === "/master") {
-            log.innerHTML = "SYSTEM: WELCOME MASTER ESSAM ELKOMY. STATUS: OWNER.";
-        } else if (cmd === "/sat") {
-            log.innerHTML = "SYSTEM: 3 SATELLITES TRACKING LIVE... ENCRYPTED DATA STREAMING.";
-        } else {
-            log.innerHTML = "SYSTEM: UNKNOWN COMMAND. TRY /369 OR /MASTER.";
-        }
-        document.getElementById('masterCommand').value = "";
-    }
-}
- style="top: 20%; left: 30%;"></div>
-        <div class="sat-point" style="top: 50%; left: 70%;"></div>
-        <div class="sat-point" style="top: 80%; left: 40%;"></div>
-    </div>
-    <div class="command-line">
-        <span class="prompt">AETHER_OS_v3.6.9 > </span>
-        <input type="text" id="masterCommand" placeholder="أدخل الأمر السيادي..." onkeypress="handleCommand(event)">
-    </div>
-</div>
-
-<div id="commandOutput" class="output-log"></div>
-
-<html lang="ar" dir="rtl">
-<head><div style="background: #111; border-top: 1px solid #0f0; padding: 5px; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 100;">
-    <marquee behavior="scroll" direction="right" style="color: #0f0; font-size: 0.8rem;">
-        Sovereignty Status: ACTIVE | Gold Price: MONITORING | Bitcoin: LIVE FEED | Aether Protocol v4.0.1 | Master: Essam Elkomy 369 | Welcome to the New Era of Digital Sovereignty...
-    </marquee>
-</div>
-
+<!DOCTYPE html>
+<html lang="ar">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة أثير العملاقة | السيادة الرقمية</title>
+    <title>Aether Protocol | Master Essam Elkomy 369</title>
     <style>
-        body { background: #000; color: #0f0; text-align: center; font-family: 'Orbitron', sans-serif; padding: 10px; overflow-x: hidden; }
-        .container { border: 2px solid #0f0; padding: 20px; border-radius: 15px; display: inline-block; margin-top: 20px; background: #0a0a0a; box-shadow: 0 0 20px #0f0; width: 90%; max-width: 600px; }
-        
-        /* رادار السيادة */
-        .radar-box { width: 120px; height: 120px; border: 2px solid #0f0; border-radius: 50%; position: relative; margin: 15px auto; overflow: hidden; background: repeating-radial-gradient(circle, #000 0, #000 10px, #0f0 11px, #000 12px); }
-        .radar-sweep { position: absolute; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 50%, rgba(0,255,0,0.3) 100%); animation: sweep 3s linear infinite; transform-origin: center; }
-        @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        :root {
+            --neon-green: #00ff41;
+            --dark-bg: #0a0a0a;
+            --glass-bg: rgba(0, 255, 65, 0.05);
+        }
 
-        input, textarea { display: block; margin: 10px auto; padding: 12px; width: 85%; background: #000; border: 1px solid #0f0; color: #0f0; border-radius: 5px; font-size: 1rem; }
-        button { padding: 12px; background: #0f0; color: #000; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 90%; transition: 0.3s; font-size: 1.1rem; }
-        button:hover { background: #fff; box-shadow: 0 0 30px #0f0; }
-        
-        #secure-content { display: none; }
-        .live-data { margin-top: 15px; font-size: 1rem; color: #ffd700; border: 1px solid #ffd700; padding: 10px; border-radius: 10px; background: rgba(255, 215, 0, 0.05); }
-        .id-badge { color: #ffd700; font-weight: bold; border: 1px solid #ffd700; padding: 3px 8px; margin-bottom: 5px; display: inline-block; font-size: 0.7rem; border-radius: 3px; }
-        #messages-display { margin-top: 20px; text-align: right; max-height: 250px; overflow-y: auto; background: #050505; padding: 10px; border: 1px solid #111; }
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header & Status */
+        .header {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--neon-green);
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px var(--neon-green);
+        }
+
+        .status-bar {
+            color: var(--neon-green);
+            font-weight: bold;
+            letter-spacing: 2px;
+            animation: blink 1.5s infinite;
+        }
+
+        /* Grid Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 95%;
+            max-width: 1200px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--neon-green);
+            border-radius: 10px;
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+        }
+
+        /* Radar Section */
+        .radar {
+            width: 150px;
+            height: 150px;
+            border: 2px solid var(--neon-green);
+            border-radius: 50%;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radar::after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(from 0deg, transparent, var(--neon-green));
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0.3;
+            animation: spin 2s linear infinite;
+        }
+
+        /* Live Tickers */
+        .ticker {
+            font-size: 1.2rem;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .price-up { color: var(--neon-green); }
+
+        /* Satellite Map */
+        .map-container {
+            height: 200px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_blank_without_borders.svg') no-repeat center;
+            background-size: contain;
+            position: relative;
+            opacity: 0.6;
+        }
+
+        .sat-point {
+            width: 8px;
+            height: 8px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            position: absolute;
+            animation: pulse 2s infinite;
+        }
+
+        /* Command Center */
+        .command-box {
+            grid-column: 1 / -1;
+            background: #000;
+            padding: 15px;
+            border: 1px solid var(--neon-green);
+        }
+
+        #cmdInput {
+            background: transparent;
+            border: none;
+            color: var(--neon-green);
+            width: 80%;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        /* Animations */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.7); } 70% { transform: scale(2); box-shadow: 0 0 0 10px rgba(0, 255, 65, 0); } 100% { transform: scale(1); } }
+
     </style>
 </head>
 <body>
 
-    <div id="login-screen" class="container">
-        <h2 style="color: #0f0;">مبادرة أثير للخير 🛡️</h2>
-        <p>نظام السيادة الرقمية | EH369</p>
-        <div class="radar-box"><div class="radar-sweep"></div></div>
-        <input type="text" id="user" placeholder="اسم القائد">
-        <input type="password" id="pass" placeholder="كلمة المرور">
-        <button onclick="login()">تفعيل البروتوكول</button>
+    <div class="header">
+        <h1>AETHER PROTOCOL <span style="font-size: 0.5em;">v3.6.9</span></h1>
+        <div class="status-bar">SYSTEM STATUS: SECURED | OWNER: MASTER ESSAM ELKOMY</div>
     </div>
 
-    <div id="secure-content" class="container">
-        <h2 style="color: #fff;">تم الاختراق.. أهلاً يا ماستر 🤝</h2>
-        
-        <div class="live-data">
-            <p>🛰️ رصد الأقمار: <span id="coords" style="font-family: monospace;">Scanning...</span></p>
-            <p>💰 البيتكوين: <span id="btc-price">جاري الجلب...</span></p>
-            <p>🕒 الوقت الذري: <span id="atomic-time">00:00:00</span></p>
+    <div class="dashboard">
+        <div class="card">
+            <h3>LIVE GLOBAL MARKETS</h3>
+            <div class="ticker">BTC/USD: <span id="btcPrice" class="price-up">$80,284.45</span></div>
+            <div class="ticker">GOLD/OZ: <span id="goldPrice" class="price-up">$2,680.12</span></div>
+            <div class="ticker">EGP/USD: <span>48.50</span></div>
         </div>
 
-        <div id="guestbook" style="margin-top: 25px;">
-            <h3>📩 سجل الزوار والولاء</h3>
-            <input type="text" id="v-name" placeholder="اسم العضو الجديد">
-            <textarea id="v-msg" placeholder="رسالة للمبادرة..."></textarea>
-            <button onclick="sendLegacy()">تسجيل البصمة الرقمية</button>
+        <div class="card" style="text-align: center;">
+            <h3>RAVEN EYE RADAR</h3>
+            <div class="radar"></div>
+            <p>Scanning for Sovereignty...</p>
         </div>
 
-        <div id="messages-display">
-            <p style="color: #444;">[النظام جاهز لاستقبال البيانات]</p>
+        <div class="card">
+            <h3>GLOBAL TIME NODES</h3>
+            <div id="clock-cairo">CAIRO: --:--:--</div>
+            <div id="clock-ny">NEW YORK: --:--:--</div>
+            <div id="clock-tokyo">TOKYO: --:--:--</div>
         </div>
-        
-        <p style="font-size: 0.7rem; margin-top: 20px; color: #333;">CONTRACT: ESSAM_OWNED | VERSION: 4.0.1</p>
+
+        <div class="card">
+            <h3>SATELLITE TRACKING 369</h3>
+            <div class="map-container">
+                <div class="sat-point" style="top: 30%; left: 55%;"></div> <div class="sat-point" style="top: 40%; left: 20%;"></div> </div>
+        </div>
+
+        <div class="card command-box">
+            <div id="log">AETHER_OS_v3.6.9 > Welcome, Master. Waiting for command...</div>
+            <div style="display: flex; margin-top: 10px;">
+                <span style="color: var(--neon-green);">CMD> </span>
+                <input type="text" id="cmdInput" placeholder="Enter Command (e.g. /master, /369, /sat)" onkeypress="runCommand(event)">
+            </div>
+        </div>
     </div>
 
     <script>
-        function login() {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            if(u === 'Essam' && p === '369') { 
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('secure-content').style.display = 'block';
-                speak("Welcome Master Essam. System is Live.");
-                startEngine();
-            } else {
-                alert('خطأ في الهوية.. الدخول للمصرح لهم فقط');
-                speak("Access Denied.");
+        // Real-time Clocks
+        function updateClocks() {
+            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            document.getElementById('clock-cairo').innerText = "CAIRO: " + new Date().toLocaleTimeString('en-GB', { ...options, timeZone: 'Africa/Cairo' });
+            document.getElementById('clock-ny').innerText = "NEW YORK: " + new Date().toLocaleTimeString('en-GB', { ...options, timeZone: 'America/New_York' });
+            document.getElementById('clock-tokyo').innerText = "TOKYO: " + new Date().toLocaleTimeString('en-GB', { ...options, timeZone: 'Asia/Tokyo' });
+        }
+        setInterval(updateClocks, 1000);
+
+        // Command System
+        function runCommand(e) {
+            if (e.key === "Enter") {
+                const input = document.getElementById('cmdInput');
+                const log = document.getElementById('log');
+                const val = input.value.toLowerCase();
+
+                if (val === "/master") {
+                    log.innerText = "ACCESS GRANTED. WELCOME MASTER ESSAM ELKOMY. PROTECT THE PROTOCOL.";
+                    log.style.color = "#00ff41";
+                } else if (val === "/369") {
+                    log.innerText = "3...6...9... THE UNIVERSE KEY ACTIVATED. FREQUENCY SYNCED.";
+                } else if (val === "/sat") {
+                    log.innerText = "ENCRYPTED SATELLITE FEED ESTABLISHED. TRACKING NODES...";
+                } else {
+                    log.innerText = "UNKNOWN COMMAND. SYSTEM SECURED.";
+                    log.style.color = "red";
+                    setTimeout(() => log.style.color = "white", 2000);
+                }
+                input.value = "";
             }
-        }
-
-        function startEngine() {
-            setInterval(() => {
-                // محاكي إحداثيات الأقمار
-                const lat = (Math.random() * 180 - 90).toFixed(4);
-                const lon = (Math.random() * 360 - 180).toFixed(4);
-                document.getElementById('coords').innerText = `LAT: ${lat} | LON: ${lon}`;
-                
-                // الوقت
-                document.getElementById('atomic-time').innerText = new Date().toLocaleTimeString('en-GB');
-            }, 2000);
-
-            // جلب سعر البيتكوين
-            fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT')
-                .then(r => r.json())
-                .then(d => { document.getElementById('btc-price').innerText = "$" + parseFloat(d.price).toLocaleString(); });
-        }
-
-        function sendLegacy() {
-            const name = document.getElementById('v-name').value;
-            const msg = document.getElementById('v-msg').value;
-            const display = document.getElementById('messages-display');
-
-            if(name && msg) {
-                const id = "AT-369-" + Math.floor(1000 + Math.random() * 9000);
-                const item = `<div style="border-bottom: 1px solid #111; padding: 10px; margin-bottom: 5px;">
-                    <span class="id-badge">${id}</span><br>
-                    <b style="color: #0f0;">${name}:</b> ${msg}
-                </div>`;
-                display.innerHTML = item + display.innerHTML;
-                speak("Identity Secured.");
-                document.getElementById('v-name').value = '';
-                document.getElementById('v-msg').value = '';
-            }
-        }
-
-        function speak(t) {
-            const m = new SpeechSynthesisUtterance(t);
-            m.lang = 'en-US';
-            window.speechSynthesis.speak(m);
         }
     </script>
 </body>
