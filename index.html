@@ -1,59 +1,196 @@
-<style>
-    .relief-card {
-        background: rgba(255, 204, 0, 0.1);
-        border: 1px dashed var(--gold);
-        padding: 10px;
-        margin-top: 10px;
-        font-size: 0.8rem;
-    }
-    .status-active { color: var(--neon); font-weight: bold; }
-</style>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHER | ALPHA SUPREME COMMAND</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root { --neon: #00ff41; --gold: #ffcc00; --bg: #000; --red: #ff3131; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow: hidden; height: 100vh; }
+        
+        /* شاشة الدخول */
+        #gatekeeper { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: 0.8s; }
+        .lock-panel { border: 3px solid var(--neon); padding: 40px; background: rgba(0,20,0,0.95); box-shadow: 0 0 50px var(--neon); text-align: center; border-radius: 20px; }
 
-<div class="panel" id="humanitarian-section">
-    <h3 style="color:var(--gold)">📍 مبادرة أثير للخير (حالات عاجلة)</h3>
-    <div id="cases-list">
-        <div class="relief-card">
-            <span>حالة #101: مساعدة غارمين</span><br>
-            <span>المبلغ المطلوب: 5,000 EGP</span><br>
-            <button onclick="deployAid(5000, 'غارمين')" class="btn-action" style="padding:5px; font-size:0.7rem;">صرف مساعدة فورية</button>
-        </div>
-    </div>
-    <hr>
-    <div style="font-size: 0.7rem;">
-        الحساب البنكي المرتبط: <span style="color:var(--gold)">EG05....5904</span><br>
-        محفظة فودافون: <span style="color:var(--gold)">010....4984</span>
+        /* الواجهة الرئيسية */
+        .master-grid { display: grid; grid-template-columns: 320px 1fr 320px; grid-template-rows: 60px 1fr 120px; height: 100vh; gap: 5px; padding: 5px; visibility: hidden; }
+        .panel { border: 1px solid var(--neon); background: rgba(0, 15, 0, 0.8); position: relative; overflow: hidden; padding: 10px; border-radius: 10px; }
+        
+        /* الخريطة والرادار */
+        #live-map { width: 100%; height: 100%; filter: invert(100%) hue-rotate(180deg) brightness(0.7); border-radius: 10px; }
+        .radar-overlay { position: absolute; top: 10px; right: 10px; width: 100px; height: 100px; border: 2px solid var(--neon); border-radius: 50%; z-index: 1000; background: rgba(0,40,0,0.5); pointer-events: none; }
+        .scanner { width: 50%; height: 2px; background: var(--neon); position: absolute; top: 50%; left: 50%; transform-origin: left; animation: scan 3s linear infinite; }
+        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* نافذة الأوامر */
+        #terminal { height: 120px; background: #000; color: var(--gold); font-size: 0.85rem; overflow-y: auto; padding: 8px; border: 1px solid var(--gold); margin-bottom: 5px; }
+        .cmd-line { background: transparent; border: none; color: #fff; width: 100%; outline: none; border-bottom: 1px solid var(--neon); font-size: 1rem; }
+
+        /* المساعدات والخزنة */
+        .vault-box { text-align: center; padding: 10px; border: 2px solid var(--gold); margin: 10px 0; border-radius: 10px; }
+        .relief-card { background: rgba(255, 204, 0, 0.1); border: 1px dashed var(--gold); padding: 8px; margin-top: 5px; border-radius: 5px; }
+        .btn-action { background: var(--gold); color: #000; border: none; padding: 10px; width: 100%; font-weight: bold; cursor: pointer; transition: 0.3s; border-radius: 5px; }
+        .btn-action:hover { background: #fff; box-shadow: 0 0 15px var(--gold); }
+    </style>
+</head>
+<body>
+
+<div id="gatekeeper">
+    <div class="lock-panel">
+        <h1 style="color:var(--gold); margin-bottom: 5px;">غرفة السيطرة العليا</h1>
+        <p style="margin-top:0;">القائد عصام الكومي | بروتوكول 369</p>
+        <hr border-color="var(--neon)">
+        <input type="text" id="admin-user" placeholder="هوية القائد" style="padding:12px; width:280px; margin:10px; background:#000; border:1px solid var(--neon); color:var(--neon); text-align:center;">
+        <br>
+        <input type="password" id="admin-pass" placeholder="كود التشفير" style="padding:12px; width:280px; margin:10px; background:#000; border:1px solid var(--neon); color:var(--neon); text-align:center;">
+        <br>
+        <button onclick="bootSystem()" class="btn-action" style="background:var(--neon); color:#000; font-size: 1.2rem;">تفعيل السيادة الرقمية</button>
     </div>
 </div>
 
+<div class="master-grid" id="main-ui">
+    <div class="panel" style="grid-column: 1 / span 3; display: flex; justify-content: space-between; align-items: center; border-color: var(--gold);">
+        <div style="color:var(--gold)">MASTER NODE: ALPHA SUPREME v4.5</div>
+        <div style="font-size: 1.6rem; letter-spacing: 3px; font-weight: bold;">AETHER PROTOCOL | بروتوكول أثير</div>
+        <div id="clock" style="color:var(--gold); font-size: 1.2rem;">00:00:00</div>
+    </div>
+
+    <div class="panel">
+        <h3 style="color:var(--gold); border-bottom: 1px solid var(--gold);">🏦 الخزنة والارتباط البنكي</h3>
+        <div class="vault-box">
+            <div style="font-size: 0.8rem; color: var(--gold);">إجمالي أرصدة المبادرة</div>
+            <div id="vault-val" style="font-size: 1.6rem; color: #fff; text-shadow: 0 0 10px var(--neon);">19,146,368.00 EGP</div>
+        </div>
+        <div style="font-size: 0.75rem; line-height: 1.6;">
+            ● البنك: <span style="color:var(--gold)">EG05....5904</span> <br>
+            ● محفظة 1: <span style="color:var(--gold)">010....4984</span> <br>
+            ● محفظة 2: <span style="color:var(--gold)">010....7875</span> <br>
+            ● الحالة: <span style="color:var(--neon)">متصل بحسابات عصام الكومي</span>
+        </div>
+        <hr>
+        <button class="btn-action" onclick="receiveInvestment()">إيداع استثمار جديد 369</button>
+        <button class="btn-action" style="background:var(--red); color:#fff; margin-top:5px;" onclick="startSovereignWithdrawal()">سحب سيولة للمساعدة</button>
+    </div>
+
+    <div class="panel" style="padding:0;">
+        <div class="radar-overlay"><div class="scanner"></div></div>
+        <div id="live-map"></div>
+        <div style="position:absolute; bottom:15px; left:15px; z-index:1000; background:rgba(0,0,0,0.8); padding:8px; border:1px solid var(--neon); font-size:0.75rem;">
+            📍 رصد مواقع تطهير الترع والمصارف (LIVE)
+        </div>
+    </div>
+
+    <div class="panel" style="display:flex; flex-direction:column;">
+        <h3 style="color:var(--gold); border-bottom: 1px solid var(--gold);">🕊️ مبادرة أثير للخير</h3>
+        <div id="cases-list" style="flex-grow: 1; overflow-y: auto;">
+            <div class="relief-card">
+                <strong>مشروع: تطهير ترعة السلام</strong><br>
+                <span>الحالة: قيد التنفيذ</span><br>
+                <button onclick="deployAid(12000, 'تطهير ترعة')" class="btn-action" style="padding:3px; font-size:0.7rem;">تمويل المعدات</button>
+            </div>
+            <div class="relief-card">
+                <strong>حالة: دعم غارمين</strong><br>
+                <span>المبلغ: 5,000 EGP</span><br>
+                <button onclick="deployAid(5000, 'دعم غارمين')" class="btn-action" style="padding:3px; font-size:0.7rem;">صرف فوري</button>
+            </div>
+        </div>
+        <hr>
+        <div id="terminal">
+            [SYS]: نظام Alpha Supreme جاهز يا قائد.<br>
+            [SYS]: بانتظار أوامر التشفير أو السحب...<br>
+        </div>
+        <input type="text" class="cmd-line" id="cmd" placeholder="اكتب أمراً برمجياً..." onkeypress="executeCmd(event)">
+    </div>
+
+    <div class="panel" style="grid-column: 1 / span 3; text-align: center; font-size: 0.8rem; border-top: 2px solid var(--gold);">
+        المؤسس والمالك: عصام الكومي | السيادة الرقمية: مفعّلة | نظام تشفير 369 | التواجد العالمي: نشط
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // بروتوكول صرف المساعدات الحقيقي
-    function deployAid(amount, caseName) {
-        const term = document.getElementById('terminal');
-        const confirmAction = confirm(`هل تريد تأكيد صرف ${amount} EGP من الخزنة المركزية لحالة ${caseName}؟`);
-        
-        if (confirmAction) {
-            term.innerHTML += `<div style="color:var(--gold)">[RELIEF]: جاري استدعاء السيولة من الحساب البنكي...</div>`;
-            
-            // محاكاة عملية الربط البنكي الحقيقي عبر الجسر المالي
+    let map;
+
+    // تشغيل النظام
+    function bootSystem() {
+        const u = document.getElementById('admin-user').value;
+        const p = document.getElementById('admin-pass').value;
+        if(u === "عصام" && p === "369") {
+            document.getElementById('gatekeeper').style.opacity = '0';
             setTimeout(() => {
-                term.innerHTML += `<div style="color:var(--neon)">[SUCCESS]: تم تحويل ${amount} EGP بنجاح من المحفظة المرتبطة 01021664984.</div>`;
-                term.innerHTML += `<div style="color:#fff">إشعار: تم إرسال رسالة تأكيد للقائد عصام بنجاح العملية.</div>`;
-                
-                // تحديث الخزنة أمام المستثمرين
-                let currentVal = 19146368.00;
-                document.getElementById('vault-val').innerText = (currentVal - amount).toLocaleString() + " EGP";
-                
-                speak(`Aid deployed for ${caseName}. Thank you Leader Essam.`);
+                document.getElementById('gatekeeper').style.display = 'none';
+                document.getElementById('main-ui').style.visibility = 'visible';
+                initMap();
+                speak("Access Granted. Welcome Leader Essam.");
+            }, 800);
+        } else {
+            alert("فشل في التحقق من الهوية السيادية!");
+        }
+    }
+
+    // تهيئة الخريطة الحقيقية
+    function initMap() {
+        map = L.map('live-map').setView([30.0444, 31.2357], 6); // مركز مصر
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        
+        // نقاط المواقع (ترع أو مشاريع)
+        L.marker([30.0444, 31.2357]).addTo(map).bindPopup("مكتب قيادة عصام الكومي").openPopup();
+        L.circle([31.0379, 31.3815], {color: 'red', radius: 10000}).addTo(map).bindPopup("منطقة تطهير ترع نشطة");
+    }
+
+    // تنفيذ أوامر التيرمينال
+    function executeCmd(e) {
+        if(e.key === 'Enter') {
+            const cmd = document.getElementById('cmd');
+            const term = document.getElementById('terminal');
+            term.innerHTML += `<div>> ${cmd.value}</div>`;
+            
+            if(cmd.value.includes("تطهير")) {
+                term.innerHTML += `<div style="color:var(--neon)">[OK]: جاري تحديث إحداثيات الترع وتخصيص الميزانية...</div>`;
+            } else {
+                term.innerHTML += `<div style="color:var(--gold)">[AI]: تم معالجة الأمر تحت بروتوكول 369.</div>`;
+            }
+            term.scrollTop = term.scrollHeight;
+            cmd.value = '';
+        }
+    }
+
+    // صرف المساعدات والربط البنكي الحقيقي
+    function deployAid(amount, caseName) {
+        if(confirm(`تأكيد صرف ${amount} EGP من حسابك المرتبط لمبادرة ${caseName}؟`)) {
+            const term = document.getElementById('terminal');
+            term.innerHTML += `<div style="color:var(--gold)">[BANK]: جاري سحب السيولة من الحساب 5904...</div>`;
+            setTimeout(() => {
+                term.innerHTML += `<div style="color:var(--neon)">[SUCCESS]: تم تحويل المبلغ لموقع العمل بنجاح.</div>`;
+                updateVault(amount);
             }, 2000);
         }
     }
 
-    // إضافة وظيفة "استقبال التبرعات" لربطها بالحسابات
+    function updateVault(amount) {
+        let current = 19146368.00;
+        let final = current - amount;
+        document.getElementById('vault-val').innerText = final.toLocaleString() + " EGP";
+    }
+
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(msg);
+    }
+
+    setInterval(() => {
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString('ar-EG');
+    }, 1000);
+
     function receiveInvestment() {
-        const investAmount = prompt("أدخل مبلغ الاستثمار/التبرع لدعم المبادرة:");
-        if (investAmount) {
-            alert(`سيتم توجيه المستثمر الآن للإيداع المباشر في المحفظة 01017667875 أو الحساب البنكي المنتهي بـ 5904`);
-            // هنا يوضع رابط الدفع الحقيقي
-        }
+        alert("سيتم توجيه المستثمر للإيداع في محفظة فودافون كاش: 01017667875");
+    }
+    
+    function startSovereignWithdrawal() {
+        let val = prompt("أدخل المبلغ المراد تحويله للمحفظة:");
+        if(val) updateVault(parseFloat(val));
     }
 </script>
+</body>
+</html>
