@@ -3,55 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aether Protocol | Cosmic Edition 369</title>
+    <title>Aether Protocol | Live Space Feed 369</title>
     <style>
-        :root { --neon-green: #00ff41; --deep-space: #0a0a0a; --gold: #ffd700; }
-        body { background-color: var(--deep-space); color: white; font-family: 'Courier New', monospace; margin: 0; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
-        
-        /* Header */
-        .header { width: 100%; padding: 15px; border-bottom: 2px solid var(--neon-green); background: #000; box-shadow: 0 0 20px var(--neon-green); text-align: center; position: sticky; top: 0; z-index: 100; }
-        .status { color: var(--neon-green); font-weight: bold; font-size: 0.9rem; animation: blink 1.5s infinite; }
-
-        /* Main Dashboard */
-        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; padding: 20px; width: 95%; max-width: 1400px; }
-        .card { background: rgba(0, 255, 65, 0.03); border: 1px solid var(--neon-green); border-radius: 12px; padding: 20px; box-shadow: 0 0 15px rgba(0, 255, 65, 0.1); position: relative; transition: 0.3s; }
-        .card:hover { border-color: var(--gold); }
-
-        /* Radar & Markets */
-        .radar { width: 80px; height: 80px; border: 2px solid var(--neon-green); border-radius: 50%; margin: 0 auto; position: relative; overflow: hidden; }
+        :root { --neon-green: #00ff41; --dark-bg: #0a0a0a; --gold: #ffd700; }
+        body { background-color: var(--dark-bg); color: white; font-family: 'Courier New', monospace; margin: 0; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
+        .header { width: 100%; padding: 15px; border-bottom: 2px solid var(--neon-green); background: #000; box-shadow: 0 0 15px var(--neon-green); text-align: center; }
+        .status { color: var(--neon-green); font-weight: bold; animation: blink 1.5s infinite; font-size: 0.8rem; }
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px; width: 95%; max-width: 1200px; }
+        .card { background: rgba(0, 255, 65, 0.05); border: 1px solid var(--neon-green); border-radius: 10px; padding: 15px; box-shadow: 0 0 10px rgba(0, 255, 65, 0.1); }
+        .radar { width: 70px; height: 70px; border: 2px solid var(--neon-green); border-radius: 50%; margin: 10px auto; position: relative; overflow: hidden; }
         .radar::after { content: ''; width: 100%; height: 100%; background: conic-gradient(from 0deg, transparent, var(--neon-green)); position: absolute; top: 0; left: 0; opacity: 0.3; animation: spin 2s linear infinite; }
-        
-        /* Satellite Map */
-        .map { height: 150px; background: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_blank_without_borders.svg') no-repeat center; background-size: contain; opacity: 0.5; position: relative; }
-        .sat-point { width: 8px; height: 8px; background: var(--neon-green); border-radius: 50%; position: absolute; box-shadow: 0 0 10px var(--neon-green); animation: pulse 2s infinite; }
-        .cairo { top: 38%; left: 56%; } .dubai { top: 42%; left: 62%; }
-
-        /* Cosmic Gate (The New Feature) */
-        #cosmicView { width: 100%; height: 400px; border: 1px solid var(--gold); border-radius: 8px; display: none; margin-top: 15px; }
-
-        /* Command Center */
-        .command-box { grid-column: 1 / -1; background: #000; border: 1px solid var(--neon-green); padding: 15px; }
-        #cmdInput { background: transparent; border: none; color: white; width: 85%; font-size: 1.1rem; outline: none; padding-left: 10px; }
-        .prompt { color: var(--neon-green); font-weight: bold; }
-
-        /* Animations */
+        .map { height: 120px; background: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_blank_without_borders.svg') no-repeat center; background-size: contain; opacity: 0.5; position: relative; }
+        .sat-point { width: 6px; height: 6px; background: var(--neon-green); border-radius: 50%; position: absolute; animation: pulse 2s infinite; }
+        .cairo { top: 38%; left: 56%; }
+        #spaceGate { width: 100%; height: 400px; border: 1px solid var(--gold); border-radius: 8px; display: none; margin-top: 15px; }
+        .command-box { grid-column: 1 / -1; background: #000; padding: 15px; border: 1px solid var(--neon-green); }
+        #cmdInput { background: transparent; border: none; color: white; width: 80%; outline: none; font-size: 1rem; padding-left: 10px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes blink { 50% { opacity: 0.3; } }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.8); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.5); } }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1 style="margin:0; letter-spacing: 5px;">AETHER PROTOCOL 369</h1>
-        <div class="status">● SATELLITE LINK ESTABLISHED | MASTER: ESSAM ELKOMY</div>
+        <h1 style="margin:0;">AETHER PROTOCOL 369</h1>
+        <div class="status">● LIVE SATELLITE FEED | MASTER: ESSAM ELKOMY</div>
     </div>
 
     <div class="dashboard">
         <div class="card">
             <h3>GLOBAL MARKETS</h3>
-            <p>BITCOIN: <span style="color:var(--neon-green); font-weight:bold;">$80,284.45</span></p>
-            <p>GOLD/OZ: <span style="color:var(--gold); font-weight:bold;">$2,680.12</span></p>
+            <p>BTC: <span style="color:var(--neon-green)">$84,120.00</span></p>
+            <p>GOLD: <span style="color:var(--gold)">$2,680.15</span></p>
             <div class="radar"></div>
         </div>
 
@@ -59,52 +43,39 @@
             <h3>SATELLITE POSITION</h3>
             <div class="map">
                 <div class="sat-point cairo"></div>
-                <div class="sat-point dubai"></div>
             </div>
-            <p id="satLoc" style="font-size: 0.8rem; color: var(--neon-green);">TRACKING NODE: CAIRO</p>
+            <p style="font-size: 0.8rem; color: var(--neon-green);">NODE: CAIRO / ACTIVE</p>
         </div>
 
         <div class="card command-box">
-            <div id="log">SYSTEM READY. Awaiting Command (/master, /369, /cosmos)...</div>
-            <div style="display: flex; align-items: center; margin-top: 10px;">
-                <span class="prompt">CMD> </span>
-                <input type="text" id="cmdInput" placeholder="أدخل الأمر السيادي..." onkeypress="execute(event)">
+            <div id="log">SYSTEM SECURED. Awaiting Command (/master, /369, /cosmos)...</div>
+            <div style="display: flex; margin-top: 10px;">
+                <span style="color:var(--neon-green)">CMD></span>
+                <input type="text" id="cmdInput" placeholder="أدخل الأمر..." onkeypress="execute(event)">
             </div>
-            <iframe id="cosmicView" src="https://sky.esa.int/esasky-embed/?target=NGC%201300&zoom=0.5"></iframe>
+            <iframe id="spaceGate" src="https://www.youtube.com/embed/jPTD2gnZFUw?autoplay=1&mute=1" allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
-        // Satellite Switcher
-        const locs = ["CAIRO", "DUBAI", "DEEP SPACE"];
-        let i = 0;
-        setInterval(() => {
-            document.getElementById('satLoc').innerText = "TRACKING NODE: " + locs[i];
-            i = (i + 1) % locs.length;
-        }, 3000);
-
-        // Command Engine
         function execute(e) {
             if (e.key === "Enter") {
-                const cmd = document.getElementById('cmdInput').value.toLowerCase();
+                const val = document.getElementById('cmdInput').value.toLowerCase();
                 const log = document.getElementById('log');
-                const cosmic = document.getElementById('cosmicView');
+                const gate = document.getElementById('spaceGate');
 
-                if (cmd === "/master") {
-                    log.innerText = "ACCESS GRANTED. WELCOME MASTER ESSAM. PROTOCOL IS YOURS.";
-                    log.style.color = "var(--gold)";
-                    cosmic.style.display = "none";
-                } else if (cmd === "/369") {
-                    log.innerText = "FREQUENCY SYNCED. ENERGY LEVELS STABLE. SYSTEM PROTECTED.";
-                    log.style.color = "var(--neon-green)";
-                    cosmic.style.display = "none";
-                } else if (cmd === "/cosmos") {
-                    log.innerText = "OPENING COSMIC GATE... SCANNING DEEP SPACE.";
+                if (val === "/cosmos") {
+                    log.innerText = "OPENING COSMIC GATE... LIVE STREAMING FROM ISS.";
                     log.style.color = "cyan";
-                    cosmic.style.display = "block";
+                    gate.style.display = "block";
+                } else if (val === "/master") {
+                    log.innerText = "WELCOME MASTER ESSAM. ACCESS GRANTED.";
+                    log.style.color = "var(--gold)";
+                } else if (val === "/369") {
+                    log.innerText = "FREQUENCY 369 SYNCED. SYSTEM STABLE.";
+                    log.style.color = "var(--neon-green)";
                 } else {
-                    log.innerText = "UNKNOWN COMMAND. SECURITY ALERT BYPASSED.";
-                    log.style.color = "red";
+                    log.innerText = "UNKNOWN COMMAND.";
                 }
                 document.getElementById('cmdInput').value = "";
             }
