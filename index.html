@@ -6,7 +6,7 @@
     <title>Aether | Nature Breaker Ultimate</title>
     <style>
         :root { --neon: #00ff41; --gold: #ffd700; --bg: #000; }
-        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; padding-bottom: 120px; overflow-x: hidden; }
         
         /* شريط الأرصدة العلوي */
         .top-nav { display: flex; justify-content: space-around; padding: 10px; border-bottom: 2px solid var(--neon); background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 1000; font-size: 0.7rem; }
@@ -14,29 +14,25 @@
 
         /* منطقة الرادار */
         .main-display { padding: 10px; text-align: center; }
-        #mapView { width: 100%; height: 300px; border: 1px solid var(--neon); border-radius: 10px; }
+        #mapView { width: 100%; height: 300px; border: 1px solid var(--neon); border-radius: 10px; margin-bottom: 10px; }
         
         /* عين الغراب */
-        .core-circle { width: 150px; height: 150px; border: 4px double var(--gold); border-radius: 50%; margin: 20px auto; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 20px var(--gold); }
+        .core-circle { width: 140px; height: 140px; border: 4px double var(--gold); border-radius: 50%; margin: 15px auto; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 15px var(--gold); }
 
-        /* بوابة الكون */
-        #gateView { width: 100%; height: 400px; border: 3px solid var(--gold); display: none; margin-top: 10px; }
-
-        /* شريط الأوامر الجديد (واضح ومرتفع) */
+        /* شريط الأوامر العائم (المكان الذي ستكتب فيه) */
         .cmd-bar { 
             position: fixed; 
-            bottom: 20px; /* رفعت الشريط لفوق شوية */
-            left: 5%;
+            bottom: 30px; /* مرتفع عن الحافة لضمان الظهور */
+            left: 50%;
+            transform: translateX(-50%);
             width: 90%; 
             background: #111; 
-            border: 2px solid var(--neon); 
-            border-radius: 50px; /* خليته شكل كبسولة عشان يبان */
-            padding: 10px 20px; 
+            border: 2px solid var(--gold); /* لون ذهبي لتمييزه */
+            border-radius: 15px;
+            padding: 12px; 
             display: flex; 
-            align-items: center; 
-            box-sizing: border-box; 
-            z-index: 9999;
-            box-shadow: 0 0 15px var(--neon);
+            z-index: 99999; /* أعلى طبقة في الصفحة */
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
         #cmdInput { 
             background: transparent; 
@@ -44,11 +40,11 @@
             color: white; 
             width: 100%; 
             font-size: 1.1rem; 
-            outline: none; 
-            margin-left: 10px;
+            outline: none;
+            text-align: center;
         }
-        .prompt { color: var(--neon); font-weight: bold; }
 
+        #gateView { width: 100%; height: 350px; border: 2px solid var(--gold); display: none; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -57,23 +53,22 @@
         <div class="stat">TIME<span id="clock" class="val">--:--</span></div>
         <div class="stat">BITCOIN<span class="val">$84.3K</span></div>
         <div class="stat">GOLD<span class="val" style="color:var(--gold)">$2.6K</span></div>
-        <div class="stat">369<span class="val">LOCKED</span></div>
+        <div class="stat">369<span class="val">SECURED</span></div>
     </div>
 
     <div class="main-display">
         <iframe id="mapView" src="https://www.windy.com/?30.044,31.236,6"></iframe>
         
         <div class="core-circle">
-            <h3 style="color:var(--gold); margin:0;">RAVEN EYE</h3>
-            <small style="color:var(--neon)">MASTER EDITION</small>
+            <h3 style="color:var(--gold); margin:0; font-size: 0.9rem;">RAVEN EYE</h3>
+            <small style="color:var(--neon)">V4 MASTER</small>
         </div>
 
-        <div id="log" style="color:var(--neon); font-size: 0.8rem; margin-bottom: 20px;">AWAITING COMMAND...</div>
+        <div id="log" style="color:var(--neon); font-size: 0.8rem; margin-bottom: 10px;">AWAITING COMMAND...</div>
         <iframe id="gateView" src=""></iframe>
     </div>
 
     <div class="cmd-bar">
-        <span class="prompt">></span>
         <input type="text" id="cmdInput" placeholder="اكتب هنا: /master أو /cosmos" onkeypress="run(event)">
     </div>
 
@@ -92,11 +87,8 @@
                     gate.style.display = "block";
                     gate.scrollIntoView({ behavior: 'smooth' });
                 } else if (cmd === "/master") {
-                    log.innerText = "WELCOME MASTER ESSAM. SYSTEMS READY.";
+                    log.innerText = "WELCOME MASTER ESSAM ELKOMY.";
                     log.style.color = "var(--gold)";
-                    document.querySelector('.top-nav').style.borderColor = "var(--gold)";
-                } else if (cmd === "/369") {
-                    log.innerText = "369 FREQUENCY SYNCED.";
                 }
                 document.getElementById('cmdInput').value = "";
             }
