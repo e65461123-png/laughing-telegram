@@ -6,50 +6,62 @@
     <title>Aether | Operational Control</title>
     <style>
         :root { --neon: #00ff41; --gold: #ffd700; --bg: #000; --danger: #ff003c; }
-        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; padding-bottom: 150px; }
+        body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; padding-bottom: 160px; overflow-x: hidden; }
         
         /* شريط الأرصدة العلوي */
-        .top-nav { display: flex; justify-content: space-around; padding: 10px; border-bottom: 2px solid var(--neon); background: #000; position: sticky; top: 0; z-index: 1000; font-size: 0.7rem; }
-        .val { color: var(--neon); font-weight: bold; display: block; }
+        .top-nav { display: grid; grid-template-columns: repeat(3, 1fr); padding: 12px; border-bottom: 2px solid var(--neon); background: #000; position: sticky; top: 0; z-index: 1000; font-size: 0.7rem; text-align: center; }
+        .val { color: var(--neon); font-weight: bold; display: block; font-size: 0.85rem; }
 
-        /* لوحة العمليات المالية (الجديدة) */
-        .action-hub { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
+        /* لوحة أيقونات العمل والسحب */
+        .action-hub { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
         .btn-action { 
-            background: rgba(255, 215, 0, 0.1); 
+            background: rgba(255, 215, 0, 0.05); 
             border: 2px solid var(--gold); 
-            border-radius: 12px; 
-            padding: 20px 10px; 
+            border-radius: 15px; 
+            padding: 25px 10px; 
             text-align: center; 
             cursor: pointer;
             transition: 0.3s;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
         }
-        .btn-action:active { transform: scale(0.95); background: var(--gold); color: black; }
-        .icon { font-size: 2rem; display: block; margin-bottom: 5px; }
-        .btn-label { font-weight: bold; font-size: 0.8rem; }
+        .btn-action:active { transform: scale(0.92); background: var(--gold); color: black; }
+        .icon { font-size: 2.2rem; display: block; margin-bottom: 8px; }
+        .btn-label { font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
 
-        /* منطقة الرادار */
-        #mapView { width: 90%; height: 200px; border: 1px solid var(--neon); border-radius: 10px; margin: 10px auto; display: block; }
+        /* شاشة سحب الرصيد المنبثقة */
+        #withdrawScreen { 
+            display: none; 
+            position: fixed; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            background: #0a0a0a; 
+            border: 3px solid var(--gold); 
+            padding: 25px; 
+            z-index: 10000; 
+            width: 85%; 
+            border-radius: 20px; 
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+        }
+        .withdraw-input { background: #000; border: 1px solid var(--neon); color: var(--neon); padding: 12px; width: 80%; margin: 15px 0; font-size: 1.2rem; text-align: center; border-radius: 8px; }
 
         /* مركز الأوامر السفلي */
-        .cmd-center { position: fixed; bottom: 20px; left: 5%; width: 90%; background: #111; border: 2px solid var(--neon); border-radius: 15px; padding: 15px; z-index: 9999; box-shadow: 0 0 20px var(--neon); }
+        .cmd-center { position: fixed; bottom: 20px; left: 5%; width: 90%; background: #000; border: 2px solid var(--neon); border-radius: 20px; padding: 15px; z-index: 9999; box-shadow: 0 0 20px var(--neon); }
         #cmdInput { background: transparent; border: none; color: white; width: 100%; font-size: 1.1rem; outline: none; text-align: center; }
-        #log { color: var(--neon); font-size: 0.7rem; text-align: center; margin-bottom: 5px; }
-
-        /* شاشة السحب */
-        #withdrawScreen { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #111; border: 3px solid var(--gold); padding: 20px; z-index: 10000; width: 80%; border-radius: 15px; text-align: center; }
+        #log { color: var(--neon); font-size: 0.75rem; text-align: center; margin-bottom: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
         <div>BALANCE<span class="val">$42,900.00</span></div>
-        <div>BITCOIN<span class="val">$84,312</span></div>
-        <div>369 STATUS<span class="val">ACTIVE</span></div>
+        <div>BTC/USD<span class="val">$84,312</span></div>
+        <div>NODE<span class="val">369-ONLINE</span></div>
     </div>
 
-    <div style="text-align: center; padding: 10px;">
-        <h2 style="color: var(--gold); margin: 5px;">AETHER CONTROL PANEL</h2>
-        <small style="color: var(--neon);">Operational Status: Master Authenticated</small>
+    <div style="text-align: center; padding: 20px 10px;">
+        <h2 style="color: var(--gold); margin: 0; text-shadow: 0 0 10px var(--gold);">MASTER DASHBOARD</h2>
+        <small style="color: var(--neon);">ESSAM ELKOMY | SECURE TERMINAL</small>
     </div>
 
     <div class="action-hub">
@@ -58,57 +70,55 @@
             <span class="btn-label">سحب الأرصدة</span>
         </div>
         <div class="btn-action" onclick="startWork()">
-            <span class="icon">🚀</span>
+            <span class="icon">⚡</span>
             <span class="btn-label">مباشرة العمل</span>
         </div>
-        <div class="btn-action" onclick="toggleRadar()">
+        <div class="btn-action" onclick="alert('جاري مزامنة بيانات الرصد...')">
             <span class="icon">🛰️</span>
-            <span class="btn-label">رادار الرصد</span>
+            <span class="btn-label">الرصد الحي</span>
         </div>
-        <div class="btn-action" onclick="openVault()">
-            <span class="icon">🔒</span>
-            <span class="btn-label">الخزنة المشفرة</span>
+        <div class="btn-action" onclick="alert('الخزنة المشفرة AES-256 مفعلة')">
+            <span class="icon">🔐</span>
+            <span class="btn-label">مركز الأمان</span>
         </div>
     </div>
 
-    <iframe id="mapView" src="https://www.windy.com/?30.044,31.236,6"></iframe>
-
     <div id="withdrawScreen">
-        <h3 style="color: var(--gold);">Withdraw Portal</h3>
-        <p>Current Balance: $42,900</p>
-        <input type="number" placeholder="Enter Amount" style="width: 80%; padding: 10px; margin-bottom: 10px;">
-        <button onclick="alert('جاري معالجة الطلب عبر فودافون كاش...')" style="background: var(--neon); padding: 10px 20px; border: none; font-weight: bold;">تأكيد السحب</button>
-        <button onclick="hideWithdraw()" style="background: var(--danger); color: white; padding: 10px 20px; border: none; margin-left: 10px;">إلغاء</button>
+        <h3 style="color: var(--gold); margin-top: 0;">PORTAL WITHDRAWAL</h3>
+        <p style="font-size: 0.8rem;">رصيدك المتاح: <span style="color:var(--neon)">$42,900</span></p>
+        <input type="number" class="withdraw-input" placeholder="0.00">
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button onclick="confirmWithdraw()" style="background: var(--neon); padding: 12px 20px; border: none; font-weight: bold; border-radius: 5px;">تأكيد السحب</button>
+            <button onclick="hideWithdraw()" style="background: var(--danger); color: white; padding: 12px 20px; border: none; border-radius: 5px;">إلغاء</button>
+        </div>
     </div>
 
     <div class="cmd-center">
-        <div id="log">SYSTEM ONLINE | READY FOR OPERATIONS</div>
-        <input type="text" id="cmdInput" placeholder="اكتب أمرك هنا..." onkeypress="run(event)">
+        <div id="log">SYSTEM READY. AWAITING MASTER COMMAND...</div>
+        <input type="text" id="cmdInput" placeholder="أدخل الأوامر السيادية هنا..." onkeypress="run(event)">
     </div>
 
     <script>
         function showWithdraw() { document.getElementById('withdrawScreen').style.display = 'block'; }
         function hideWithdraw() { document.getElementById('withdrawScreen').style.display = 'none'; }
         
-        function startWork() {
-            const log = document.getElementById('log');
-            log.innerText = "OPENING WORK CHANNELS... SYNCING DATA...";
-            log.style.color = "var(--gold)";
-            setTimeout(() => { alert("تم فتح قنوات العمل المباشرة. النظام جاهز للتنفيذ."); }, 500);
+        function confirmWithdraw() {
+            alert('جاري توجيه الدفع عبر شبكة فودافون كاش... الماستر عصام في انتظار التأكيد.');
+            hideWithdraw();
         }
 
-        function toggleRadar() {
-            const map = document.getElementById('mapView');
-            map.style.display = (map.style.display === 'none') ? 'block' : 'none';
+        function startWork() {
+            document.getElementById('log').innerText = "WORK CHANNELS INITIALIZED... DATA SYNC ACTIVE.";
+            document.getElementById('log').style.color = "var(--gold)";
+            alert("تم تفعيل قنوات العمل المباشرة بنجاح.");
         }
 
         function run(e) {
             if (e.key === "Enter") {
                 const cmd = document.getElementById('cmdInput').value.toLowerCase();
-                const log = document.getElementById('log');
                 if (cmd === "/master") {
-                    log.innerText = "WELCOME MASTER ESSAM. FULL ACCESS GRANTED.";
-                    log.style.color = "var(--gold)";
+                    document.getElementById('log').innerText = "ACCESS GRANTED: WELCOME ESSAM ELKOMY.";
+                    document.getElementById('log').style.color = "var(--gold)";
                 }
                 document.getElementById('cmdInput').value = "";
             }
