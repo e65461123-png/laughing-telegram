@@ -1,578 +1,80 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>AETHER X — Digital Intelligence System</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-
 <style>
+    /* تنسيق لوحة التحكم كما في الصورة */
+    .terminal-container {
+        position: fixed;
+        bottom: 10px;
+        left: 5%;
+        width: 90%;
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid #ffd700; /* البرواز الذهبي */
+        border-radius: 15px;
+        padding: 10px;
+        z-index: 999999;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Orbitron',sans-serif;
-}
+    .status-log {
+        color: #00ff41; /* أخضر نيون */
+        font-size: 0.7rem;
+        height: 40px;
+        overflow-y: hidden;
+        border-bottom: 1px solid #333;
+        margin-bottom: 5px;
+        font-family: 'Courier New', monospace;
+    }
 
-body{
-background:#02040a;
-overflow-x:hidden;
-color:white;
-}
+    .input-wrapper {
+        display: flex;
+        align-items: center;
+        background: #111;
+        border-radius: 8px;
+        padding: 5px 10px;
+    }
 
-/* ================= BACKGROUND ================= */
+    #masterCmd {
+        background: transparent;
+        border: none;
+        color: #fff;
+        width: 100%;
+        font-size: 1rem;
+        outline: none;
+        padding: 5px;
+    }
 
-body::before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background:
-radial-gradient(circle at center,#00ffff22 0%,transparent 60%),
-linear-gradient(180deg,#000000,#020611,#000);
-z-index:-5;
-}
-
-/* Matrix */
-
-.matrix{
-position:fixed;
-width:100%;
-height:100%;
-overflow:hidden;
-z-index:-4;
-opacity:.12;
-}
-
-.matrix span{
-position:absolute;
-top:-100px;
-color:#00ffff;
-font-size:14px;
-animation:fall linear infinite;
-}
-
-@keyframes fall{
-to{
-transform:translateY(120vh);
-}
-}
-
-/* ================= NAVBAR ================= */
-
-nav{
-position:fixed;
-top:0;
-width:100%;
-padding:20px 50px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:rgba(0,0,0,.4);
-backdrop-filter:blur(10px);
-z-index:999;
-border-bottom:1px solid #00ffff33;
-}
-
-.logo{
-font-size:30px;
-font-weight:900;
-color:#00ffff;
-text-shadow:0 0 20px #00ffff;
-}
-
-nav ul{
-display:flex;
-gap:25px;
-list-style:none;
-}
-
-nav ul li a{
-text-decoration:none;
-color:white;
-transition:.3s;
-}
-
-nav ul li a:hover{
-color:#00ffff;
-text-shadow:0 0 10px #00ffff;
-}
-
-/* ================= HERO ================= */
-
-.hero{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:40px;
-position:relative;
-}
-
-.hero-content{
-max-width:1000px;
-}
-
-.hero h1{
-font-size:90px;
-color:#00ffff;
-text-shadow:
-0 0 20px #00ffff,
-0 0 40px #00ffff,
-0 0 80px #00ffff;
-margin-bottom:20px;
-animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-from{
-text-shadow:0 0 10px #00ffff;
-}
-to{
-text-shadow:0 0 50px #00ffff;
-}
-}
-
-.hero p{
-font-size:22px;
-line-height:1.8;
-color:#ddd;
-margin-bottom:40px;
-}
-
-.btn{
-padding:18px 45px;
-background:transparent;
-border:2px solid #00ffff;
-color:#00ffff;
-font-size:18px;
-cursor:pointer;
-transition:.4s;
-border-radius:10px;
-box-shadow:0 0 15px #00ffff55;
-}
-
-.btn:hover{
-background:#00ffff;
-color:black;
-box-shadow:0 0 30px #00ffff;
-transform:scale(1.05);
-}
-
-/* ================= SECTION ================= */
-
-section{
-padding:120px 8%;
-position:relative;
-}
-
-.section-title{
-font-size:50px;
-margin-bottom:70px;
-text-align:center;
-color:#00ffff;
-text-shadow:0 0 15px #00ffff;
-}
-
-/* ================= GRID ================= */
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:30px;
-}
-
-.card{
-background:rgba(255,255,255,.05);
-border:1px solid #00ffff33;
-padding:35px;
-border-radius:20px;
-backdrop-filter:blur(15px);
-transition:.4s;
-position:relative;
-overflow:hidden;
-}
-
-.card::before{
-content:"";
-position:absolute;
-width:100%;
-height:5px;
-top:0;
-left:0;
-background:#00ffff;
-box-shadow:0 0 20px #00ffff;
-}
-
-.card:hover{
-transform:translateY(-10px) scale(1.02);
-box-shadow:0 0 40px #00ffff22;
-}
-
-.card h3{
-font-size:24px;
-margin-bottom:20px;
-color:#00ffff;
-}
-
-.card p{
-line-height:1.8;
-color:#ccc;
-}
-
-/* ================= TERMINAL ================= */
-
-.terminal{
-background:black;
-padding:40px;
-border-radius:20px;
-border:1px solid #00ff99;
-box-shadow:0 0 40px #00ff9955;
-font-family:monospace;
-color:#00ff99;
-line-height:2;
-font-size:18px;
-overflow:auto;
-height:350px;
-}
-
-.typing{
-border-right:3px solid #00ffff;
-white-space:nowrap;
-overflow:hidden;
-width:0;
-animation:typing 6s steps(40,end) forwards,
-blink .8s infinite;
-}
-
-@keyframes typing{
-to{
-width:100%;
-}
-}
-
-@keyframes blink{
-50%{
-border-color:transparent;
-}
-}
-
-/* ================= DASHBOARD ================= */
-
-.dashboard{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:25px;
-}
-
-.stat{
-padding:35px;
-background:#08131f;
-border-radius:20px;
-border:1px solid #00ffff33;
-text-align:center;
-box-shadow:0 0 20px #00ffff11;
-}
-
-.stat h2{
-font-size:55px;
-color:#00ffff;
-margin-bottom:15px;
-}
-
-.stat span{
-color:#ccc;
-font-size:18px;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-padding:40px;
-text-align:center;
-border-top:1px solid #00ffff33;
-background:#000;
-}
-
-footer h2{
-color:#00ffff;
-margin-bottom:10px;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:768px){
-
-.hero h1{
-font-size:50px;
-}
-
-nav{
-padding:15px 20px;
-}
-
-nav ul{
-display:none;
-}
-
-.section-title{
-font-size:35px;
-}
-
-}
-
+    .prompt-label {
+        color: #ffd700;
+        margin-right: 10px;
+        font-weight: bold;
+    }
 </style>
-</head>
 
-<body>
-
-<!-- MATRIX -->
-
-<div class="matrix" id="matrix"></div>
-
-<!-- NAVBAR -->
-
-<nav>
-<div class="logo">AETHER X</div>
-
-<ul>
-<li><a href="#">HOME</a></li>
-<li><a href="#">AI CORE</a></li>
-<li><a href="#">SYSTEM</a></li>
-<li><a href="#">NETWORK</a></li>
-<li><a href="#">CONTROL</a></li>
-</ul>
-</nav>
-
-<!-- HERO -->
-
-<section class="hero">
-
-<div class="hero-content">
-
-<h1>AETHER PROTOCOL</h1>
-
-<p class="typing">
-WELCOME TO THE DIGITAL INTELLIGENCE SYSTEM
-</p>
-
-<br><br>
-
-<p>
-منظومة رقمية مستقبلية تجمع الذكاء الاصطناعى،
-الأمن السيبرانى،
-البث المباشر،
-والتحكم الشبكى داخل واجهة Cyberpunk أسطورية.
-</p>
-
-<button class="btn">ENTER SYSTEM</button>
-
+<div class="terminal-container">
+    <div id="sysLog" class="status-log">
+        SYSTEM ONLINE...<br>
+        AWAITING MASTER COMMAND_
+    </div>
+    
+    <div class="input-wrapper">
+        <span class="prompt-label">></span>
+        <input type="text" id="masterCmd" placeholder="Awaiting Master Command..." onkeypress="handleCmd(event)">
+    </div>
 </div>
-
-</section>
-
-<!-- AI CORE -->
-
-<section>
-
-<h2 class="section-title">AI CORE</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>NEURAL AI</h3>
-<p>
-نظام ذكاء اصطناعى متطور لتحليل البيانات والتفاعل الحى.
-</p>
-</div>
-
-<div class="card">
-<h3>CYBER SECURITY</h3>
-<p>
-طبقات حماية متقدمة وتشفير رقمى ومراقبة الشبكات.
-</p>
-</div>
-
-<div class="card">
-<h3>LIVE CONTROL</h3>
-<p>
-لوحة تحكم متكاملة لإدارة البث والأنظمة الحية.
-</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- DASHBOARD -->
-
-<section>
-
-<h2 class="section-title">SYSTEM STATUS</h2>
-
-<div class="dashboard">
-
-<div class="stat">
-<h2 id="cpu">99%</h2>
-<span>CPU POWER</span>
-</div>
-
-<div class="stat">
-<h2 id="network">87%</h2>
-<span>NETWORK</span>
-</div>
-
-<div class="stat">
-<h2 id="shield">100%</h2>
-<span>SECURITY</span>
-</div>
-
-<div class="stat">
-<h2 id="ai">92%</h2>
-<span>AI STATUS</span>
-</div>
-
-</div>
-
-</section>
-
-<!-- TERMINAL -->
-
-<section>
-
-<h2 class="section-title">MATRIX TERMINAL</h2>
-
-<div class="terminal" id="terminal">
-
-> Initializing AETHER X...<br>
-> Connecting Neural Core...<br>
-> Encrypting Quantum Layers...<br>
-> AI System Activated...<br>
-> Live Broadcast Enabled...<br>
-> Threat Detection Online...<br>
-> Welcome Commander...<br>
-
-</div>
-
-</section>
-
-<!-- NETWORK -->
-
-<section>
-
-<h2 class="section-title">GLOBAL NETWORK</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>LIVE MONITORING</h3>
-<p>
-تتبع الشبكات والاتصالات والأنظمة الرقمية لحظة بلحظة.
-</p>
-</div>
-
-<div class="card">
-<h3>QUANTUM DATA</h3>
-<p>
-معالجة وتحليل البيانات الضخمة بسرعات فائقة.
-</p>
-</div>
-
-<div class="card">
-<h3>DIGITAL DOMINATION</h3>
-<p>
-واجهة سيطرة رقمية مستقبلية بطابع Cyberpunk.
-</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- FOOTER -->
-
-<footer>
-
-<h2>AETHER X</h2>
-
-<p>
-THE FUTURE OF DIGITAL INTELLIGENCE
-</p>
-
-</footer>
 
 <script>
-
-/* MATRIX EFFECT */
-
-const matrix = document.getElementById("matrix");
-
-for(let i=0;i<120;i++){
-
-let span=document.createElement("span");
-
-span.innerHTML=Math.random()>0.5?"1":"0";
-
-span.style.left=Math.random()*100+"vw";
-
-span.style.animationDuration=(Math.random()*5+3)+"s";
-
-span.style.fontSize=(Math.random()*20+10)+"px";
-
-matrix.appendChild(span);
-
-}
-
-/* LIVE STATS */
-
-function randomStat(id,min,max){
-
-setInterval(()=>{
-
-document.getElementById(id).innerText=
-Math.floor(Math.random()*(max-min)+min)+"%";
-
-},2000);
-
-}
-
-randomStat("cpu",80,100);
-randomStat("network",60,100);
-randomStat("shield",90,100);
-randomStat("ai",70,100);
-
-/* TERMINAL */
-
-const terminal=document.getElementById("terminal");
-
-const logs=[
-"> Scanning Network...",
-"> AI Learning...",
-"> Quantum Encryption Enabled...",
-"> Threat Neutralized...",
-"> Neural Pulse Synced...",
-"> Access Granted...",
-"> Monitoring Systems...",
-"> Cyber Defense Activated..."
-];
-
-setInterval(()=>{
-
-let line=document.createElement("div");
-
-line.innerHTML=logs[Math.floor(Math.random()*logs.length)];
-
-terminal.appendChild(line);
-
-terminal.scrollTop=terminal.scrollHeight;
-
-},2500);
-
+    function handleCmd(e) {
+        if (e.key === "Enter") {
+            const cmd = document.getElementById('masterCmd').value;
+            const log = document.getElementById('sysLog');
+            
+            // تنفيذ الأوامر مع تحديث اللوج
+            if (cmd.toLowerCase() === "/master") {
+                log.innerHTML = "STATUS: ACCESS GRANTED<br>WELCOME MASTER ESSAM ELKOMY";
+                log.style.color = "#ffd700";
+            } else {
+                log.innerHTML = "EXECUTING: " + cmd + "<br>PROCESSING DATA...";
+            }
+            
+            document.getElementById('masterCmd').value = "";
+        }
+    }
 </script>
-
-</body>
-</html>
