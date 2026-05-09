@@ -1,4 +1,17 @@
-<!DOCTYPE html>
+<!DOCTYPE html><div class="satellite-container">
+    <div class="map-overlay">
+        <div class="sat-point" style="top: 20%; left: 30%;"></div>
+        <div class="sat-point" style="top: 50%; left: 70%;"></div>
+        <div class="sat-point" style="top: 80%; left: 40%;"></div>
+    </div>
+    <div class="command-line">
+        <span class="prompt">AETHER_OS_v3.6.9 > </span>
+        <input type="text" id="masterCommand" placeholder="أدخل الأمر السيادي..." onkeypress="handleCommand(event)">
+    </div>
+</div>
+
+<div id="commandOutput" class="output-log"></div>
+
 <html lang="ar" dir="rtl">
 <head><div style="background: #111; border-top: 1px solid #0f0; padding: 5px; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 100;">
     <marquee behavior="scroll" direction="right" style="color: #0f0; font-size: 0.8rem;">
