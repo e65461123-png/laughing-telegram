@@ -7,50 +7,79 @@
     <style>
         :root { --neon: #00ff41; --gold: #ffd700; --bg: #000; }
         body { background: var(--bg); color: white; font-family: 'Courier New', monospace; margin: 0; padding-bottom: 120px; overflow-x: hidden; }
+        
+        /* شريط المعلومات العلوي */
         .top-nav { display: grid; grid-template-columns: repeat(4, 1fr); padding: 10px; border-bottom: 2px solid var(--neon); background: #000; position: sticky; top: 0; z-index: 1000; font-size: 0.65rem; text-align: center; }
         .val { color: var(--neon); font-weight: bold; display: block; font-size: 0.8rem; }
+
+        /* شريط الأخبار المتحرك (التطوير الجديد) */
         .news-ticker { background: rgba(0,255,65,0.1); color: var(--neon); padding: 5px; font-size: 0.7rem; white-space: nowrap; overflow: hidden; border-bottom: 1px solid #1a1a1a; }
-        .news-ticker span { display: inline-block; animation: ticker 20s linear infinite; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .news-ticker span { display: inline-block; padding-left: 100%; animation: ticker 25s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* منطقة الرصد */
         .main-display { padding: 10px; text-align: center; }
-        #liveRadar { width: 100%; height: 250px; border: 1px solid var(--neon); border-radius: 10px; margin-bottom: 10px; }
-        .core-circle { width: 120px; height: 120px; border: 4px double var(--gold); border-radius: 50%; margin: 15px auto; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 15px var(--gold); }
-        #liveGate { width: 100%; height: 350px; border: 2px solid var(--gold); display: none; margin-top: 10px; }
-        .cmd-center { position: fixed; bottom: 20px; left: 5%; width: 90%; background: #111; border: 2px solid var(--gold); border-radius: 15px; padding: 12px; z-index: 99999; box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); text-align: center; }
+        #liveRadar { width: 100%; height: 250px; border: 1px solid var(--neon); border-radius: 10px; box-shadow: 0 0 10px var(--neon); }
+        
+        /* عين الغراب وحالة النظام */
+        .core-circle { width: 120px; height: 120px; border: 4px double var(--gold); border-radius: 50%; margin: 15px auto; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 15px var(--gold); background: rgba(255,215,0,0.05); }
+        .sys-status { font-size: 0.6rem; color: var(--neon); margin: 10px 0; line-height: 1.4; text-align: left; display: inline-block; border-left: 2px solid var(--gold); padding-left: 10px; }
+
+        /* مركز الأوامر العائم */
+        .cmd-center { position: fixed; bottom: 20px; left: 5%; width: 90%; background: #111; border: 2px solid var(--gold); border-radius: 15px; padding: 12px; z-index: 99999; box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); }
         #cmdInput { background: transparent; border: none; color: white; width: 100%; font-size: 1.1rem; outline: none; text-align: center; }
+        #log { color: var(--neon); font-size: 0.7rem; margin-bottom: 5px; }
+
+        #liveGate { width: 100%; height: 380px; border: 2px solid var(--gold); display: none; margin-top: 10px; }
     </style>
 </head>
 <body>
+
     <div class="top-nav">
         <div>CAIRO<span id="clock" class="val">--:--</span></div>
         <div>BITCOIN<span class="val">$84,312</span></div>
         <div>GOLD<span class="val" style="color:var(--gold)">$2,684</span></div>
         <div>369 STATUS<span class="val">SECURED</span></div>
     </div>
+
     <div class="news-ticker">
-        <span>AI NEWS: Aether Protocol V4 Active | Cyber Sovereignty AES-256 Enabled | Global Markets: Bullish | Master Essam Identified...</span>
+        <span>[LIVE] AI NEWS: AETHER V4 CORE DEPLOYED | CYBER SECURITY: AES-256 ACTIVE | GLOBAL NODE: STABLE | MASTER ESSAM IDENTIFIED...</span>
     </div>
+
     <div class="main-display">
         <iframe id="liveRadar" src="https://www.windy.com/?30.044,31.236,6"></iframe>
+        
         <div class="core-circle">
             <h3 style="color:var(--gold); margin:0; font-size: 0.8rem;">RAVEN EYE</h3>
             <small style="color:var(--neon); font-size: 0.5rem;">ESSAM_OWNED</small>
         </div>
-        <div id="log" style="color:var(--neon); font-size: 0.7rem;">SYSTEM READY...</div>
+
+        <div class="sys-status">
+            SYSTEM STATUS : ONLINE<br>
+            AETHER CORE   : ACTIVE<br>
+            SECURITY LAYER: ENABLED<br>
+            GLOBAL NODE   : STABLE
+        </div>
+
         <iframe id="liveGate" src=""></iframe>
     </div>
+
     <div class="cmd-center">
+        <div id="log">SYSTEM READY. AWAITING MASTER COMMAND...</div>
         <input type="text" id="cmdInput" placeholder="اكتب /master أو /cosmos هنا" onkeypress="run(event)">
     </div>
+
     <script>
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB'); }, 1000);
+
         function run(e) {
             if (e.key === "Enter") {
                 const cmd = document.getElementById('cmdInput').value.toLowerCase();
                 const gate = document.getElementById('liveGate');
                 const log = document.getElementById('log');
+
                 if (cmd === "/cosmos") {
-                    log.innerText = "OPENING COSMOS GATE...";
+                    log.innerText = "COSMOS GATE OPENED. SCANNING SECTOR 369...";
                     gate.src = "https://sky.esa.int/esasky-embed/?target=NGC%201300&zoom=0.5";
                     gate.style.display = "block";
                     gate.scrollIntoView({ behavior: 'smooth' });
