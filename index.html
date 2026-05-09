@@ -1,49 +1,117 @@
-<style>
-    .radar-box { width: 150px; height: 150px; border: 2px solid #0f0; border-radius: 50%; position: relative; margin: 20px auto; overflow: hidden; background: repeating-radial-gradient(circle, #000 0, #000 10px, #0f0 11px, #000 12px); }
-    .radar-sweep { position: absolute; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 50%, rgba(0,255,0,0.3) 100%); animation: sweep 3s linear infinite; transform-origin: center; }
-    @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    .id-badge { color: #ffd700; font-weight: bold; border: 1px solid #ffd700; padding: 5px; margin-top: 5px; display: inline-block; font-size: 0.8rem; }
-</style>
-
-<div class="radar-box"><div class="radar-sweep"></div></div>
-<p style="font-size: 0.8rem;">SATELLITE BEAM: <span id="coords">Scanning...</span></p>
-
-<script>
-// تحديث الإحداثيات الوهمية للرادار
-setInterval(() => {
-    const lat = (Math.random() * 180 - 90).toFixed(4);
-    const lon = (Math.random() * 360 - 180).toFixed(4);
-    document.getElementById('coords').innerText = `LAT: ${lat} | LON: ${lon}`;
-}, 2000);
-
-// تحديث وظيفة إرسال الرسالة لتوليد ID
-function sendLegacy() {
-    const name = document.getElementById('visitor-name').value;
-    const msg = document.getElementById('visitor-msg').value;
-    const display = document.getElementById('messages-display');
-
-    if(name && msg) {
-        const memberID = "AT-369-" + Math.floor(1000 + Math.random() * 9000);
-        const time = new Date().toLocaleTimeString();
-        const newMessage = `<div style="border-bottom: 1px solid #111; padding: 10px;">
-            <span class="id-badge">${memberID}</span> <br>
-            <b style="color: #0f0;">${name}:</b> ${msg} <br>
-            <small style="color: #444;">Time: ${time}</small>
-        </div>`;
-        display.innerHTML = newMessage + display.innerHTML;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة أثير العملاقة | السيادة الرقمية</title>
+    <style>
+        body { background: #000; color: #0f0; text-align: center; font-family: 'Orbitron', sans-serif; padding: 10px; overflow-x: hidden; }
+        .container { border: 2px solid #0f0; padding: 20px; border-radius: 15px; display: inline-block; margin-top: 20px; background: #0a0a0a; box-shadow: 0 0 20px #0f0; width: 90%; max-width: 600px; }
         
-        // نظام التنبيه الصوتي
-        speak("Member Verified. Legacy Saved.");
-        
-        document.getElementById('visitor-name').value = '';
-        document.getElementById('visitor-msg').value = '';
-    }
-}
+        /* رادار السيادة */
+        .radar-box { width: 120px; height: 120px; border: 2px solid #0f0; border-radius: 50%; position: relative; margin: 15px auto; overflow: hidden; background: repeating-radial-gradient(circle, #000 0, #000 10px, #0f0 11px, #000 12px); }
+        .radar-sweep { position: absolute; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 50%, rgba(0,255,0,0.3) 100%); animation: sweep 3s linear infinite; transform-origin: center; }
+        @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-// وظيفة النطق الآلي
-function speak(text) {
-    const msg = new SpeechSynthesisUtterance(text);
-    msg.lang = 'en-US';
-    window.speechSynthesis.speak(msg);
-}
-</script>
+        input, textarea { display: block; margin: 10px auto; padding: 12px; width: 85%; background: #000; border: 1px solid #0f0; color: #0f0; border-radius: 5px; font-size: 1rem; }
+        button { padding: 12px; background: #0f0; color: #000; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 90%; transition: 0.3s; font-size: 1.1rem; }
+        button:hover { background: #fff; box-shadow: 0 0 30px #0f0; }
+        
+        #secure-content { display: none; }
+        .live-data { margin-top: 15px; font-size: 1rem; color: #ffd700; border: 1px solid #ffd700; padding: 10px; border-radius: 10px; background: rgba(255, 215, 0, 0.05); }
+        .id-badge { color: #ffd700; font-weight: bold; border: 1px solid #ffd700; padding: 3px 8px; margin-bottom: 5px; display: inline-block; font-size: 0.7rem; border-radius: 3px; }
+        #messages-display { margin-top: 20px; text-align: right; max-height: 250px; overflow-y: auto; background: #050505; padding: 10px; border: 1px solid #111; }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen" class="container">
+        <h2 style="color: #0f0;">مبادرة أثير للخير 🛡️</h2>
+        <p>نظام السيادة الرقمية | EH369</p>
+        <div class="radar-box"><div class="radar-sweep"></div></div>
+        <input type="text" id="user" placeholder="اسم القائد">
+        <input type="password" id="pass" placeholder="كلمة المرور">
+        <button onclick="login()">تفعيل البروتوكول</button>
+    </div>
+
+    <div id="secure-content" class="container">
+        <h2 style="color: #fff;">تم الاختراق.. أهلاً يا ماستر 🤝</h2>
+        
+        <div class="live-data">
+            <p>🛰️ رصد الأقمار: <span id="coords" style="font-family: monospace;">Scanning...</span></p>
+            <p>💰 البيتكوين: <span id="btc-price">جاري الجلب...</span></p>
+            <p>🕒 الوقت الذري: <span id="atomic-time">00:00:00</span></p>
+        </div>
+
+        <div id="guestbook" style="margin-top: 25px;">
+            <h3>📩 سجل الزوار والولاء</h3>
+            <input type="text" id="v-name" placeholder="اسم العضو الجديد">
+            <textarea id="v-msg" placeholder="رسالة للمبادرة..."></textarea>
+            <button onclick="sendLegacy()">تسجيل البصمة الرقمية</button>
+        </div>
+
+        <div id="messages-display">
+            <p style="color: #444;">[النظام جاهز لاستقبال البيانات]</p>
+        </div>
+        
+        <p style="font-size: 0.7rem; margin-top: 20px; color: #333;">CONTRACT: ESSAM_OWNED | VERSION: 4.0.1</p>
+    </div>
+
+    <script>
+        function login() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === 'Essam' && p === '369') { 
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('secure-content').style.display = 'block';
+                speak("Welcome Master Essam. System is Live.");
+                startEngine();
+            } else {
+                alert('خطأ في الهوية.. الدخول للمصرح لهم فقط');
+                speak("Access Denied.");
+            }
+        }
+
+        function startEngine() {
+            setInterval(() => {
+                // محاكي إحداثيات الأقمار
+                const lat = (Math.random() * 180 - 90).toFixed(4);
+                const lon = (Math.random() * 360 - 180).toFixed(4);
+                document.getElementById('coords').innerText = `LAT: ${lat} | LON: ${lon}`;
+                
+                // الوقت
+                document.getElementById('atomic-time').innerText = new Date().toLocaleTimeString('en-GB');
+            }, 2000);
+
+            // جلب سعر البيتكوين
+            fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT')
+                .then(r => r.json())
+                .then(d => { document.getElementById('btc-price').innerText = "$" + parseFloat(d.price).toLocaleString(); });
+        }
+
+        function sendLegacy() {
+            const name = document.getElementById('v-name').value;
+            const msg = document.getElementById('v-msg').value;
+            const display = document.getElementById('messages-display');
+
+            if(name && msg) {
+                const id = "AT-369-" + Math.floor(1000 + Math.random() * 9000);
+                const item = `<div style="border-bottom: 1px solid #111; padding: 10px; margin-bottom: 5px;">
+                    <span class="id-badge">${id}</span><br>
+                    <b style="color: #0f0;">${name}:</b> ${msg}
+                </div>`;
+                display.innerHTML = item + display.innerHTML;
+                speak("Identity Secured.");
+                document.getElementById('v-name').value = '';
+                document.getElementById('v-msg').value = '';
+            }
+        }
+
+        function speak(t) {
+            const m = new SpeechSynthesisUtterance(t);
+            m.lang = 'en-US';
+            window.speechSynthesis.speak(m);
+        }
+    </script>
+</body>
+</html>
