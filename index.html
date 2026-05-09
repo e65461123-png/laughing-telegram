@@ -1,75 +1,37 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة أثير العملاقة - السيادة الرقمية</title>
-    <style>
-        body { background: #000; color: #0f0; text-align: center; font-family: 'Orbitron', sans-serif; padding: 20px; overflow-x: hidden; }
-        .container { border: 2px solid #0f0; padding: 30px; border-radius: 15px; display: inline-block; margin-top: 50px; background: #111; box-shadow: 0 0 20px #0f0; transition: 0.5s; }
-        input { display: block; margin: 15px auto; padding: 12px; width: 250px; background: #000; border: 1px solid #0f0; color: #0f0; border-radius: 5px; font-size: 1rem; }
-        button { padding: 12px 40px; background: #0f0; color: #000; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 100%; transition: 0.3s; font-size: 1.1rem; }
-        button:hover { background: #fff; box-shadow: 0 0 30px #0f0; }
-        #secure-content { display: none; }
-        .live-data { margin-top: 20px; font-size: 1.2rem; color: #ffd700; border: 1px solid #ffd700; padding: 10px; border-radius: 10px; }
-    </style>
-</head>
-<body>
-    <div id="login-screen" class="container">
-        <h2>مبادرة أثير للخير 🚀</h2>
-        <p>بوابة السيادة الرقمية للمستر عصام الكومي</p>
-        <input type="text" id="user" placeholder="اسم القائد">
-        <input type="password" id="pass" placeholder="كلمة المرور">
-        <button onclick="login()">دخول المنصة</button>
-    </div>
+<div id="guestbook-section" style="margin-top: 30px; border-top: 1px dashed #0f0; padding-top: 20px;">
+    <h3>📩 سجل الزوار السيادي</h3>
+    <p style="font-size: 0.9rem; color: #888;">اترك بصمتك في تاريخ بروتوكول أثير</p>
+    
+    <input type="text" id="visitor-name" placeholder="اسمك أو لقبك الرقمي" style="width: 80%;">
+    <textarea id="visitor-msg" placeholder="رسالتك للمبادرة..." style="width: 80%; background: #000; border: 1px solid #0f0; color: #0f0; padding: 10px; border-radius: 5px; height: 60px;"></textarea>
+    <button onclick="sendLegacy()" style="margin-top: 10px; width: 50%;">إرسال للماستر</button>
 
-    <div id="secure-content" class="container">
-        <h1>أهلاً بك يا قائد عصام الكومي</h1>
-        <p style="font-size: 1.2em; color: #fff;">لقد نجحت في تأسيس بروتوكول أثير المتكامل.</p>
+    <div id="messages-display" style="margin-top: 20px; text-align: right; max-height: 200px; overflow-y: auto; background: #050505; padding: 10px; border-radius: 5px;">
+        <p style="color: #555;">[نظام]: في انتظار الرسالة الأولى...</p>
+    </div>
+</div>
+
+<script>
+// محرك إرسال الرسائل
+function sendLegacy() {
+    const name = document.getElementById('visitor-name').value;
+    const msg = document.getElementById('visitor-msg').value;
+    const display = document.getElementById('messages-display');
+
+    if(name && msg) {
+        const time = new Date().toLocaleTimeString();
+        const newMessage = `<div style="border-bottom: 1px solid #111; padding: 5px;">
+            <b style="color: #ffd700;">${name}:</b> ${msg} <br>
+            <small style="color: #444; font-size: 0.7rem;">تم الرصد في: ${time}</small>
+        </div>`;
+        display.innerHTML = newMessage + display.innerHTML;
         
-        <div class="live-data">
-            <p>سعر البيتكوين (BTC): <span id="btc-price">جاري الرصد...</span></p>
-            <p>التوقيت الذري: <span id="current-atomic-time">جاري المزامنة...</span></p>
-        </div>
-
-        <div style="border-top: 1px solid #0f0; margin-top: 20px; padding-top: 20px;">
-            <p>CONTRACT: ESSAM_OWNED ✅</p>
-            <p>الحالة: متصل بنطاق سيادي دائم ✅</p>
-        </div>
-    </div>
-
-    <script>
-        // نظام الدخول المعتمد
-        function login() {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            // بيانات الدخول المعتمدة في ملفك
-            if(u === 'Essam' && p === 'Atheer2026') { 
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('secure-content').style.display = 'block';
-                startAtheerEngine();
-            } else {
-                alert('عذراً.. بيانات الهوية غير صحيحة');
-            }
-        }
-
-        // محرك رصد البيانات الحية
-        async function startAtheerEngine() {
-            setInterval(async () => {
-                try {
-                    // سحب سعر البيتكوين لايف
-                    const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-                    const data = await res.json();
-                    document.getElementById('btc-price').innerText = "$" + parseFloat(data.price).toLocaleString();
-                    
-                    // تحديث الوقت الذري
-                    const now = new Date();
-                    document.getElementById('current-atomic-time').innerText = now.toLocaleTimeString('en-GB');
-                } catch (e) {
-                    console.log("Shield Active: Data Protection Mode.");
-                }
-            }, 3000);
-        }
-    </script>
-</body>
-</html>
+        // مسح الحقول بعد الإرسال
+        document.getElementById('visitor-name').value = '';
+        document.getElementById('visitor-msg').value = '';
+        alert("تم تسجيل بصمتك في سجلات أثير بنجاح ✅");
+    } else {
+        alert("برجاء إدخال الاسم والرسالة لتأكيد الهوية.");
+    }
+}
+</script>
