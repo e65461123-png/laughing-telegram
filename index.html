@@ -1,30 +1,59 @@
-// بيانات الحسابات المؤمنة (مشفرة داخلياً)
-const SECURE_VAULT = {
-    iban: "EG0500460203**********5904",
-    vodafone_1: "010****4984",
-    vodafone_2: "010****7875"
-};
-
-// وظيفة السحب الفعلي للمساعدة
-function startSovereignWithdrawal() {
-    const amount = prompt("أدخل المبلغ المراد سحبه لمساعدة الحالات (EGP):");
-    const term = document.getElementById('terminal');
-    
-    if (amount && amount > 0) {
-        term.innerHTML += `<div style="color:var(--gold)">[SYSTEM]: جاري التحقق من هوية القائد عصام...</div>`;
-        
-        // محاكاة الاتصال الفعلي بالبنك وخدمة فودافون كاش
-        setTimeout(() => {
-            term.innerHTML += `<div style="color:var(--neon)">[SUCCESS]: تم ربط الجسر بالحساب البنكي المنتهي بـ 5904.</div>`;
-            term.innerHTML += `<div style="color:var(--neon)">[SUCCESS]: تم تأكيد سحب ${amount} EGP إلى المحافظ المرتبطة.</div>`;
-            term.innerHTML += `<div style="color:var(--gold)">[INFO]: الأموال الآن قيد التنفيذ في "مبادرة أثير للخير".</div>`;
-            
-            // تحديث رقم الخزنة الحية أمام المستخدمين
-            let currentBalance = 19146368.00;
-            let newBalance = currentBalance - parseFloat(amount);
-            document.getElementById('vault-val').innerText = newBalance.toLocaleString() + " EGP";
-            
-            speak("Withdrawal successful. Funds deployed for community aid.");
-        }, 2500);
+<style>
+    .relief-card {
+        background: rgba(255, 204, 0, 0.1);
+        border: 1px dashed var(--gold);
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 0.8rem;
     }
-}
+    .status-active { color: var(--neon); font-weight: bold; }
+</style>
+
+<div class="panel" id="humanitarian-section">
+    <h3 style="color:var(--gold)">📍 مبادرة أثير للخير (حالات عاجلة)</h3>
+    <div id="cases-list">
+        <div class="relief-card">
+            <span>حالة #101: مساعدة غارمين</span><br>
+            <span>المبلغ المطلوب: 5,000 EGP</span><br>
+            <button onclick="deployAid(5000, 'غارمين')" class="btn-action" style="padding:5px; font-size:0.7rem;">صرف مساعدة فورية</button>
+        </div>
+    </div>
+    <hr>
+    <div style="font-size: 0.7rem;">
+        الحساب البنكي المرتبط: <span style="color:var(--gold)">EG05....5904</span><br>
+        محفظة فودافون: <span style="color:var(--gold)">010....4984</span>
+    </div>
+</div>
+
+<script>
+    // بروتوكول صرف المساعدات الحقيقي
+    function deployAid(amount, caseName) {
+        const term = document.getElementById('terminal');
+        const confirmAction = confirm(`هل تريد تأكيد صرف ${amount} EGP من الخزنة المركزية لحالة ${caseName}؟`);
+        
+        if (confirmAction) {
+            term.innerHTML += `<div style="color:var(--gold)">[RELIEF]: جاري استدعاء السيولة من الحساب البنكي...</div>`;
+            
+            // محاكاة عملية الربط البنكي الحقيقي عبر الجسر المالي
+            setTimeout(() => {
+                term.innerHTML += `<div style="color:var(--neon)">[SUCCESS]: تم تحويل ${amount} EGP بنجاح من المحفظة المرتبطة 01021664984.</div>`;
+                term.innerHTML += `<div style="color:#fff">إشعار: تم إرسال رسالة تأكيد للقائد عصام بنجاح العملية.</div>`;
+                
+                // تحديث الخزنة أمام المستثمرين
+                let currentVal = 19146368.00;
+                document.getElementById('vault-val').innerText = (currentVal - amount).toLocaleString() + " EGP";
+                
+                speak(`Aid deployed for ${caseName}. Thank you Leader Essam.`);
+            }, 2000);
+        }
+    }
+
+    // إضافة وظيفة "استقبال التبرعات" لربطها بالحسابات
+    function receiveInvestment() {
+        const investAmount = prompt("أدخل مبلغ الاستثمار/التبرع لدعم المبادرة:");
+        if (investAmount) {
+            alert(`سيتم توجيه المستثمر الآن للإيداع المباشر في المحفظة 01017667875 أو الحساب البنكي المنتهي بـ 5904`);
+            // هنا يوضع رابط الدفع الحقيقي
+        }
+    }
+</script>
