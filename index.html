@@ -3,233 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aether Protocol | Raven Eye Dashboard</title>
+    <title>Raven Eye | Nature Breaker V4</title>
     <style>
         :root {
-            --neon-blue: #00f3ff;
-            --neon-purple: #bc13fe;
-            --dark-bg: #050505;
-            --panel-bg: rgba(20, 20, 20, 0.8);
+            --neon-green: #00ff41;
+            --dark-bg: #000000;
+            --panel-border: #1a3a1a;
+            --gold: #ffcc00;
         }
 
         body {
             background-color: var(--dark-bg);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--neon-green);
+            font-family: 'Orbitron', sans-serif; /* يفضل استدعاء خط تقني */
             margin: 0;
-            overflow: hidden;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            height: 100vh;
-        }
-
-        /* خلفية جزيئات متحركة */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        header {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid var(--neon-blue);
-            text-shadow: 0 0 10px var(--neon-blue);
-            background: var(--panel-bg);
-        }
-
-        .main-container {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            gap: 15px;
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        .panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--neon-purple);
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: inset 0 0 15px rgba(188, 19, 254, 0.2);
-        }
-
-        h2 {
-            color: var(--neon-blue);
-            font-size: 1.2rem;
-            border-bottom: 1px solid var(--neon-blue);
-            padding-bottom: 5px;
-            margin-top: 0;
-        }
-
-        /* الساعات العالمية */
-        .clock-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        /* البورصة والعملات */
-        .market-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .price-up { color: #00ff00; }
-        .price-down { color: #ff0000; }
-
-        /* منطقة الخريطة/الأقمار الصناعية */
-        #map-placeholder {
-            width: 100%;
-            height: 300px;
-            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
-            border: 1px dashed var(--neon-blue);
-            display: flex;
             align-items: center;
+        }
+
+        /* حاوية الساعات العالمية */
+        .clocks-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+        }
+        .clock { text-align: center; }
+        .time { font-size: 1.2rem; display: block; margin-top: 5px; }
+
+        /* حالة الأصول والأسواق */
+        .assets-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .asset-val { font-size: 1.1rem; color: #fff; display: block; }
+        .status-secured { text-shadow: 0 0 10px var(--neon-green); }
+
+        /* الدائرة المركزية Raven Eye */
+        .main-eye {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 4px solid var(--gold);
+            box-shadow: 0 0 50px rgba(255, 204, 0, 0.4);
+            display: flex;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            background: radial-gradient(circle, rgba(255,204,0,0.1) 0%, transparent 70%);
+        }
+        .eye-title { color: var(--gold); font-size: 1.4rem; letter-spacing: 2px; }
+        .eye-subtitle { font-size: 0.7rem; margin-top: 5px; }
+
+        /* الصناديق الجانبية */
+        .info-box {
+            border: 1px solid var(--neon-green);
+            padding: 10px;
+            width: 140px;
+            font-size: 0.6rem;
             position: relative;
         }
+        .info-box::before {
+            content: ""; position: absolute; left: -2px; top: 0; 
+            height: 100%; width: 4px; background: var(--gold);
+        }
 
-        .status-bar {
-            grid-column: 1 / span 3;
-            background: var(--neon-blue);
-            color: black;
-            padding: 5px 20px;
-            font-weight: bold;
+        .row { display: flex; justify-content: space-between; width: 100%; max-width: 400px; }
+
+        footer {
+            margin-top: auto;
+            width: 100%;
             display: flex;
             justify-content: space-between;
-        }
-
-        .glitch-text {
-            animation: glitch 2s infinite;
-        }
-
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
+            font-size: 0.7rem;
+            border-top: 1px solid var(--panel-border);
+            padding-top: 10px;
         }
     </style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
-
-<header>
-    <h1 class="glitch-text">بروتوكول أثير | AETHER PROTOCOL V4.0</h1>
-    <div>المستخدم النشط: <span style="color: var(--neon-purple);">ESSAM 369</span></div>
-</header>
-
-<div class="main-container">
-    <div class="panel">
-        <h2>التوقيت العالمي LIVE</h2>
-        <div id="clocks">
-            <div class="clock-item"><span>القاهرة</span> <span id="cairo">--:--:--</span></div>
-            <div class="clock-item"><span>لندن</span> <span id="london">--:--:--</span></div>
-            <div class="clock-item"><span>نيويورك</span> <span id="ny">--:--:--</span></div>
-            <div class="clock-item"><span>طوكيو</span> <span id="tokyo">--:--:--</span></div>
-        </div>
-        <hr>
-        <h2>حالة الأقمار الصناعية</h2>
-        <div style="font-size: 0.8rem; line-height: 1.6;">
-            SATELLITE 369: <span class="price-up">ACTIVE</span><br>
-            SIGNAL STRENGTH: 98.4%<br>
-            ENCRYPTION: AES-256
-        </div>
+    <div class="clocks-container">
+        <div class="clock">CAIRO <span class="time" id="cairo-time">--:--:--</span></div>
+        <div class="clock">LONDON <span class="time" id="london-time">--:--:--</span></div>
+        <div class="clock">NY <span class="time" id="ny-time">--:--:--</span></div>
+        <div class="clock">TOKYO <span class="time" id="tokyo-time">--:--:--</span></div>
     </div>
 
-    <div class="panel">
-        <h2>رادار التتبع والخرائط الذكية</h2>
-        <div id="map-placeholder">
-            <div style="text-align: center;">
-                <div style="font-size: 3rem;">🛰️</div>
-                جاري الاتصال بقاعدة بيانات الأقمار الصناعية...
-            </div>
-        </div>
-        <div style="margin-top: 15px;">
-            <h2>آخر الأخبار التقنية</h2>
-            <marquee scrollamount="5" style="color: var(--neon-blue);">
-                تحديث جديد لنظام Raven Eye... بروتوكول أثير يحقق السيادة الرقمية... أسواق الكريبتو تشهد تقلبات... 
-            </marquee>
-        </div>
+    <div class="assets-grid">
+        <div>GOLD ASSET <span class="asset-val" style="color: var(--neon-green);">$2,348.12</span></div>
+        <div>369 STATUS <span class="asset-val status-secured">SECURED</span></div>
+        <div>BITCOIN LIVE <span class="asset-val" id="btc-val">$80,281.40</span></div>
     </div>
 
-    <div class="panel">
-        <h2>البورصة والعملات الرقمية</h2>
-        <div id="markets">
-            <div class="market-item"><span>الذهب (OZ)</span> <span class="price-up">$2,342.10</span></div>
-            <div class="market-item"><span>البيتكوين (BTC)</span> <span id="btc-price">$64,231.00</span></div>
-            <div class="market-item"><span>إيثيريوم (ETH)</span> <span id="eth-price">$3,150.45</span></div>
-            <div class="market-item"><span>فودافون كاش (EGP)</span> <span class="price-up">نشط</span></div>
-        </div>
+    <div class="row">
+        <div class="info-box">🛰️ SATELLITE 369<br>LIVE EARTH VIEW</div>
+        <div class="info-box" style="text-align: right;">🌌 COSMOS PORTAL<br>GALAXY MONITOR</div>
     </div>
-</div>
 
-<div class="status-bar">
-    <span>SYSTEM: SECURED</span>
-    <span>AETHER_IP: 169.254.3.6.9</span>
-    <span>OWNER: ESSAM ELKOMY</span>
-</div>
+    <div class="main-eye">
+        <div class="eye-title">RAVEN EYE</div>
+        <div class="eye-subtitle">NATURE BREAKER V4</div>
+    </div>
 
-<script>
-    // تحديث الساعات
-    function updateClocks() {
-        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-        
-        document.getElementById('cairo').innerText = new Date().toLocaleTimeString('ar-EG', { ...options, timeZone: 'Africa/Cairo' });
-        document.getElementById('london').innerText = new Date().toLocaleTimeString('en-GB', { ...options, timeZone: 'Europe/London' });
-        document.getElementById('ny').innerText = new Date().toLocaleTimeString('en-US', { ...options, timeZone: 'America/New_York' });
-        document.getElementById('tokyo').innerText = new Date().toLocaleTimeString('ja-JP', { ...options, timeZone: 'Asia/Tokyo' });
-    }
+    <div class="row">
+        <div class="info-box">🛡️ SECURITY<br>AES-256_ACTIVE</div>
+        <div class="info-box" style="text-align: right;">📄 CONTRACT<br>ESSAM_OWNED</div>
+    </div>
 
-    // محاكاة تحديث أسعار الكريبتو (يمكن ربطها بـ API حقيقي لاحقاً)
-    function updateMarkets() {
-        const btc = 64000 + Math.random() * 500;
-        const eth = 3100 + Math.random() * 100;
-        document.getElementById('btc-price').innerText = `$${btc.toLocaleString(undefined, {maximumFractionDigits:2})}`;
-        document.getElementById('eth-price').innerText = `$${eth.toLocaleString(undefined, {maximumFractionDigits:2})}`;
-    }
+    <footer>
+        <span>SYSTEM: ONLINE</span>
+        <span>AETHER PROTOCOL © 2026</span>
+    </footer>
 
-    // خلفية الجزيئات
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    <script>
+        function updateAll() {
+            const now = new Date();
+            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
 
-    let particles = [];
-    for(let i=0; i<100; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 1,
-            vy: (Math.random() - 0.5) * 1
-        });
-    }
+            document.getElementById('cairo-time').innerText = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Africa/Cairo' });
+            document.getElementById('london-time').innerText = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Europe/London' });
+            document.getElementById('ny-time').innerText = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'America/New_York' });
+            document.getElementById('tokyo-time').innerText = now.toLocaleTimeString('en-GB', { ...options, timeZone: 'Asia/Tokyo' });
 
-    function draw() {
-        ctx.clearRect(0,0,canvas.width, canvas.height);
-        ctx.fillStyle = '#00f3ff';
-        particles.forEach(p => {
-            p.x += p.vx; p.y += p.vy;
-            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, 1, 0, Math.PI*2);
-            ctx.fill();
-        });
-        requestAnimationFrame(draw);
-    }
+            // محاكاة تغير طفيف في سعر البيتكوين ليعطي إحساساً بالحياة
+            const baseBtc = 80281.40;
+            const drift = (Math.random() - 0.5) * 10;
+            document.getElementById('btc-val').innerText = `$${(baseBtc + drift).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        }
 
-    setInterval(updateClocks, 1000);
-    setInterval(updateMarkets, 3000);
-    draw();
-</script>
+        setInterval(updateAll, 1000);
+        updateAll();
+    </script>
 </body>
 </html>
