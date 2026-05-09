@@ -1,54 +1,21 @@
-/* MASTER PROTOCOL: ESSAM369 
-   THE REALITY BREAKER - ALL-IN-ONE CORE
-   INTEGRATING: FINANCE, TIME, & SATELLITE RADAR
+/* SOVEREIGN GATEWAY - PROTOCOL 369
+   AUTHORIZED PERSONNEL ONLY: MASTER ESSAM ELKOMY
 */
 
-const SOVEREIGN_ID = "Essam369";
-
-async function updateAtheerLiveSystem() {
-    console.log(`[${SOVEREIGN_ID}] System Heartbeat...`);
-
-    try {
-        // 1. تحديث البورصة العالمية (بيتكوين) - حقيقي 100%
-        const cryptoRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-        const cryptoData = await cryptoRes.json();
-        const btcPrice = parseFloat(cryptoData.price).toLocaleString(undefined, {minimumFractionDigits: 2});
-        if(document.getElementById('btc-price')) {
-            document.getElementById('btc-price').innerText = "$" + btcPrice;
-        }
-
-        // 2. تحديث التوقيت الذري المتزامن
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString('en-GB', { hour12: false });
-        if(document.getElementById('current-atomic-time')) {
-            document.getElementById('current-atomic-time').innerText = timeStr;
-        }
-
-        // 3. محاكي رادار الأقمار الصناعية (Satellite 369)
-        // هذا الجزء يضيف حركة واقعية للرادار دون تغيير التصميم
-        const radarNodes = document.querySelectorAll('.radar-node');
-        radarNodes.forEach(node => {
-            node.style.opacity = Math.random();
-            node.style.transform = `scale(${Math.random() * 1.5})`;
-        });
-
-        // 4. تحديث حالة الذهب (تقديري من البورصة الحية)
-        // يتم الربط هنا ببيانات حقيقية لإتمام "السيادة المالية"
-        if(document.getElementById('gold-live')) {
-            // محاكاة نبض السعر الحقيقي للذهب
-            let baseGold = 2348.12; 
-            let liveGold = (baseGold + (Math.random() * 2)).toFixed(2);
-            document.getElementById('gold-live').innerText = "$" + liveGold;
-        }
-
-    } catch (error) {
-        console.warn("Shield Active: Data Integrity Maintained by Essam369.");
+function activateSovereignLock() {
+    const accessKey = prompt("ENTER MASTER IDENTITY CODE:");
+    
+    if (accessKey === "Essam369") {
+        alert("IDENTITY VERIFIED. WELCOME MASTER ESSAM.");
+        console.log("Access Granted: Reality Unlocked.");
+        // هنا يتم تفعيل كل الأنظمة الحية اللي برمجناها
+        startAtheerEngine(); 
+    } else {
+        alert("ACCESS DENIED. SYSTEM SECURED.");
+        document.body.innerHTML = "<h1 style='color:red; text-align:center; margin-top:20%;'>UNAUTHORIZED ACCESS DETECTED</h1>";
+        window.location.href = "about:blank"; // غلق الواقع عن المتطفلين
     }
 }
 
-// تشغيل المحرك الشامل كل 3 ثواني لاختراق الواقع بالثانية
-setInterval(updateAtheerLiveSystem, 3000);
-updateAtheerLiveSystem();
-
-// رسالة الترحيب السيادية في الكونسول
-console.log(`%c ACCESS GRANTED: ${SOVEREIGN_ID} `, 'background: #ffd700; color: #000; font-size: 20px; font-weight: bold;');
+// تفعيل القفل فور تحميل الرابط الشامل
+window.onload = activateSovereignLock;
