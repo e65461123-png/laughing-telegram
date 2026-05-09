@@ -1,37 +1,49 @@
-<div id="guestbook-section" style="margin-top: 30px; border-top: 1px dashed #0f0; padding-top: 20px;">
-    <h3>📩 سجل الزوار السيادي</h3>
-    <p style="font-size: 0.9rem; color: #888;">اترك بصمتك في تاريخ بروتوكول أثير</p>
-    
-    <input type="text" id="visitor-name" placeholder="اسمك أو لقبك الرقمي" style="width: 80%;">
-    <textarea id="visitor-msg" placeholder="رسالتك للمبادرة..." style="width: 80%; background: #000; border: 1px solid #0f0; color: #0f0; padding: 10px; border-radius: 5px; height: 60px;"></textarea>
-    <button onclick="sendLegacy()" style="margin-top: 10px; width: 50%;">إرسال للماستر</button>
+<style>
+    .radar-box { width: 150px; height: 150px; border: 2px solid #0f0; border-radius: 50%; position: relative; margin: 20px auto; overflow: hidden; background: repeating-radial-gradient(circle, #000 0, #000 10px, #0f0 11px, #000 12px); }
+    .radar-sweep { position: absolute; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 50%, rgba(0,255,0,0.3) 100%); animation: sweep 3s linear infinite; transform-origin: center; }
+    @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .id-badge { color: #ffd700; font-weight: bold; border: 1px solid #ffd700; padding: 5px; margin-top: 5px; display: inline-block; font-size: 0.8rem; }
+</style>
 
-    <div id="messages-display" style="margin-top: 20px; text-align: right; max-height: 200px; overflow-y: auto; background: #050505; padding: 10px; border-radius: 5px;">
-        <p style="color: #555;">[نظام]: في انتظار الرسالة الأولى...</p>
-    </div>
-</div>
+<div class="radar-box"><div class="radar-sweep"></div></div>
+<p style="font-size: 0.8rem;">SATELLITE BEAM: <span id="coords">Scanning...</span></p>
 
 <script>
-// محرك إرسال الرسائل
+// تحديث الإحداثيات الوهمية للرادار
+setInterval(() => {
+    const lat = (Math.random() * 180 - 90).toFixed(4);
+    const lon = (Math.random() * 360 - 180).toFixed(4);
+    document.getElementById('coords').innerText = `LAT: ${lat} | LON: ${lon}`;
+}, 2000);
+
+// تحديث وظيفة إرسال الرسالة لتوليد ID
 function sendLegacy() {
     const name = document.getElementById('visitor-name').value;
     const msg = document.getElementById('visitor-msg').value;
     const display = document.getElementById('messages-display');
 
     if(name && msg) {
+        const memberID = "AT-369-" + Math.floor(1000 + Math.random() * 9000);
         const time = new Date().toLocaleTimeString();
-        const newMessage = `<div style="border-bottom: 1px solid #111; padding: 5px;">
-            <b style="color: #ffd700;">${name}:</b> ${msg} <br>
-            <small style="color: #444; font-size: 0.7rem;">تم الرصد في: ${time}</small>
+        const newMessage = `<div style="border-bottom: 1px solid #111; padding: 10px;">
+            <span class="id-badge">${memberID}</span> <br>
+            <b style="color: #0f0;">${name}:</b> ${msg} <br>
+            <small style="color: #444;">Time: ${time}</small>
         </div>`;
         display.innerHTML = newMessage + display.innerHTML;
         
-        // مسح الحقول بعد الإرسال
+        // نظام التنبيه الصوتي
+        speak("Member Verified. Legacy Saved.");
+        
         document.getElementById('visitor-name').value = '';
         document.getElementById('visitor-msg').value = '';
-        alert("تم تسجيل بصمتك في سجلات أثير بنجاح ✅");
-    } else {
-        alert("برجاء إدخال الاسم والرسالة لتأكيد الهوية.");
     }
+}
+
+// وظيفة النطق الآلي
+function speak(text) {
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'en-US';
+    window.speechSynthesis.speak(msg);
 }
 </script>
