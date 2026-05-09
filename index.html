@@ -1,21 +1,13 @@
-/* SOVEREIGN GATEWAY - PROTOCOL 369
-   AUTHORIZED PERSONNEL ONLY: MASTER ESSAM ELKOMY
-*/
+<div id="sovereign-status">
+    <p>CONTRACT STATUS: <span style="color: #00ff00;">ACTIVE</span></p>
+    <p>OWNER: <span id="master-id">ESSAM ELKOMY 369</span></p>
+</div>
 
-function activateSovereignLock() {
-    const accessKey = prompt("ENTER MASTER IDENTITY CODE:");
-    
-    if (accessKey === "Essam369") {
-        alert("IDENTITY VERIFIED. WELCOME MASTER ESSAM.");
-        console.log("Access Granted: Reality Unlocked.");
-        // هنا يتم تفعيل كل الأنظمة الحية اللي برمجناها
-        startAtheerEngine(); 
-    } else {
-        alert("ACCESS DENIED. SYSTEM SECURED.");
-        document.body.innerHTML = "<h1 style='color:red; text-align:center; margin-top:20%;'>UNAUTHORIZED ACCESS DETECTED</h1>";
-        window.location.href = "about:blank"; // غلق الواقع عن المتطفلين
-    }
+<button onclick="activateRadar()" class="master-btn">ACTIVATE SATELLITE 369</button>
+
+<script>
+function activateRadar() {
+    alert("System Initialized... Connecting to Aether Satellites.");
+    // هنا نربط الكود بخرائط حية أو بيانات رادارية
 }
-
-// تفعيل القفل فور تحميل الرابط الشامل
-window.onload = activateSovereignLock;
+</script>
