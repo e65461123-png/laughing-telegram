@@ -3,119 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHER COMMAND CENTER | غرفة العمليات</title>
+    <title>AETHER FINANCE | المركز المالي العالمي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #ffd700; --cyan: #00fff7; --bg: #00050a; --red: #ff3c3c; }
-        body { margin: 0; background: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow: hidden; height: 100vh; }
-        
-        /* شريط البورصة الحي */
-        .stock-ticker { position: fixed; top: 0; width: 100%; background: rgba(0, 20, 30, 0.9); border-bottom: 1px solid var(--cyan); z-index: 100; overflow: hidden; white-space: nowrap; padding: 5px 0; }
-        .ticker-wrap { display: inline-block; animation: ticker 30s linear infinite; font-family: 'Orbitron'; font-size: 12px; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .stock-item { margin-right: 30px; color: var(--cyan); }
-        .up { color: #0f0; } .down { color: var(--red); }
+        :root { --gold: #ffd700; --cyan: #00fff7; --bg: #01080e; --success: #00ff88; }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
 
-        /* الأقمار الصناعية وعين الغراب */
-        .sat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 40px; padding: 15px; }
-        .sat-panel { background: rgba(0, 10, 20, 0.8); border: 1px solid rgba(0, 255, 247, 0.2); padding: 10px; border-radius: 5px; position: relative; }
-        .sat-icon { font-size: 20px; color: var(--gold); margin-bottom: 5px; }
-        
-        /* غرفة العمليات (المركز) */
-        .ops-center { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px; height: calc(100vh - 100px); overflow-y: auto; }
-        .control-panel { border: 1px solid var(--gold); background: rgba(255, 215, 0, 0.05); padding: 15px; border-radius: 10px; position: relative; }
-        
-        /* الأيقونات الجاهزة للفتح */
-        .icon-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border: 1px solid var(--gold); padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-        .icon-btn:hover { background: var(--gold); color: black; box-shadow: 0 0 20px var(--gold); }
-        .icon-btn i { font-size: 24px; margin-bottom: 8px; }
+        /* الساعة العالمية */
+        .world-clocks { display: flex; justify-content: space-around; background: rgba(0, 20, 40, 0.8); padding: 10px; border-bottom: 2px solid var(--gold); font-family: 'Orbitron'; font-size: 14px; }
+        .clock-item { text-align: center; color: var(--gold); }
 
-        /* عين الغراب (الرادار) */
-        .raven-eye { width: 100%; height: 150px; background: radial-gradient(circle, #001a1a 0%, #000 70%); border: 2px solid var(--cyan); position: relative; overflow: hidden; border-radius: 50%; }
-        .raven-line { position: absolute; width: 50%; height: 2px; background: var(--cyan); top: 50%; left: 50%; transform-origin: left; animation: scan 4s linear infinite; }
-        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .container { padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); }
+        .card-title { color: var(--gold); font-family: 'Orbitron'; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
 
-        .title-gold { font-family: 'Orbitron'; color: var(--gold); font-size: 14px; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        /* أسعار حية */
+        .price-tag { font-size: 28px; font-family: 'Orbitron'; text-align: center; margin: 15px 0; color: #fff; }
+        .up { color: var(--success); }
+
+        /* بوابة التحويل */
+        .swap-input { width: 100%; background: #000; border: 1px solid var(--gold); padding: 10px; color: #fff; border-radius: 5px; margin: 5px 0; }
+        .action-btn { width: 100%; padding: 15px; background: var(--gold); color: #000; border: none; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .action-btn:hover { background: #fff; box-shadow: 0 0 20px var(--gold); }
+
+        /* قائمة الأسهم */
+        .stock-list { list-style: none; padding: 0; }
+        .stock-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #222; font-size: 14px; }
+        .buy-btn { background: var(--success); color: #000; border: none; padding: 2px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold; }
+
     </style>
 </head>
 <body>
 
-<div class="stock-ticker">
-    <div class="ticker-wrap">
-        <span class="stock-item">BTC: <span class="up">$94,231.45 ▲</span></span>
-        <span class="stock-item">ETH: <span class="up">$3,412.10 ▲</span></span>
-        <span class="stock-item">GOLD: <span class="down">$2,341.00 ▼</span></span>
-        <span class="stock-item">AETHER: <span class="up">369.00 ★</span></span>
-        <span class="stock-item">OIL: <span class="down">$82.15 ▼</span></span>
-    </div>
+<div class="world-clocks">
+    <div class="clock-item">CAIRO<br><span id="cairo-time">00:00:00</span></div>
+    <div class="clock-item">LONDON<br><span id="london-time">00:00:00</span></div>
+    <div class="clock-item">NEW YORK<br><span id="ny-time">00:00:00</span></div>
 </div>
 
-<div class="ops-center">
-    <div class="control-panel">
-        <span class="title-gold"><i class="fa-solid fa-eye"></i> Raven's Eye Surveillance</span>
-        <div class="raven-eye">
-            <div class="raven-line"></div>
-            <div style="position:absolute; top:20%; left:30%; width:5px; height:5px; background:red; border-radius:50%; box-shadow: 0 0 10px red;"></div>
-        </div>
-        <div class="sat-grid">
-            <div class="sat-panel">
-                <i class="fa-solid fa-satellite sat-icon"></i>
-                <div style="font-size:10px;">SAT-01: <span style="color:#0f0;">ACTIVE</span></div>
-            </div>
-            <div class="sat-panel">
-                <i class="fa-solid fa-satellite-dish sat-icon"></i>
-                <div style="font-size:10px;">UPLINK: <span style="color:#0f0;">SECURE</span></div>
-            </div>
-        </div>
+<div class="container">
+    <div class="card">
+        <div class="card-title"><i class="fa-solid fa-chart-line"></i> أسعار حية (Real-Time)</div>
+        <div style="font-size:12px; color:#888;">GOLD (XAU/USD)</div>
+        <div class="price-tag" id="gold-price">$2,341.20</div>
+        <div style="font-size:12px; color:#888;">BITCOIN (BTC)</div>
+        <div class="price-tag up" id="btc-price">$94,231.45</div>
     </div>
 
-    <div class="control-panel" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-        <span class="title-gold" style="grid-column: 1/-1;">System Controls</span>
-        <div class="icon-btn" onclick="alert('جارِ فتح الخزنة...')">
-            <i class="fa-solid fa-vault"></i>
-            <span style="font-size:10px;">فتح الخزنة</span>
-        </div>
-        <div class="icon-btn" onclick="alert('تفعيل القمر الصناعي...')">
-            <i class="fa-solid fa-tower-broadcast"></i>
-            <span style="font-size:10px;">بث عالمي</span>
-        </div>
-        <div class="icon-btn" onclick="alert('فتح الاتصال العصبى...')">
-            <i class="fa-solid fa-brain"></i>
-            <span style="font-size:10px;">ذكاء عصبي</span>
-        </div>
-        <div class="icon-btn" onclick="alert('الدخول للبيانات الحية...')">
-            <i class="fa-solid fa-database"></i>
-            <span style="font-size:10px;">بيانات حية</span>
-        </div>
+    <div class="card">
+        <div class="card-title"><i class="fa-solid fa-rotate"></i> بوابة التحويل السيادي</div>
+        <label style="font-size:11px;">من:</label>
+        <select class="swap-input"><option>USD - دولار أمريكي</option><option>EGP - جنيه مصري</option></select>
+        <label style="font-size:11px;">إلى:</label>
+        <select class="swap-input"><option>BTC - بيتكوين</option><option>GOLD - ذهب</option></select>
+        <button class="action-btn" onclick="alert('جارِ معالجة التحويل عبر بروتوكول أثير...')">تحويل الآن عبرنا</button>
     </div>
 
-    <div class="control-panel" style="grid-column: 1 / -1; height: 180px;">
-        <span class="title-gold"><i class="fa-solid fa-terminal"></i> Global Ops Terminal</span>
-        <div id="ops-log" style="font-family:monospace; font-size:11px; color:#0f0; overflow-y:auto; height:130px;">
-            > INITIALIZING SUPREME COMMAND...<br>
-            > LINKING WITH SATELLITE AETHER-369...<br>
-            > SCANNING GLOBAL MARKETS...
+    <div class="card" style="grid-column: 1 / -1;">
+        <div class="card-title"><i class="fa-solid fa-briefcase"></i> شراء أسهم الشركات (Investment)</div>
+        <div class="stock-list">
+            <div class="stock-row"><span>APPLE (AAPL)</span><span>$192.42</span><button class="buy-btn">شراء الآن</button></div>
+            <div class="stock-row"><span>TESLA (TSLA)</span><span>$175.05</span><button class="buy-btn">شراء الآن</button></div>
+            <div class="stock-row"><span>AETHER CORP</span><span class="up">$369.00</span><button class="buy-btn">شراء الآن</button></div>
+            <div class="stock-row"><span>GOOGLE (GOOGL)</span><span>$142.10</span><button class="buy-btn">شراء الآن</button></div>
         </div>
     </div>
 </div>
 
 <script>
-    // محاكاة البيانات الحية في التيرمينال
-    const logs = [
-        "تم رصد حركة في قطاع البورصة العالمي.",
-        "تحديث إحداثيات عين الغراب: الموقغ 369-A.",
-        "القمر الصناعي SAT-01 يرسل بيانات مشفرة.",
-        "تم صد محاولة اختراق للسيادة الرقمية.",
-        "الخزنة السيادية: جاري تحديث الأرصدة."
-    ];
+    // نظام الساعات العالمية
+    function updateClocks() {
+        const now = new Date();
+        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+        
+        document.getElementById('cairo-time').innerText = new Intl.DateTimeFormat('en-GB', {...options, timeZone: 'Africa/Cairo'}).format(now);
+        document.getElementById('london-time').innerText = new Intl.DateTimeFormat('en-GB', {...options, timeZone: 'Europe/London'}).format(now);
+        document.getElementById('ny-time').innerText = new Intl.DateTimeFormat('en-GB', {...options, timeZone: 'America/New_York'}).format(now);
+    }
+    setInterval(updateClocks, 1000);
 
+    // محاكاة تغير الأسعار الحية
     setInterval(() => {
-        const log = document.getElementById('ops-log');
-        const entry = document.createElement('div');
-        entry.innerHTML = `> [${new Date().toLocaleTimeString()}] ${logs[Math.floor(Math.random()*logs.length)]}`;
-        log.appendChild(entry);
-        log.scrollTop = log.scrollHeight;
+        let gold = 2341 + Math.random();
+        let btc = 94231 + (Math.random() * 10);
+        document.getElementById('gold-price').innerText = `$${gold.toLocaleString('en-US', {minimumFractionDigits:2})}`;
+        document.getElementById('btc-price').innerText = `$${btc.toLocaleString('en-US', {minimumFractionDigits:2})}`;
     }, 3000);
 </script>
 
