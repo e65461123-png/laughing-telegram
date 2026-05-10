@@ -1,933 +1,137 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>AETHER PROTOCOL X</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-scroll-behavior:smooth;
-}
-
-body{
-background:#000;
-font-family:'Cairo',sans-serif;
-color:white;
-overflow-x:hidden;
-}
-
-/* MATRIX */
-
-#matrix{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:-5;
-}
-
-/* GRID */
-
-.grid{
-position:fixed;
-width:100%;
-height:100%;
-background:
-linear-gradient(rgba(255,215,0,.04) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,215,0,.04) 1px, transparent 1px);
-
-background-size:40px 40px;
-animation:gridMove 15s linear infinite;
-z-index:-4;
-}
-
-@keyframes gridMove{
-0%{transform:translateY(0);}
-100%{transform:translateY(40px);}
-}
-
-/* LOADER */
-
-#loader{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:2rem;
-font-family:'Orbitron';
-color:gold;
-z-index:999999;
-letter-spacing:5px;
-animation:fadeOut 4s forwards;
-}
-
-@keyframes fadeOut{
-
-0%,80%{
-opacity:1;
-visibility:visible;
-}
-
-100%{
-opacity:0;
-visibility:hidden;
-}
-
-}
-
-/* NAVBAR */
-
-nav{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-padding:20px 8%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-backdrop-filter:blur(12px);
-background:rgba(0,0,0,.4);
-border-bottom:1px solid rgba(255,215,0,.1);
-z-index:999;
-}
-
-.logo-small{
-font-family:'Orbitron';
-font-size:1.4rem;
-font-weight:bold;
-color:gold;
-}
-
-nav ul{
-display:flex;
-gap:25px;
-list-style:none;
-}
-
-nav ul li{
-cursor:pointer;
-transition:.3s;
-}
-
-nav ul li:hover{
-color:gold;
-}
-
-/* HERO */
-
-.hero{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-padding:20px;
-position:relative;
-}
-
-.hero h1{
-
-font-size:5rem;
-font-family:'Orbitron';
-font-weight:900;
-
-background:linear-gradient(90deg,#ffd700,#ff9900,#ffd700);
-
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-
-text-shadow:
-0 0 10px gold,
-0 0 25px orange,
-0 0 60px gold;
-
-animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-
-from{
-filter:drop-shadow(0 0 10px gold);
-}
-
-to{
-filter:drop-shadow(0 0 35px orange);
-}
-
-}
-
-.hero p{
-margin-top:25px;
-max-width:900px;
-line-height:2;
-font-size:1.2rem;
-opacity:.85;
-}
-
-.hero-buttons{
-margin-top:40px;
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-justify-content:center;
-}
-
-.hero-buttons button{
-
-padding:15px 35px;
-
-background:rgba(255,215,0,.08);
-
-border:1px solid gold;
-
-color:white;
-
-font-size:1rem;
-
-cursor:pointer;
-
-transition:.4s;
-
-backdrop-filter:blur(10px);
-
-font-family:'Orbitron';
-}
-
-.hero-buttons button:hover{
-
-background:gold;
-color:black;
-
-transform:translateY(-8px);
-
-box-shadow:0 0 30px gold;
-
-}
-
-/* GENERAL */
-
-section{
-padding:90px 8%;
-}
-
-.title{
-font-size:3rem;
-font-family:'Orbitron';
-margin-bottom:50px;
-color:gold;
-text-align:center;
-text-shadow:0 0 20px gold;
-}
-
-/* LIVE MONEY */
-
-.money-box{
-
-background:rgba(255,255,255,.04);
-
-padding:40px;
-
-border-radius:25px;
-
-border:1px solid rgba(255,215,0,.2);
-
-text-align:center;
-
-backdrop-filter:blur(12px);
-
-box-shadow:0 0 30px rgba(255,215,0,.1);
-}
-
-.money-box h2{
-margin-bottom:20px;
-color:gold;
-}
-
-#money{
-
-font-size:4rem;
-font-family:'Orbitron';
-font-weight:bold;
-}
-
-/* DASHBOARD */
-
-.dashboard{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:25px;
-margin-top:50px;
-}
-
-.panel{
-
-background:rgba(255,255,255,.05);
-
-padding:25px;
-
-border-radius:20px;
-
-border:1px solid rgba(255,215,0,.15);
-
-backdrop-filter:blur(12px);
-}
-
-.panel-title{
-font-family:'Orbitron';
-font-size:1.5rem;
-margin-bottom:20px;
-color:gold;
-}
-
-/* TERMINAL */
-
-.terminal{
-height:350px;
-overflow:hidden;
-background:black;
-padding:20px;
-border:1px solid #222;
-font-family:monospace;
-color:#00ff66;
-line-height:2;
-}
-
-/* LIVE SYSTEM */
-
-.live-system{
-height:350px;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:2rem;
-font-family:'Orbitron';
-color:gold;
-text-align:center;
-}
-
-/* CARDS */
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-margin-top:70px;
-}
-
-.card{
-
-background:rgba(255,255,255,.05);
-
-padding:30px;
-
-border-radius:20px;
-
-border:1px solid rgba(255,215,0,.15);
-
-transition:.4s;
-
-position:relative;
-
-overflow:hidden;
-}
-
-.card::before{
-
-content:'';
-
-position:absolute;
-
-width:200%;
-
-height:200%;
-
-background:linear-gradient(
-45deg,
-transparent,
-rgba(255,215,0,.08),
-transparent
-);
-
-top:-50%;
-left:-50%;
-
-transform:rotate(25deg);
-}
-
-.card:hover{
-
-transform:translateY(-10px);
-
-box-shadow:0 0 30px rgba(255,215,0,.25);
-
-border-color:gold;
-}
-
-.card h3{
-margin-bottom:20px;
-color:gold;
-font-family:'Orbitron';
-}
-
-/* GLOBE */
-
-.globe{
-
-margin-top:70px;
-
-height:400px;
-
-border-radius:25px;
-
-border:1px solid rgba(255,215,0,.2);
-
-background:
-radial-gradient(circle at center,
-rgba(255,215,0,.15),
-transparent 70%);
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:3rem;
-
-font-family:'Orbitron';
-
-color:gold;
-
-animation:pulse 4s infinite;
-}
-
-@keyframes pulse{
-
-0%{
-box-shadow:0 0 20px rgba(255,215,0,.1);
-}
-
-50%{
-box-shadow:0 0 60px rgba(255,215,0,.4);
-}
-
-100%{
-box-shadow:0 0 20px rgba(255,215,0,.1);
-}
-
-}
-
-/* STATS */
-
-.stats{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-gap:25px;
-
-margin-top:70px;
-}
-
-.stat{
-
-background:#0a0a0a;
-
-padding:30px;
-
-border-radius:20px;
-
-text-align:center;
-
-border:1px solid rgba(255,215,0,.15);
-}
-
-.stat h1{
-
-font-size:3rem;
-
-font-family:'Orbitron';
-
-color:gold;
-}
-
-/* NEWS */
-
-.news{
-
-margin-top:70px;
-
-background:rgba(255,215,0,.08);
-
-padding:20px;
-
-border-radius:15px;
-
-overflow:hidden;
-
-border:1px solid rgba(255,215,0,.2);
-}
-
-.news-track{
-
-display:flex;
-
-gap:60px;
-
-white-space:nowrap;
-
-animation:newsMove 18s linear infinite;
-}
-
-@keyframes newsMove{
-
-0%{
-transform:translateX(100%);
-}
-
-100%{
-transform:translateX(-100%);
-}
-
-}
-
-/* FOOTER */
-
-footer{
-
-padding:40px;
-
-text-align:center;
-
-margin-top:80px;
-
-border-top:1px solid rgba(255,215,0,.1);
-
-color:gold;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:900px){
-
-.hero h1{
-font-size:2.5rem;
-}
-
-.hero p{
-font-size:1rem;
-}
-
-.dashboard{
-grid-template-columns:1fr;
-}
-
-.title{
-font-size:2rem;
-}
-
-#money{
-font-size:2.2rem;
-}
-
-nav ul{
-display:none;
-}
-
-.hero{
-height:auto;
-padding-top:150px;
-padding-bottom:100px;
-}
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHER PROTOCOL | الصرح العملاق</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #ffd700; --cyan: #00fff7; --bg: #020205; }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
+        canvas { position: fixed; inset: 0; z-index: -1; opacity: 0.6; }
+
+        /* شاشة التحميل الأسطورية */
+        #loader { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 1s; }
+        .spinner { width: 80px; height: 80px; border: 4px solid #111; border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* بوابة الدخول (369) */
+        #login-gate { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; display: flex; align-items: center; justify-content: center; }
+        .gate-box { width: 90%; max-width: 400px; padding: 40px; border: 1px solid var(--gold); border-radius: 20px; background: #0a0a0a; text-align: center; box-shadow: 0 0 50px rgba(255,215,0,0.15); }
+        input { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid var(--gold); color: #fff; border-radius: 8px; text-align: center; font-family: 'Orbitron'; }
+        .btn-entry { width: 100%; padding: 15px; background: var(--gold); border: none; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 18px; }
+
+        /* واجهة القيادة */
+        .header { text-align: center; padding: 50px 20px; }
+        .header h1 { font-family: 'Orbitron'; font-size: 3rem; color: var(--gold); text-shadow: 0 0 20px rgba(255,215,0,0.5); margin: 0; }
+        
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 20px; }
+        .card { background: rgba(15,15,15,0.9); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); }
+        .card-h { font-family: 'Orbitron'; color: var(--gold); margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 10px; }
+        
+        .khazna { font-size: 35px; font-weight: bold; text-align: center; color: #fff; margin: 20px 0; }
+        .terminal { height: 200px; background: #000; color: #39ff14; font-family: monospace; padding: 15px; overflow-y: auto; font-size: 12px; border: 1px solid #222; }
+
+        /* خريطة النفوذ التخيلية */
+        .world-map { height: 250px; background: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg') center; background-size: contain; background-repeat: no-repeat; position: relative; opacity: 0.4; }
+        .dot { position: absolute; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 10px var(--gold); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    </style>
 </head>
-
 <body>
 
-<!-- LOADER -->
-
 <div id="loader">
-AETHER INITIALIZING...
+    <div class="spinner"></div>
+    <h2 style="color:var(--gold); font-family:Orbitron; margin-top:20px;">INITIALIZING AETHER 369...</h2>
 </div>
 
-<!-- MATRIX -->
-
-<canvas id="matrix"></canvas>
-
-<!-- GRID -->
-
-<div class="grid"></div>
-
-<!-- NAV -->
-
-<nav>
-
-<div class="logo-small">
-AETHER X
+<div id="login-gate">
+    <div class="gate-box">
+        <h1 style="color:var(--gold); font-family:Orbitron;">ACCESS GATE</h1>
+        <input type="text" id="u" placeholder="قائد الصرح">
+        <input type="password" id="p" placeholder="كلمة السر">
+        <button class="btn-entry" onclick="unlock()">دخول النظام</button>
+    </div>
 </div>
 
-<ul>
-<li>HOME</li>
-<li>AI</li>
-<li>DASHBOARD</li>
-<li>NETWORK</li>
-<li>SECURITY</li>
-</ul>
+<canvas id="p-canvas"></canvas>
 
-</nav>
+<div id="main-content" style="display:none;">
+    <div class="header">
+        <h1>AETHER PROTOCOL</h1>
+        <p>السيادة الرقمية والتمكين العالمي | النسخة 2.0</p>
+    </div>
 
-<!-- HERO -->
+    <div class="dashboard">
+        <div class="card">
+            <div class="card-h">LIVE SOVEREIGNTY FUND</div>
+            <div class="khazna" id="bal">19,146,368.146</div>
+            <p style="text-align:center; font-size:12px; color:var(--gold);">محفظة: 01017667875</p>
+        </div>
 
-<header class="hero">
+        <div class="card">
+            <div class="card-h">GLOBAL INFLUENCE MAP</div>
+            <div class="world-map">
+                <div class="dot" style="top:50%; left:60%;"></div>
+                <div class="dot" style="top:40%; left:30%;"></div>
+                <div class="dot" style="top:65%; left:45%;"></div>
+            </div>
+        </div>
 
-<h1>
-AETHER PROTOCOL X
-</h1>
-
-<p>
-منظومة سيبرانية مستقبلية مدعومة بالذكاء الاصطناعي والمراقبة الحية والتحكم العالمي وتحليل الشبكات والأنظمة المتقدمة.
-</p>
-
-<div class="hero-buttons">
-
-<button>ENTER SYSTEM</button>
-
-<button>AI NETWORK</button>
-
-<button>LIVE CONTROL</button>
-
+        <div class="card" style="grid-column: 1 / -1;">
+            <div class="card-h">AI CORE TERMINAL</div>
+            <div class="terminal" id="term"></div>
+        </div>
+    </div>
 </div>
-
-</header>
-
-<!-- MAIN -->
-
-<section>
-
-<h1 class="title">
-الخزنة السيادية الحية
-</h1>
-
-<div class="money-box">
-
-<h2>LIVE DIGITAL VAULT</h2>
-
-<div id="money">
-19,146,368
-</div>
-
-<p style="margin-top:20px;color:#00ff66;">
-AI SYSTEM ACTIVE
-</p>
-
-</div>
-
-<!-- DASHBOARD -->
-
-<div class="dashboard">
-
-<div class="panel">
-
-<div class="panel-title">
-LIVE TERMINAL
-</div>
-
-<div class="terminal" id="terminal">
-</div>
-
-</div>
-
-<div class="panel">
-
-<div class="panel-title">
-SYSTEM STATUS
-</div>
-
-<div class="live-system">
-
-ONLINE<br>
-99.9%
-
-</div>
-
-</div>
-
-</div>
-
-<!-- CARDS -->
-
-<div class="cards">
-
-<div class="card">
-
-<h3>AI CORE</h3>
-
-<p>
-نواة ذكاء اصطناعي مستقلة لتحليل البيانات واتخاذ القرارات.
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>CYBER DEFENSE</h3>
-
-<p>
-جدار حماية سيبراني وتحليل تهديدات عالمي.
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>QUANTUM LINK</h3>
-
-<p>
-ربط الشبكات المستقبلية بسرعة فائقة.
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>LIVE MONITOR</h3>
-
-<p>
-مراقبة حية وتحليل فوري لجميع الأنظمة.
-</p>
-
-</div>
-
-</div>
-
-<!-- GLOBE -->
-
-<div class="globe">
-GLOBAL NETWORK
-</div>
-
-<!-- STATS -->
-
-<div class="stats">
-
-<div class="stat">
-<h1>99.9%</h1>
-<p>SECURITY</p>
-</div>
-
-<div class="stat">
-<h1>369</h1>
-<p>AI NODES</p>
-</div>
-
-<div class="stat">
-<h1>24/7</h1>
-<p>LIVE STATUS</p>
-</div>
-
-<div class="stat">
-<h1>14M+</h1>
-<p>AI CALCULATIONS</p>
-</div>
-
-</div>
-
-<!-- NEWS -->
-
-<div class="news">
-
-<div class="news-track">
-
-<div>⚡ AI NETWORK ACTIVE</div>
-
-<div>⚡ GLOBAL SECURITY ONLINE</div>
-
-<div>⚡ QUANTUM ENCRYPTION ENABLED</div>
-
-<div>⚡ LIVE MONITORING RUNNING</div>
-
-<div>⚡ AETHER PROTOCOL STABLE</div>
-
-</div>
-
-</div>
-
-</section>
-
-<footer>
-
-⚠ AETHER PROTOCOL X — 2026
-
-</footer>
 
 <script>
+    // إخفاء الـ Loader
+    window.onload = () => { setTimeout(() => document.getElementById('loader').style.opacity = '0', 2000); 
+                             setTimeout(() => document.getElementById('loader').style.display = 'none', 3000); };
 
-/* MATRIX */
+    function unlock() {
+        const u = document.getElementById('u').value;
+        const p = document.getElementById('p').value;
+        if(u === "عصام" && p === "369") {
+            document.getElementById('login-gate').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            runSystem();
+        }
+    }
 
-const canvas =
-document.getElementById("matrix");
+    function runSystem() {
+        let b = 19146368.146;
+        const term = document.getElementById('term');
+        const logs = [
+            "جاري ربط العقد العالمية...", "تشفير القنوات العصبية...",
+            "مزامنة التردد 369Hz...", "اكتمال الربط مع القمر الصناعي..."
+        ];
 
-const ctx =
-canvas.getContext("2d");
+        setInterval(() => {
+            b += Math.random() * 0.05;
+            document.getElementById('bal').innerText = b.toLocaleString('en-US', {minimumFractionDigits:3});
+            const l = document.createElement('div');
+            l.innerText = `> [${new Date().toLocaleTimeString()}] ${logs[Math.floor(Math.random()*logs.length)]}`;
+            term.appendChild(l);
+            term.scrollTop = term.scrollHeight;
+        }, 2500);
+    }
 
-canvas.height =
-window.innerHeight;
-
-canvas.width =
-window.innerWidth;
-
-const letters =
-"01ABCDEFGHIJKLMNOPQRSTUVWXYZアイウエオカキクケコ";
-
-const array =
-letters.split("");
-
-const fontSize = 14;
-
-const columns =
-canvas.width / fontSize;
-
-const drops = [];
-
-for(let i=0;i<columns;i++){
-drops[i]=1;
-}
-
-function draw(){
-
-ctx.fillStyle =
-"rgba(0,0,0,0.05)";
-
-ctx.fillRect(
-0,
-0,
-canvas.width,
-canvas.height
-);
-
-ctx.fillStyle =
-"#00ff66";
-
-ctx.font =
-fontSize + "px monospace";
-
-for(let i=0;i<drops.length;i++){
-
-const text =
-array[
-Math.floor(
-Math.random()*array.length
-)
-];
-
-ctx.fillText(
-text,
-i*fontSize,
-drops[i]*fontSize
-);
-
-if(
-drops[i]*fontSize >
-canvas.height &&
-Math.random() > 0.975
-){
-drops[i]=0;
-}
-
-drops[i]++;
-
-}
-
-}
-
-setInterval(draw,35);
-
-/* MONEY COUNTER */
-
-const money =
-document.getElementById("money");
-
-let count = 19146368;
-
-setInterval(()=>{
-
-count += Math.random()*1000;
-
-money.innerText =
-Math.floor(count)
-.toLocaleString();
-
-},120);
-
-/* TERMINAL */
-
-const terminal =
-document.getElementById("terminal");
-
-const logs = [
-
-"[SYSTEM] الاتصال بالنواة...",
-"[AI] تفعيل الذكاء الاصطناعي...",
-"[SECURITY] فحص التهديدات...",
-"[NETWORK] ربط الشبكات...",
-"[SCAN] تحليل البيانات...",
-"[AETHER] مزامنة البروتوكول...",
-"[LIVE] مراقبة الأنظمة...",
-"[QUANTUM] تشفير القنوات...",
-"[OK] النظام مستقر...",
-"[ACTIVE] تشغيل الشبكة..."
-
-];
-
-setInterval(()=>{
-
-const line =
-document.createElement("div");
-
-line.textContent =
-logs[
-Math.floor(
-Math.random()*logs.length
-)
-];
-
-terminal.appendChild(line);
-
-terminal.scrollTop =
-terminal.scrollHeight;
-
-if(terminal.children.length > 18){
-
-terminal.removeChild(
-terminal.children[0]
-);
-
-}
-
-},1000);
-
+    // كود الجزيئات (Particles) للخلفية
+    const canvas = document.getElementById('p-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    let parts = [];
+    class Part {
+        constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.vx = Math.random()-0.5; this.vy = Math.random()-0.5; }
+        draw() { ctx.fillStyle = '#ffd700'; ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill(); }
+        update() { this.x += this.vx; this.y += this.vy; if(this.x<0||this.x>canvas.width) this.vx*=-1; if(this.y<0||this.y>canvas.height) this.vy*=-1; }
+    }
+    for(let i=0; i<100; i++) parts.push(new Part());
+    function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); parts.forEach(p=>{p.update(); p.draw();}); requestAnimationFrame(anim); }
+    anim();
 </script>
 
 </body>
