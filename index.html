@@ -1,21 +1,230 @@
-<div id="investor-hub" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px;">
-    <div class="stat-card" style="background: rgba(255,204,0,0.05); border: 1px solid var(--gold); padding: 15px; border-radius: 10px;">
-        <h4 style="margin:0; color:var(--gold);">📈 مؤشر نمو أثير</h4>
-        <div style="font-size: 30px; color:var(--green); margin: 10px 0;">+24.8%</div>
-        <p style="font-size: 11px; color:#888;">معدل العائد السنوي المتوقع للمستثمرين</p>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AETHER PROTOCOL UI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div class="stat-card" style="background: rgba(0,255,65,0.05); border: 1px solid var(--green); padding: 15px; border-radius: 10px;">
-        <h4 style="margin:0; color:var(--green);">🤝 الأثر المجتمعي</h4>
-        <div style="font-size: 30px; color:var(--gold); margin: 10px 0;">15,400</div>
-        <p style="font-size: 11px; color:#888;">إجمالي المستفيدين من مبادرة الخير</p>
-    </div>
+<style>
+body {
+margin:0;
+font-family:Arial;
+background:#05070d;
+color:#0ff;
+overflow:hidden;
+}
 
-    <div class="stat-card" style="grid-column: span 2; background: #0a0a0a; border: 1px solid #333; padding: 15px; border-radius: 10px;">
-        <h4 style="margin:0; color:var(--gold);">💎 إجمالي قيمة الأصول (AUM)</h4>
-        <div style="font-size: 35px; font-family: monospace;" id="asset-value">$2,845,900.00</div>
-        <div style="height: 5px; background: #222; margin-top: 10px; border-radius: 5px;">
-            <div style="width: 75%; height: 100%; background: var(--gold); box-shadow: 0 0 10px var(--gold);"></div>
-        </div>
-    </div>
+canvas {
+position:fixed;
+top:0;
+left:0;
+z-index:0;
+}
+
+.glass {
+background:rgba(10,15,25,0.6);
+backdrop-filter:blur(12px);
+border:1px solid rgba(0,255,255,0.2);
+border-radius:12px;
+box-shadow:0 0 20px rgba(0,255,255,0.2);
+}
+
+#ui {
+position:relative;
+z-index:2;
+display:flex;
+height:100vh;
+}
+
+.sidebar {
+width:250px;
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.sidebar button {
+background:transparent;
+border:1px solid #0ff;
+color:#0ff;
+padding:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.sidebar button:hover {
+background:#0ff;
+color:#000;
+}
+
+.main {
+flex:1;
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.hero {
+font-size:28px;
+font-weight:bold;
+text-shadow:0 0 10px #0ff;
+}
+
+.grid {
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
+
+.card {
+padding:15px;
+}
+
+.terminal {
+height:200px;
+overflow:auto;
+font-family:monospace;
+padding:10px;
+}
+
+input {
+width:100%;
+padding:10px;
+background:#000;
+border:1px solid #0ff;
+color:#0ff;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="net"></canvas>
+
+<div id="ui">
+
+<div class="sidebar glass">
+<h3>AETHER</h3>
+<button onclick="setMode('dashboard')">Dashboard</button>
+<button onclick="setMode('terminal')">Terminal</button>
+<button onclick="setMode('ai')">AI Core</button>
+<button onclick="setMode('network')">Network</button>
 </div>
+
+<div class="main">
+
+<div class="hero">AETHER PROTOCOL SYSTEM</div>
+
+<div id="content" class="grid">
+
+<div class="card glass">STATUS: ONLINE</div>
+<div class="card glass">NODES: 128</div>
+<div class="card glass">SECURITY: ACTIVE</div>
+<div class="card glass">AI CORE: STABLE</div>
+
+</div>
+
+<div id="terminalBox" class="glass terminal" style="display:none;"></div>
+
+<div id="aiBox" class="glass" style="display:none; padding:10px;">
+<div id="chat"></div>
+<input placeholder="Ask Aether..." onkeydown="ai(event)">
+</div>
+
+</div>
+</div>
+
+<script>
+// ===== MODE SWITCH =====
+function setMode(m){
+document.getElementById("content").style.display="none";
+document.getElementById("terminalBox").style.display="none";
+document.getElementById("aiBox").style.display="none";
+
+if(m==="dashboard"){
+document.getElementById("content").style.display="grid";
+}
+
+if(m==="terminal"){
+document.getElementById("terminalBox").style.display="block";
+log("AETHER TERMINAL READY");
+}
+
+if(m==="ai"){
+document.getElementById("aiBox").style.display="block";
+}
+
+if(m==="network"){
+alert("Network Visualization Active in Background");
+}
+}
+
+// ===== TERMINAL =====
+function log(msg){
+let t=document.getElementById("terminalBox");
+t.innerHTML+="> "+msg+"<br>";
+t.scrollTop=t.scrollHeight;
+}
+
+document.addEventListener("keydown",e=>{
+if(e.key==="Enter" && document.activeElement.tagName!=="INPUT"){
+log("command executed");
+}
+});
+
+// ===== AI CHAT MOCK =====
+function ai(e){
+if(e.key==="Enter"){
+let v=e.target.value;
+let chat=document.getElementById("chat");
+
+chat.innerHTML+="<div>User: "+v+"</div>";
+chat.innerHTML+="<div>AETHER: Processing "+v+"...</div>";
+
+e.target.value="";
+}
+}
+
+// ===== NETWORK BACKGROUND =====
+const c=document.getElementById("net");
+const ctx=c.getContext("2d");
+c.width=window.innerWidth;
+c.height=window.innerHeight;
+
+let nodes=[];
+
+for(let i=0;i<80;i++){
+nodes.push({
+x:Math.random()*c.width,
+y:Math.random()*c.height,
+vx:(Math.random()-0.5)*1.5,
+vy:(Math.random()-0.5)*1.5
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,c.width,c.height);
+
+for(let n of nodes){
+n.x+=n.vx;
+n.y+=n.vy;
+
+if(n.x<0||n.x>c.width)n.vx*=-1;
+if(n.y<0||n.y>c.height)n.vy*=-1;
+
+ctx.fillStyle="#0ff";
+ctx.beginPath();
+ctx.arc(n.x,n.y,2,0,Math.PI*2);
+ctx.fill();
+}
+
+requestAnimationFrame(draw);
+}
+draw();
+</script>
+
+</body>
+</html>
