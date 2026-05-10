@@ -1,9 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GBT HUB | المنصة الذكية المتكاملة</title>
+    <style>
+        :root { --gold: #d4af37; --bg: #050a14; --card: #0d1425; --text: #e2e8f0; --green: #22c55e; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; }
+        
+        header { background: #000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 26px; font-weight: 900; color: var(--gold); letter-spacing: 2px; }
 
-<meta name="description" content="منصة GBT HUB - المنصة الرائدة بقيادة عصام الكومي لتحليل الأسواق والسيادة الرقمية وتداول العملات.">
-<meta name="keywords" content="عصام الكومي, GBT HUB, تداول, بيتكوين, بورصة, اثير للخير, بروتوكول اثير, تحليل مالي">
-<meta name="author" content="Essam Elkomy">
+        .page { display: none; padding: 20px 5%; max-width: 1200px; margin: 0 auto; }
+        .active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-<meta property="og:title" content="GBT HUB | منصة عصام الكومي الاحترافية">
-<meta property="og:description" content="انضم الآن لأقوى منصة تحليل مالي وتداول تحت إدارة عصام الكومي.">
-<meta property="og:image" content="رابط_صورة_لوجو_موقعك">
-<meta property="og:url" content="https://e65461123-png.github.io/laughing-telegram/">
+        .card { background: var(--card); border-radius: 15px; padding: 25px; border: 1px solid #1e293b; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .auth-form { max-width: 400px; margin: 50px auto; text-align: center; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 8px; border: 1px solid #333; background: #000; color: #fff; font-size: 16px; }
+        
+        .btn { width: 100%; padding: 14px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; font-size: 16px; }
+        .btn-gold { background: var(--gold); color: #000; }
+        .btn-gold:hover { background: #b8962d; transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+
+        .status-badge { font-size: 12px; padding: 4px 12px; border-radius: 20px; background: rgba(34, 197, 94, 0.1); color: var(--green); border: 1px solid var(--green); }
+        .price-up { color: var(--green); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">GBT HUB</div>
+    <nav id="nav-links">
+        <button onclick="showPage('login-page')" class="btn-outline" style="padding: 6px 20px; width: auto;">تسجيل دخول</button>
+    </nav>
+</header>
+
+<div id="home-page" class="page active">
+    <div class="card" style="text-align: center; border: 1px solid var(--gold);">
+        <h1 style="color: var(--gold); margin-top: 0;">مرحباً بك في GBT HUB</h1>
+        <p style="opacity: 0.8;">المنصة الرائدة لمتابعة الأسواق والتحليل الفني العالمي.</p>
+        <button onclick="showPage('register-page')" class="btn btn-gold" style="width: 250px;">ابدأ الآن وافتح حسابك</button>
+    </div>
+    
+    <div class="card">
+        <h3 style="margin-top: 0;">📊 مراقبة السوق الحية (للزوار)</h3>
+        <div id="tradingview_main" style="height: 450px;"></div>
+    </div>
+</div>
+
+<div id="login-page" class="page">
+    <div class="card auth-form">
+        <h2 style="color: var(--gold);">تسجيل الدخول</h2>
+        <p style="font-size: 14px; opacity: 0.7;">ادخل كلمة السر للوصول إلى لوحتك</p>
+        <input type="password" id="login-pass" placeholder="كلمة المرور">
+        <button onclick="handleLogin()" class="btn btn-gold">دخول آمن</button>
+        <p style="font-size: 13px; margin-top: 20px;">ليس لديك حساب؟ <a href="#" onclick="showPage('register-page')" style="color: var(--gold); text-decoration: none;">انضم إلينا الآن</a></p>
+        <button onclick="showPage('home-page')" class="btn btn-outline">رجوع للرئيسية</button>
+    </div>
+</div>
+
+<div id="register-page" class="page">
+    <div class="card auth-form">
+        <h2 style="color: var(--gold);">فتح حساب استثماري</h2>
+        <input type="text" placeholder="الاسم بالكامل">
+        <input type="email" placeholder="البريد الإلكتروني">
+        <input type="password" placeholder="اختر كلمة مرور">
+        <button onclick="alert('تم إرسال طلبك بنجاح! سيتم مراجعته وتفعيله.'); showPage('login-page')" class="btn btn-gold">إنشاء حساب</button>
+        <button onclick="showPage('home-page')" class="btn btn-outline">رجوع</button>
+    </div>
+</div>
+
+<div id="client-dashboard" class="page">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>لوحة المستثمر</h2>
+        <span class="status-badge">حساب نشط ✅</span>
+    </div>
+    <div class="card" style="background: linear-gradient(135deg, #0d1425 0%, #1a263f 100%);">
+        <p style="opacity: 0.7; margin: 0;">رصيد المحفظة (الافتراضي)</p>
+        <div style="font-size: 32px; font-weight: bold; color: var(--gold); margin: 10px 0;">$5,000.00</div>
+        <button class="btn btn-gold" style="width: auto; padding: 8px 25px;">طلب سحب أرباح</button>
+    </div>
+    <div class="card">
+        <h4>📈 أداء محفظتك</h4>
+        <p style="font-size: 14px;">لا توجد صفقات مفتوحة حالياً. ابدأ التداول الآن!</p>
+    </div>
+</div>
+
+<div id="admin-dashboard" class="page">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="color: var(--gold); margin: 0;">🛠 لوحة القيادة المركزية</h2>
+        <span class="status-badge" style="color: var(--gold); border-color: var(--gold);">الآدمن: عصام الكومي</span>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+        <div class="card" style="margin: 0; border-right: 4px solid var(--green);">
+            <p style="font-size: 12px; opacity: 0.7;">إجمالي أرباح المنصة الحية</p>
+            <div style="font-size: 26px; color: var(--green); font-weight: bold;">$14,250.00</div>
+        </div>
+        <div class="card" style="margin: 0; border-right: 4px solid var(--gold);">
+            <p style="font-size: 12px; opacity: 0.7;">عدد المشتركين</p>
+            <div style="font-size: 26px; font-weight: bold;">124 مستخدم</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 style="color: var(--gold); border-bottom: 1px solid #333; padding-bottom: 10px;">🔒 الخزنة الشخصية</h3>
+        <p>البنك المرتبط: <strong>Mashreq Neo</strong></p>
+        <p>رقم الحساب: <code style="color: var(--gold);">**** **** **** 7875</code></p>
+        <p>المحفظة الذكية: <strong>Vodafone Cash / USDT</strong></p>
+        <p>المعرف الموحد: <code style="color: var(--green);">01017667875</code></p>
+    </div>
+    
+    <button onclick="location.reload()" class="btn btn-outline" style="width: auto;">تسجيل الخروج الآمن</button>
+</div>
+
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script>
+    // وظيفة التنقل بين الصفحات السلسة
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    // محرك تسجيل الدخول الذكي
+    function handleLogin() {
+        const pass = document.getElementById('login-pass').value;
+
+        if (pass === "369") {
+            showPage('admin-dashboard');
+            alert("أهلاً بك يا قائد عصام. تم فتح الخزنة واللوحة المركزية.");
+        } else if (pass !== "") {
+            showPage('client-dashboard');
+            alert("تم الدخول بنجاح لملف المستثمر.");
+        } else {
+            alert("يرجى إدخال كلمة المرور.");
+        }
+    }
+
+    // تشغيل شاشة التداول في الصفحة الرئيسية
+    new TradingView.widget({
+      "width": "100%",
+      "height": 450,
+      "symbol": "BITSTAMP:BTCUSD",
+      "interval": "D",
+      "timezone": "Etc/UTC",
+      "theme": "dark",
+      "style": "1",
+      "locale": "ar",
+      "toolbar_bg": "#f1f3f6",
+      "enable_publishing": false,
+      "allow_symbol_change": true,
+      "container_id": "tradingview_main"
+    });
+</script>
+
+</body>
+</html>
