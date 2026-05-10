@@ -1,138 +1,22 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHER PROTOCOL | الصرح العملاق</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --gold: #ffd700; --cyan: #00fff7; --bg: #020205; }
-        body { margin: 0; background: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
-        canvas { position: fixed; inset: 0; z-index: -1; opacity: 0.6; }
+// إضافة رادار القيادة في الخلفية
+function drawRadar() {
+    ctx.strokeStyle = 'rgba(0, 255, 247, 0.2)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(canvas.width/2, canvas.height/2, 200, 0, Math.PI*2);
+    ctx.stroke();
+    
+    // خط المسح الدوار
+    let angle = (Date.now() / 1000) % (Math.PI * 2);
+    ctx.moveTo(canvas.width/2, canvas.height/2);
+    ctx.lineTo(canvas.width/2 + Math.cos(angle)*200, canvas.height/2 + Math.sin(angle)*200);
+    ctx.stroke();
+}
 
-        /* شاشة التحميل الأسطورية */
-        #loader { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 1s; }
-        .spinner { width: 80px; height: 80px; border: 4px solid #111; border-top: 4px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* بوابة الدخول (369) */
-        #login-gate { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; display: flex; align-items: center; justify-content: center; }
-        .gate-box { width: 90%; max-width: 400px; padding: 40px; border: 1px solid var(--gold); border-radius: 20px; background: #0a0a0a; text-align: center; box-shadow: 0 0 50px rgba(255,215,0,0.15); }
-        input { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid var(--gold); color: #fff; border-radius: 8px; text-align: center; font-family: 'Orbitron'; }
-        .btn-entry { width: 100%; padding: 15px; background: var(--gold); border: none; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 18px; }
-
-        /* واجهة القيادة */
-        .header { text-align: center; padding: 50px 20px; }
-        .header h1 { font-family: 'Orbitron'; font-size: 3rem; color: var(--gold); text-shadow: 0 0 20px rgba(255,215,0,0.5); margin: 0; }
-        
-        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 20px; }
-        .card { background: rgba(15,15,15,0.9); border: 1px solid rgba(255,215,0,0.2); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); }
-        .card-h { font-family: 'Orbitron'; color: var(--gold); margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 10px; }
-        
-        .khazna { font-size: 35px; font-weight: bold; text-align: center; color: #fff; margin: 20px 0; }
-        .terminal { height: 200px; background: #000; color: #39ff14; font-family: monospace; padding: 15px; overflow-y: auto; font-size: 12px; border: 1px solid #222; }
-
-        /* خريطة النفوذ التخيلية */
-        .world-map { height: 250px; background: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg') center; background-size: contain; background-repeat: no-repeat; position: relative; opacity: 0.4; }
-        .dot { position: absolute; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 10px var(--gold); animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-    </style>
-</head>
-<body>
-
-<div id="loader">
-    <div class="spinner"></div>
-    <h2 style="color:var(--gold); font-family:Orbitron; margin-top:20px;">INITIALIZING AETHER 369...</h2>
-</div>
-
-<div id="login-gate">
-    <div class="gate-box">
-        <h1 style="color:var(--gold); font-family:Orbitron;">ACCESS GATE</h1>
-        <input type="text" id="u" placeholder="قائد الصرح">
-        <input type="password" id="p" placeholder="كلمة السر">
-        <button class="btn-entry" onclick="unlock()">دخول النظام</button>
-    </div>
-</div>
-
-<canvas id="p-canvas"></canvas>
-
-<div id="main-content" style="display:none;">
-    <div class="header">
-        <h1>AETHER PROTOCOL</h1>
-        <p>السيادة الرقمية والتمكين العالمي | النسخة 2.0</p>
-    </div>
-
-    <div class="dashboard">
-        <div class="card">
-            <div class="card-h">LIVE SOVEREIGNTY FUND</div>
-            <div class="khazna" id="bal">19,146,368.146</div>
-            <p style="text-align:center; font-size:12px; color:var(--gold);">محفظة: 01017667875</p>
-        </div>
-
-        <div class="card">
-            <div class="card-h">GLOBAL INFLUENCE MAP</div>
-            <div class="world-map">
-                <div class="dot" style="top:50%; left:60%;"></div>
-                <div class="dot" style="top:40%; left:30%;"></div>
-                <div class="dot" style="top:65%; left:45%;"></div>
-            </div>
-        </div>
-
-        <div class="card" style="grid-column: 1 / -1;">
-            <div class="card-h">AI CORE TERMINAL</div>
-            <div class="terminal" id="term"></div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // إخفاء الـ Loader
-    window.onload = () => { setTimeout(() => document.getElementById('loader').style.opacity = '0', 2000); 
-                             setTimeout(() => document.getElementById('loader').style.display = 'none', 3000); };
-
-    function unlock() {
-        const u = document.getElementById('u').value;
-        const p = document.getElementById('p').value;
-        if(u === "عصام" && p === "369") {
-            document.getElementById('login-gate').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            runSystem();
-        }
-    }
-
-    function runSystem() {
-        let b = 19146368.146;
-        const term = document.getElementById('term');
-        const logs = [
-            "جاري ربط العقد العالمية...", "تشفير القنوات العصبية...",
-            "مزامنة التردد 369Hz...", "اكتمال الربط مع القمر الصناعي..."
-        ];
-
-        setInterval(() => {
-            b += Math.random() * 0.05;
-            document.getElementById('bal').innerText = b.toLocaleString('en-US', {minimumFractionDigits:3});
-            const l = document.createElement('div');
-            l.innerText = `> [${new Date().toLocaleTimeString()}] ${logs[Math.floor(Math.random()*logs.length)]}`;
-            term.appendChild(l);
-            term.scrollTop = term.scrollHeight;
-        }, 2500);
-    }
-
-    // كود الجزيئات (Particles) للخلفية
-    const canvas = document.getElementById('p-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    let parts = [];
-    class Part {
-        constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.vx = Math.random()-0.5; this.vy = Math.random()-0.5; }
-        draw() { ctx.fillStyle = '#ffd700'; ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill(); }
-        update() { this.x += this.vx; this.y += this.vy; if(this.x<0||this.x>canvas.width) this.vx*=-1; if(this.y<0||this.y>canvas.height) this.vy*=-1; }
-    }
-    for(let i=0; i<100; i++) parts.push(new Part());
-    function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); parts.forEach(p=>{p.update(); p.draw();}); requestAnimationFrame(anim); }
-    anim();
-</script>
-
-</body>
-</html>
+// تعديل وظيفة التحريك لتشمل الرادار
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawRadar(); // تفعيل الرادار
+    parts.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+}
