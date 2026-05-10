@@ -3,111 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GBT HUB | المنصة المالية المؤمنة</title>
+    <title>GBT HUB | منصة التداول الذكية</title>
     <style>
         :root { --gold: #d4af37; --bg: #050a14; --card: #0d1425; --text: #e2e8f0; --green: #22c55e; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; }
+        
+        /* الهيدر */
         header { background: #000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 26px; font-weight: 900; color: var(--gold); letter-spacing: 1px; }
-        .container { padding: 20px 5%; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 24px; font-weight: 900; color: var(--gold); }
+
+        /* شاشات التبديل */
+        .page { display: none; padding: 20px 5%; max-width: 1200px; margin: 0 auto; }
+        .active { display: block; }
+
+        /* تصميم الكروت */
+        .card { background: var(--card); border-radius: 15px; padding: 25px; border: 1px solid #1e293b; margin-bottom: 20px; }
+        .auth-form { max-width: 400px; margin: 50px auto; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #333; background: #000; color: #fff; box-sizing: border-box; }
         
-        /* نظام الحماية */
-        #vault-content { display: none; }
-        .lock-screen { text-align: center; padding: 50px 20px; background: var(--card); border-radius: 15px; border: 1px dashed var(--gold); margin-bottom: 30px; }
-        .pass-input { padding: 12px; border-radius: 8px; border: 1px solid var(--gold); background: #000; color: #fff; text-align: center; width: 200px; margin-bottom: 10px; }
-        
-        /* تصميم الخزنة المستوحى من Exness */
-        .balance-card { background: linear-gradient(135deg, #0d1425 0%, #1a263f 100%); padding: 25px; border-radius: 15px; border: 1px solid var(--gold); margin-bottom: 20px; }
-        .accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        @media (max-width: 700px) { .accounts-grid { grid-template-columns: 1fr; } }
-        .acc-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border-right: 4px solid var(--gold); }
-        
-        .btn { display: inline-block; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; transition: 0.3s; border: none; }
+        .btn { width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
         .btn-gold { background: var(--gold); color: #000; }
-        
-        table { width: 100%; margin-top: 15px; border-collapse: collapse; font-size: 13px; }
-        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #1e293b; }
+        .btn-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+
+        .status-badge { font-size: 12px; padding: 4px 10px; border-radius: 20px; background: rgba(34, 197, 94, 0.1); color: var(--green); }
     </style>
 </head>
 <body>
 
 <header>
     <div class="logo">GBT HUB</div>
-    <div id="user-status" style="font-size: 12px; text-align: left;">
-        <span style="color: var(--gold);">المسؤول:</span> عصام الكومي<br>
-        <span id="status-dot" style="color: #666;">● غير مسجل الدخول</span>
-    </div>
+    <nav id="nav-links">
+        <button onclick="showPage('login-page')" class="btn-outline" style="padding: 5px 15px; width: auto;">تسجيل دخول</button>
+    </nav>
 </header>
 
-<div class="container">
-    <div id="lock-screen" class="lock-screen">
-        <h2 style="color: var(--gold);">🔒 منطقة الوصول الآمن</h2>
-        <p style="font-size: 14px; opacity: 0.7;">أدخل كلمة السر لفتح الخزنة المالية</p>
-        <input type="password" id="pass-field" class="pass-input" placeholder="كلمة السر"><br>
-        <button onclick="unlockVault()" class="btn btn-gold">فتح الخزنة</button>
+<div id="home-page" class="page active">
+    <div class="card" style="text-align: center;">
+        <h1 style="color: var(--gold);">مرحباً بك في GBT HUB</h1>
+        <p>المنصة الرائدة لمتابعة الأسواق والتحليل الفني.</p>
+        <button onclick="showPage('register-page')" class="btn btn-gold" style="width: 200px;">ابدأ الآن وافتح حسابك</button>
     </div>
+    
+    <div class="card">
+        <h3>📊 مراقبة السوق الحية (للزوار)</h3>
+        <div id="tradingview_basic"></div>
+    </div>
+</div>
 
-    <div id="vault-content">
-        <div class="balance-card">
-            <span style="opacity: 0.7; font-size: 14px;">إجمالي الرصيد المتاح (Live)</span>
-            <div style="font-size: 36px; font-weight: bold; margin: 10px 0;">$14,250.00</div>
-            <div style="display: flex; gap: 10px;">
-                <a href="https://wa.me/201017667875" class="btn btn-gold" style="flex:1">إيداع</a>
-                <a href="https://wa.me/201017667875" class="btn" style="flex:1; border: 1px solid var(--gold); color: var(--gold);">سحب</a>
-            </div>
+<div id="login-page" class="page">
+    <div class="card auth-form">
+        <h2 style="color: var(--gold);">تسجيل الدخول</h2>
+        <input type="text" id="login-email" placeholder="البريد الإلكتروني أو اسم المستخدم">
+        <input type="password" id="login-pass" placeholder="كلمة المرور">
+        <button onclick="handleLogin()" class="btn btn-gold">دخول</button>
+        <p style="font-size: 13px; margin-top: 15px;">ليس لديك حساب؟ <a href="#" onclick="showPage('register-page')" style="color: var(--gold);">سجل هنا</a></p>
+    </div>
+</div>
+
+<div id="register-page" class="page">
+    <div class="card auth-form">
+        <h2 style="color: var(--gold);">فتح حساب جديد</h2>
+        <input type="text" placeholder="الاسم الكامل">
+        <input type="email" placeholder="البريد الإلكتروني">
+        <input type="password" placeholder="كلمة المرور">
+        <button onclick="alert('تم إنشاء الحساب بنجاح! يمكنك الدخول الآن.')" class="btn btn-gold">إنشاء الحساب</button>
+    </div>
+</div>
+
+<div id="client-dashboard" class="page">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>لوحة تحكم المستثمر</h2>
+        <span class="status-badge">حساب نشط</span>
+    </div>
+    <div class="card">
+        <p>رصيدك التجريبي: <span style="color: var(--gold); font-weight: bold;">$5,000.00</span></p>
+        <button class="btn btn-outline" style="width: auto;">طلب تمويل حقيقي</button>
+    </div>
+</div>
+
+<div id="admin-dashboard" class="page">
+    <h2 style="color: var(--gold);">🛠 لوحة الإدارة العليا</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div class="card">
+            <h4>💰 إجمالي أرباح المنصة</h4>
+            <div style="font-size: 28px; color: var(--green);">$14,250.00</div>
         </div>
-
-        <div class="accounts-grid">
-            <div class="acc-box">
-                <div style="font-size: 11px; color: var(--gold);">🏦 Mashreq Neo</div>
-                <div style="margin: 5px 0; font-weight: bold;">الحساب البنكي الرسمي</div>
-                <code>**** **** **** 7875</code>
-            </div>
-            <div class="acc-box" style="border-color: var(--green);">
-                <div style="font-size: 11px; color: var(--green);">📱 Vodafone Cash / USDT</div>
-                <div style="margin: 5px 0; font-weight: bold;">المحفظة الإلكترونية</div>
-                <code>ID: 01017667875</code>
-            </div>
-        </div>
-
-        <div style="background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 30px;">
-            <h3 style="margin-top:0; color: var(--gold);">🕒 آخر العمليات</h3>
-            <table>
-                <thead><tr><th>النوع</th><th>التاريخ</th><th>المبلغ</th></tr></thead>
-                <tbody>
-                    <tr><td>إيداع</td><td>2026-05-10</td><td style="color: var(--green);">+$2,500</td></tr>
-                    <tr><td>سحب</td><td>2026-05-08</td><td style="color: #ff4444;">-$1,200</td></tr>
-                </tbody>
-            </table>
+        <div class="card">
+            <h4>👥 المستخدمين النشطين</h4>
+            <div style="font-size: 28px;">124 مستخدم</div>
         </div>
     </div>
-
-    <div style="background: var(--card); padding: 20px; border-radius: 12px;">
-        <h3 style="color: var(--gold);">📊 مراقبة السوق اللحظية</h3>
-        <div id="tradingview_chart"></div>
+    <div class="card">
+        <h4>🔒 الخزنة المركزية</h4>
+        <p>Mashreq Neo: ****7875</p>
+        <p>Vodafone Cash: 01017667875</p>
     </div>
 </div>
 
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
-    // تهيئة الرسم البياني
-    new TradingView.widget({
-      "width": "100%", "height": 400, "symbol": "BTCUSD", "interval": "H", "theme": "dark", "locale": "ar", "container_id": "tradingview_chart"
-    });
+    // وظيفة التنقل بين الصفحات
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+    }
 
-    // وظيفة فتح الخزنة
-    function unlockVault() {
-        const pass = document.getElementById('pass-field').value;
-        // كلمة السر الخاصة بك هي الكود الذي حددناه سابقاً
-        if(pass === "369") { 
-            document.getElementById('lock-screen').style.display = 'none';
-            document.getElementById('vault-content').style.display = 'block';
-            document.getElementById('status-dot').style.color = 'var(--green)';
-            document.getElementById('status-dot').innerText = '● متصل (الخزنة مفتوحة)';
+    // نظام تسجيل الدخول الذكي
+    function handleLogin() {
+        const email = document.getElementById('login-email').value;
+        const pass = document.getElementById('login-pass').value;
+
+        if (pass === "369") {
+            // دخول عصام (الآدمن)
+            showPage('admin-dashboard');
+            alert("مرحباً يا قائد عصام. تم الدخول للوحة الإدارة.");
+        } else if (email !== "" && pass !== "") {
+            // دخول عميل عادي
+            showPage('client-dashboard');
+            alert("تم الدخول بنجاح لملفك الشخصي.");
         } else {
-            alert("كلمة السر خاطئة! حاول مرة أخرى.");
+            alert("يرجى إدخال البيانات.");
         }
     }
+
+    // تهيئة الرسم البياني للزوار
+    new TradingView.widget({
+      "width": "100%", "height": 400, "symbol": "BTCUSD", "theme": "dark", "container_id": "tradingview_basic"
+    });
 </script>
 
 </body>
