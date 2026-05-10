@@ -1,22 +1,157 @@
-// إضافة رادار القيادة في الخلفية
-function drawRadar() {
-    ctx.strokeStyle = 'rgba(0, 255, 247, 0.2)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(canvas.width/2, canvas.height/2, 200, 0, Math.PI*2);
-    ctx.stroke();
-    
-    // خط المسح الدوار
-    let angle = (Date.now() / 1000) % (Math.PI * 2);
-    ctx.moveTo(canvas.width/2, canvas.height/2);
-    ctx.lineTo(canvas.width/2 + Math.cos(angle)*200, canvas.height/2 + Math.sin(angle)*200);
-    ctx.stroke();
-}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHER PROTOCOL V1,000,000</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #ffd700; --cyan: #00fff7; --danger: #ff003c; --bg: #000205; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow: hidden; height: 100vh; }
+        
+        canvas { position: fixed; inset: 0; z-index: 1; }
 
-// تعديل وظيفة التحريك لتشمل الرادار
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawRadar(); // تفعيل الرادار
-    parts.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animate);
-}
+        /* شاشة الاستهلال (Deep Loading) */
+        #init-screen { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 2s ease-in-out; }
+        .glitch-text { font-family: 'Orbitron'; font-size: 2rem; color: var(--gold); letter-spacing: 10px; animation: glow 1.5s infinite alternate; }
+        @keyframes glow { from { text-shadow: 0 0 10px var(--gold); } to { text-shadow: 0 0 30px var(--gold), 0 0 50px var(--gold); } }
+
+        /* الواجهة الرئيسية */
+        .ui-overlay { position: relative; z-index: 10; padding: 20px; display: none; height: 100vh; flex-direction: column; }
+        
+        .top-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 10px; }
+        .status-tag { font-family: 'Orbitron'; font-size: 12px; color: var(--cyan); border: 1px solid var(--cyan); padding: 5px 15px; border-radius: 20px; }
+
+        .main-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 20px; flex-grow: 1; overflow-y: auto; }
+        
+        .panel { background: rgba(0,0,0,0.8); border: 1px solid rgba(255,215,0,0.2); border-radius: 10px; padding: 15px; backdrop-filter: blur(15px); position: relative; overflow: hidden; }
+        .panel::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: scan 3s infinite; }
+        @keyframes scan { 0% { left: -100%; } 100% { left: 100%; } }
+
+        .big-num { font-family: 'Orbitron'; font-size: 2.5rem; text-align: center; color: #fff; margin: 15px 0; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+        .terminal { font-family: monospace; font-size: 11px; color: #0f0; height: 150px; overflow-y: hidden; line-height: 1.5; }
+
+        /* الرادار النبضي */
+        .radar-box { height: 200px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .radar-circle { width: 150px; height: 150px; border: 1px solid rgba(0,255,247,0.3); border-radius: 50%; position: absolute; animation: pulse 4s infinite; }
+        @keyframes pulse { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+
+        .footer-tag { text-align: center; font-family: 'Orbitron'; font-size: 10px; color: var(--gold); opacity: 0.6; padding: 10px; }
+    </style>
+</head>
+<body>
+
+<div id="init-screen">
+    <div class="glitch-text">AETHER V1M</div>
+    <p style="color:#555; margin-top:10px;">GENERATING SOVEREIGNTY CORE...</p>
+</div>
+
+<canvas id="core-canvas"></canvas>
+
+<div class="ui-overlay" id="main-ui">
+    <div class="top-bar">
+        <div style="font-family:Orbitron; font-weight:900; color:var(--gold);">AETHER PROTOCOL</div>
+        <div class="status-tag">SYSTEM: SUPREME</div>
+    </div>
+
+    <div class="main-grid">
+        <div class="panel">
+            <div style="font-size:12px; color:var(--gold);">Sovereignty Fund [LIVE]</div>
+            <div class="big-num" id="vault-val">19,146,368.146</div>
+            <div style="text-align:center; font-size:10px; color:#888;">VAULT ID: ESSAM-369-IMPERIAL</div>
+        </div>
+
+        <div class="panel">
+            <div style="font-size:12px; color:var(--cyan);">Global Threat Radar</div>
+            <div class="radar-box">
+                <div class="radar-circle"></div>
+                <div class="radar-circle" style="animation-delay: 1s;"></div>
+                <div class="radar-circle" style="animation-delay: 2s;"></div>
+                <div style="width:4px; height:4px; background:red; border-radius:50%; box-shadow: 0 0 10px red;"></div>
+            </div>
+        </div>
+
+        <div class="panel" style="grid-column: 1 / -1;">
+            <div style="font-size:12px; color:#0f0;">Neural Intelligence Logs</div>
+            <div class="terminal" id="log-screen"></div>
+        </div>
+    </div>
+
+    <div class="footer-tag">© 2026 ARCHITECT ESSAM ELKOMY | SUPREME DIGITAL SOVEREIGNTY</div>
+</div>
+
+<script>
+    // تهيئة النظام
+    const init = document.getElementById('init-screen');
+    const ui = document.getElementById('main-ui');
+    
+    window.onload = () => {
+        setTimeout(() => {
+            init.style.opacity = '0';
+            setTimeout(() => {
+                init.style.display = 'none';
+                ui.style.display = 'flex';
+                launchLogic();
+            }, 2000);
+        }, 3000);
+    };
+
+    function launchLogic() {
+        let balance = 19146368.146;
+        const logBox = document.getElementById('log-screen');
+        const vault = document.getElementById('vault-val');
+        
+        const messages = [
+            "[CORE] Quantum encryption stabilized.",
+            "[AI] Neural paths mapping global nodes...",
+            "[SECURITY] Threat detected in Sector 7.. Blocked.",
+            "[SYSTEM] Frequency 369Hz synchronized.",
+            "[VAULT] Inbound sovereignty transfer detected.",
+            "[SAT] Satellite uplink: ACTIVE."
+        ];
+
+        setInterval(() => {
+            // تحديث الخزنة بشكل حي
+            balance += Math.random() * 0.09;
+            vault.innerText = balance.toLocaleString('en-US', {minimumFractionDigits:3});
+
+            // إضافة سجلات ذكية
+            const entry = document.createElement('div');
+            entry.innerText = `> ${messages[Math.floor(Math.random()*messages.length)]}`;
+            logBox.appendChild(entry);
+            if(logBox.childNodes.length > 8) logBox.removeChild(logBox.firstChild);
+        }, 2000);
+    }
+
+    // كود الخلفية السينمائية (Space & Stars)
+    const canvas = document.getElementById('core-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+
+    let stars = [];
+    for(let i=0; i<200; i++) {
+        stars.push({
+            x: Math.random()*canvas.width,
+            y: Math.random()*canvas.height,
+            s: Math.random()*2,
+            v: Math.random()*0.5
+        });
+    }
+
+    function draw() {
+        ctx.fillStyle = '#000205';
+        ctx.fillRect(0,0,canvas.width, canvas.height);
+        ctx.fillStyle = '#ffd700';
+        stars.forEach(st => {
+            ctx.beginPath();
+            ctx.arc(st.x, st.y, st.s, 0, Math.PI*2);
+            ctx.fill();
+            st.y += st.v;
+            if(st.y > canvas.height) st.y = 0;
+        });
+        requestAnimationFrame(draw);
+    }
+    draw();
+</script>
+</body>
+</html>
