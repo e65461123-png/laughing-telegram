@@ -1,125 +1,28 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GBT HUB | المنصة المالية العالمية</title>
-    <style>
-        :root { --gold: #d4af37; --bg: #050a14; --card: #0d1425; --text: #e2e8f0; --accent: #1e293b; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; }
-        
-        /* شريط الأسعار العلوي */
-        .ticker-header { background: #000; border-bottom: 1px solid var(--gold); height: 40px; }
-        
-        header { background: #000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 28px; font-weight: 900; color: var(--gold); letter-spacing: 2px; }
-
-        /* الخزنة الرقمية */
-        .vault-container { background: linear-gradient(135deg, #0d1425 0%, #1a263f 100%); border: 1px solid var(--gold); margin: 20px 5%; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .bank-info { display: inline-block; background: rgba(255,255,255,0.05); padding: 15px 30px; border-radius: 10px; border: 1px solid var(--gold); margin: 15px 0; }
-        
-        /* الساعات العالمية */
-        .clocks { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; font-size: 14px; color: var(--gold); }
-
-        .main-grid { padding: 0 5% 30px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; }
-        @media (max-width: 1000px) { .main-grid { grid-template-columns: 1fr; } }
-
-        .card { background: var(--card); border-radius: 12px; padding: 20px; border: 1px solid var(--accent); }
-        h2 { font-size: 18px; color: var(--gold); border-right: 4px solid var(--gold); padding-right: 12px; margin-top: 0; margin-bottom: 20px; }
-
-        /* أزرار الحركة */
-        .btn-group { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
-        .btn { padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.3s; }
-        .btn-gold { background: var(--gold); color: #000; }
-        .btn-outline { border: 1px solid var(--gold); color: var(--gold); }
-        
-        /* زر واتساب العائم */
-        .wa-float { position: fixed; bottom: 25px; left: 25px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.4); z-index: 9999; text-decoration: none; }
-    </style>
-</head>
-<body>
-
-<div class="ticker-header">
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-    { "symbols": [{"proName":"FX_IDC:USDEGP","title":"USD/EGP"},{"proName":"BITSTAMP:BTCUSD","title":"BTC"},{"proName":"OANDA:XAUUSD","title":"GOLD"},{"proName":"BITSTAMP:ETHUSD","title":"ETH"}], "colorTheme": "dark", "locale": "ar" }
-    </script>
-</div>
-
-<header>
-    <div class="logo">GBT HUB</div>
-    <div class="clocks">
-        <div>القاهرة: <span id="cairo">--:--</span></div>
-        <div>لندن: <span id="london">--:--</span></div>
-        <div>نيويورك: <span id="ny">--:--</span></div>
-    </div>
-</header>
-
 <section class="vault-container">
-    <h1 style="color: var(--gold); margin: 0;">🔒 الخزنة الشخصية والعمولات</h1>
-    <div class="bank-info">
-        <div style="opacity: 0.7; font-size: 12px;">البنك المربوط للتحويلات</div>
-        <div style="font-size: 20px; font-weight: bold; margin: 5px 0;">Mashreq Neo | المشرق نيو</div>
-        <div style="letter-spacing: 3px; color: var(--gold);">**** **** **** 7875</div>
+    <h1 style="color: var(--gold); margin-bottom: 20px;">🔒 الخزنة المالية والارصدة</h1>
+    
+    <div style="background: rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 10px; border: 1px solid var(--gold); margin-bottom: 20px;">
+        <span style="display: block; font-size: 14px; opacity: 0.8;">إجمالي رصيد العمولات المتاح:</span>
+        <span style="font-size: 32px; font-weight: bold; color: #22c55e;">$14,250.00</span> 
+        <span style="font-size: 12px; display: block; margin-top: 5px; color: var(--gold);">* يتم التحديث فور تأكيد العمليات</span>
     </div>
-    <div class="btn-group">
-        <a href="https://wa.me/201017667875?text=إيداع+عمولة" class="btn btn-gold">إيداع عمولة</a>
-        <a href="https://wa.me/201017667875?text=سحب+أرباح" class="btn btn-outline">سحب الأرباح</a>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div class="bank-info" style="margin: 0; padding: 15px;">
+            <div style="font-size: 11px; color: #aaa;">🏦 التحويل البنكي (IBAN)</div>
+            <div style="font-size: 16px; font-weight: bold; margin: 5px 0;">Mashreq Neo</div>
+            <div style="color: var(--gold); font-family: monospace;">**** **** **** 7875</div>
+        </div>
+
+        <div class="bank-info" style="margin: 0; padding: 15px; border-color: #25d366;">
+            <div style="font-size: 11px; color: #aaa;">📱 محفظة إلكترونية / Crypto</div>
+            <div style="font-size: 16px; font-weight: bold; margin: 5px 0;">Vodafone Cash / USDT</div>
+            <div style="color: #25d366; font-size: 12px; word-break: break-all;">01017667875</div>
+        </div>
+    </div>
+
+    <div class="btn-group" style="margin-top: 25px;">
+        <a href="https://wa.me/201017667875?text=طلب+إيداع+في+البنك" class="btn btn-gold">إيداع بنكي</a>
+        <a href="https://wa.me/201017667875?text=تحويل+إلى+المحفظة" class="btn btn-outline">شحن المحفظة</a>
     </div>
 </section>
-
-<div class="main-grid">
-    <div class="content">
-        <div class="card" style="margin-bottom: 20px;">
-            <h2>📊 مركز التحليل المتقدم (Live)</h2>
-            <div id="tradingview_main"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-            <script type="text/javascript">
-            new TradingView.widget({
-              "width": "100%", "height": 500, "symbol": "BTCUSD", "interval": "H", "timezone": "Africa/Cairo",
-              "theme": "dark", "style": "1", "locale": "ar", "container_id": "tradingview_main"
-            });
-            </script>
-        </div>
-        
-        <div class="card">
-            <h2>📰 شريط الأخبار العالمية</h2>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-            { "colorTheme": "dark", "width": "100%", "height": 400, "locale": "ar" }
-            </script>
-        </div>
-    </div>
-
-    <div class="sidebar">
-        <div class="card" style="margin-bottom: 20px;">
-            <h2>📅 الأحداث الاقتصادية</h2>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-            { "colorTheme": "dark", "width": "100%", "height": 400, "locale": "ar" }
-            </script>
-        </div>
-        
-        <div class="card" style="background: var(--gold); color: #000;">
-            <h2 style="color: #000; border-color: #000;">المكتب الفني</h2>
-            <p>إدارة: <b>عصام الكومي</b></p>
-            <p style="font-size: 18px; font-weight: bold;">01017667875</p>
-            <p style="font-size: 11px;">تواصل لتنفيذ الصفقات الفورية</p>
-        </div>
-    </div>
-</div>
-
-<a href="https://wa.me/201017667875" class="wa-float">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35">
-</a>
-
-<script>
-    function updateClocks() {
-        const opt = { hour: '2-digit', minute: '2-digit', hour12: false };
-        document.getElementById('cairo').innerText = new Date().toLocaleString('en-US', { ...opt, timeZone: 'Africa/Cairo' });
-        document.getElementById('london').innerText = new Date().toLocaleString('en-US', { ...opt, timeZone: 'Europe/London' });
-        document.getElementById('ny').innerText = new Date().toLocaleString('en-US', { ...opt, timeZone: 'America/New_York' });
-    }
-    setInterval(updateClocks, 1000);
-    updateClocks();
-</script>
-
-</body>
-</html>
