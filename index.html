@@ -1,11 +1,83 @@
-<div class="site-card" style="border: 2px solid gold;">
-    <h3>🚀 خدمات شركة عصام الكومي للتقنية</h3>
-    <ul style="list-style: none; padding: 0; text-align: right;">
-        <li>✅ تصميم تطبيقات أندرويد و iOS</li>
-        <li>✅ تأمين وحماية المواقع من الثغرات</li>
-        <li>✅ إدارة وتحليل بيانات البورصة العالمية</li>
-        <li>✅ استشارات السيادة الرقمية (بروتوكول أثير)</li>
-    </ul>
-    <p style="color: gold; font-weight: bold;">لطلب الخدمة: 01017667875</p>
-    <a href="tel:01017667875" class="btn-link" style="background: gold;">اتصل الآن للتعاقد</a>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GBT | منصة الوساطة العالمية</title>
+    <style>
+        :root { --gold: #d4af37; --blue: #002366; --white: #ffffff; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
+        
+        /* الهيدر */
+        header { background: var(--blue); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { font-size: 24px; font-weight: bold; color: var(--gold); }
+        
+        /* قسم الترحيب */
+        .hero { background: linear-gradient(rgba(0,35,102,0.8), rgba(0,35,102,0.8)), url('https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); 
+                background-size: cover; color: white; text-align: center; padding: 60px 20px; }
+        .hero h1 { font-size: 36px; margin-bottom: 10px; }
+        
+        /* شبكة الخدمات */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 40px 5%; }
+        .card { background: white; padding: 25px; border-radius: 12px; border-top: 5px solid var(--gold); box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
+        .card h3 { color: var(--blue); margin-bottom: 15px; }
+        .card p { font-size: 14px; color: #666; line-height: 1.6; }
+        
+        /* زر السيطرة */
+        .action-btn { background: var(--gold); color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px; }
+        .action-btn:hover { background: #b8962d; }
+
+        /* شريط العملات الحي */
+        .ticker-wrap { background: #111; color: var(--gold); padding: 10px 0; position: fixed; bottom: 0; width: 100%; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">GBT HUB</div>
+    <nav>اتصل بنا: 01017667875</nav>
+</header>
+
+<div class="hero">
+    <h1>بوابة المستثمرين ورجال الأعمال</h1>
+    <p>نربطك بكبرى شركات الأسهم والبيتكوين العالمية بعمولة منافسة</p>
+    <a href="#join" class="action-btn">سجل كمستثمر الآن</a>
 </div>
+
+<div class="grid">
+    <div class="card">
+        <h3>📈 تداول الأسهم</h3>
+        <p>ربط مباشر مع بورصات نيويورك وناسكاد. تنفيذ فوري للصفقات عبر شركائنا المعتمدين.</p>
+        <button class="action-btn" onclick="openDeal('الأسهم')">بدء صفقة</button>
+    </div>
+
+    <div class="card">
+        <h3>₿ العملات الرقمية</h3>
+        <p>تداول البيتكوين والإيثيريوم بأمان تام. نحن نضمن لك الوساطة بين البائع والمشتري.</p>
+        <button class="action-btn" onclick="openDeal('البيتكوين')">تبادل الآن</button>
+    </div>
+
+    <div class="card" style="border-top-color: #00ffcc;">
+        <h3>🤝 ملتقى الشركاء</h3>
+        <p>عرض مشاريعك على رجال أعمال ومستثمرين حقيقيين. نحن ننظم العقود ونضمن الحقوق.</p>
+        <button class="action-btn" onclick="openDeal('الاستثمار')">اعرض مشروعك</button>
+    </div>
+</div>
+
+<div style="text-align: center; padding: 40px; background: #fff;">
+    <h2>لماذا تتعامل عبر موقعنا؟</h2>
+    <p>نحن لا ندير أموالك، نحن **نؤمن** تعاملاتك. عمولتنا ثابتة وشفافة وتُدفع عند إتمام كل عملية بنجاح.</p>
+</div>
+
+<div class="ticker-wrap">
+    <marquee>BTC/USD: $64,231.50 ▼ | Gold: $2,345.10 ▲ | AAPL: $189.45 ▲ | نحن نضمن أمان تعاملاتكم المالية عبر منصتنا...</marquee>
+</div>
+
+<script>
+    function openDeal(type) {
+        alert("جاري تحويلك لغرفة العمليات الخاصة بـ " + type + ". سيقوم المستشار المالي بالتواصل معك لتحديد العمولة وإتمام الإجراءات.");
+    }
+</script>
+
+</body>
+</html>
