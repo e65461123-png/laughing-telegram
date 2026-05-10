@@ -3,81 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GBT | منصة الوساطة العالمية</title>
+    <title>Global Bridge Terminal | عصام الكومي</title>
     <style>
-        :root { --gold: #d4af37; --blue: #002366; --white: #ffffff; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
+        :root { --accent: #c5a059; --dark: #0f172a; --light: #f8fafc; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--light); color: var(--dark); line-height: 1.6; }
         
-        /* الهيدر */
-        header { background: var(--blue); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo { font-size: 24px; font-weight: bold; color: var(--gold); }
+        /* الهوية الجديدة */
+        header { background: var(--dark); color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-size: 24px; font-weight: 800; color: var(--accent); letter-spacing: 1px; }
         
-        /* قسم الترحيب */
-        .hero { background: linear-gradient(rgba(0,35,102,0.8), rgba(0,35,102,0.8)), url('https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); 
-                background-size: cover; color: white; text-align: center; padding: 60px 20px; }
-        .hero h1 { font-size: 36px; margin-bottom: 10px; }
-        
-        /* شبكة الخدمات */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 40px 5%; }
-        .card { background: white; padding: 25px; border-radius: 12px; border-top: 5px solid var(--gold); box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
-        .card h3 { color: var(--blue); margin-bottom: 15px; }
-        .card p { font-size: 14px; color: #666; line-height: 1.6; }
-        
-        /* زر السيطرة */
-        .action-btn { background: var(--gold); color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px; }
-        .action-btn:hover { background: #b8962d; }
+        .hero { padding: 80px 5%; text-align: center; background: white; border-bottom: 1px solid #e2e8f0; }
+        .hero h1 { font-size: 42px; margin-bottom: 20px; color: var(--dark); }
+        .hero p { font-size: 18px; color: #64748b; max-width: 700px; margin: 0 auto 30px; }
 
-        /* شريط العملات الحي */
-        .ticker-wrap { background: #111; color: var(--gold); padding: 10px 0; position: fixed; bottom: 0; width: 100%; }
+        /* أقسام الوساطة */
+        .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 50px 5%; }
+        .box { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; text-align: center; transition: 0.3s; }
+        .box:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .box h3 { color: var(--dark); font-size: 22px; margin-bottom: 15px; }
+        
+        .btn { background: var(--dark); color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        .btn:hover { background: var(--accent); color: var(--dark); }
+
+        footer { background: var(--dark); color: #94a3b8; text-align: center; padding: 30px; font-size: 14px; }
+        .contact-bar { background: var(--accent); color: var(--dark); text-align: center; padding: 10px; font-weight: bold; }
     </style>
 </head>
 <body>
 
+<div class="contact-bar">مركز الوساطة المباشر: 01017667875</div>
+
 <header>
-    <div class="logo">GBT HUB</div>
-    <nav>اتصل بنا: 01017667875</nav>
+    <div class="brand">GBT HUB</div>
+    <div>عصام الكومي | الأعمال والحلول التقنية</div>
 </header>
 
 <div class="hero">
-    <h1>بوابة المستثمرين ورجال الأعمال</h1>
-    <p>نربطك بكبرى شركات الأسهم والبيتكوين العالمية بعمولة منافسة</p>
-    <a href="#join" class="action-btn">سجل كمستثمر الآن</a>
+    <h1>منصة الربط الاستثماري العالمي</h1>
+    <p>نحن نعمل كوسيط معتمد لربط رجال الأعمال والمستثمرين بكبرى صفقات الأسهم، العقارات، والعملات الرقمية بعمولة شفافة وضمان كامل للحقوق.</p>
+    <a href="tel:01017667875" class="btn">اطلب استشارة مجانية</a>
 </div>
 
-<div class="grid">
-    <div class="card">
-        <h3>📈 تداول الأسهم</h3>
-        <p>ربط مباشر مع بورصات نيويورك وناسكاد. تنفيذ فوري للصفقات عبر شركائنا المعتمدين.</p>
-        <button class="action-btn" onclick="openDeal('الأسهم')">بدء صفقة</button>
+<div class="services">
+    <div class="box">
+        <h3>🏢 استثمارات رجال الأعمال</h3>
+        <p>تسهيل صفقات الاستحواذ والشراكات الكبرى بين الشركات والمستثمرين الأفراد.</p>
+        <a href="#" class="btn">تفاصيل العمولة</a>
     </div>
 
-    <div class="card">
-        <h3>₿ العملات الرقمية</h3>
-        <p>تداول البيتكوين والإيثيريوم بأمان تام. نحن نضمن لك الوساطة بين البائع والمشتري.</p>
-        <button class="action-btn" onclick="openDeal('البيتكوين')">تبادل الآن</button>
+    <div class="box">
+        <h3>₿ تداول الأصول الرقمية</h3>
+        <p>وساطة آمنة لبيع وشراء الكميات الكبيرة من العملات المشفرة عبر قنوات رسمية.</p>
+        <a href="#" class="btn">بدء صفقة</a>
     </div>
 
-    <div class="card" style="border-top-color: #00ffcc;">
-        <h3>🤝 ملتقى الشركاء</h3>
-        <p>عرض مشاريعك على رجال أعمال ومستثمرين حقيقيين. نحن ننظم العقود ونضمن الحقوق.</p>
-        <button class="action-btn" onclick="openDeal('الاستثمار')">اعرض مشروعك</button>
+    <div class="box">
+        <h3>📊 إدارة محافظ الأسهم</h3>
+        <p>نربطك بأفضل بيوت الخبرة العالمية لإدارة وتداول الأسهم في الأسواق الدولية.</p>
+        <a href="#" class="btn">متابعة الأسواق</a>
     </div>
 </div>
 
-<div style="text-align: center; padding: 40px; background: #fff;">
-    <h2>لماذا تتعامل عبر موقعنا؟</h2>
-    <p>نحن لا ندير أموالك، نحن **نؤمن** تعاملاتك. عمولتنا ثابتة وشفافة وتُدفع عند إتمام كل عملية بنجاح.</p>
-</div>
-
-<div class="ticker-wrap">
-    <marquee>BTC/USD: $64,231.50 ▼ | Gold: $2,345.10 ▲ | AAPL: $189.45 ▲ | نحن نضمن أمان تعاملاتكم المالية عبر منصتنا...</marquee>
-</div>
-
-<script>
-    function openDeal(type) {
-        alert("جاري تحويلك لغرفة العمليات الخاصة بـ " + type + ". سيقوم المستشار المالي بالتواصل معك لتحديد العمولة وإتمام الإجراءات.");
-    }
-</script>
+<footer>
+    &copy; 2026 Global Bridge Terminal | جميع الحقوق محفوظة للقائد عصام الكومي
+</footer>
 
 </body>
 </html>
