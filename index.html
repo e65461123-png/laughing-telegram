@@ -3,96 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GBT HUB | منصة التداول العالمية</title>
+    <title>GBT HUB | المنصة الاستثمارية الأولى</title>
     <style>
-        :root { --accent: #c5a059; --dark: #0f172a; --light: #f8fafc; --success: #22c55e; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--light); color: var(--dark); padding-bottom: 60px; }
+        :root { --accent: #d4af37; --dark: #0a1128; --light: #ffffff; --gray: #f1f5f9; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--gray); color: var(--dark); overflow-x: hidden; }
         
-        /* شريط الأخبار العاجلة */
-        .news-ticker { background: #111; color: white; padding: 10px 0; overflow: hidden; white-space: nowrap; border-bottom: 2px solid var(--accent); }
+        /* شريط الأخبار المتحرك */
+        .top-bar { background: #000; color: var(--accent); padding: 8px 0; font-weight: bold; border-bottom: 2px solid var(--accent); }
         
-        header { background: var(--dark); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .brand { font-size: 24px; font-weight: bold; color: var(--accent); }
+        header { background: var(--dark); color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .brand { font-size: 28px; letter-spacing: 2px; }
+        .contact-info { text-align: left; font-size: 14px; }
 
-        /* قسم الساعات العالمية */
-        .clocks-container { background: #fff; padding: 20px 5%; display: flex; justify-content: center; gap: 30px; border-bottom: 1px solid #ddd; flex-wrap: wrap; }
-        .clock-item { text-align: center; }
-        .clock-item span { display: block; font-size: 12px; color: #666; font-weight: bold; }
-        .time { font-size: 20px; font-weight: bold; color: var(--dark); }
+        .main-container { padding: 30px 5%; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        
+        @media (max-width: 900px) { .main-container { grid-template-columns: 1fr; } }
 
-        .container { padding: 20px 5%; }
-        .market-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 20px; }
-        .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        h2 { border-right: 4px solid var(--accent); padding-right: 10px; font-size: 20px; margin-bottom: 20px; }
+        .card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        h2 { color: var(--dark); border-right: 5px solid var(--accent); padding-right: 15px; margin-bottom: 20px; font-size: 22px; }
 
-        /* زر الواتساب العائم */
-        .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; text-align: center; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 1000; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+        /* زر التواصل العائم */
+        .float-btn { position: fixed; bottom: 30px; left: 30px; background: #25d366; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); z-index: 1000; display: flex; align-items: center; gap: 10px; }
     </style>
 </head>
 <body>
 
-<div class="news-ticker">
-    <marquee scrollamount="5" direction="right">
-        ⚡ أخبار السوق: الفيدرالي الأمريكي يثبت أسعار الفائدة.. | ₿ البيتكوين يحافظ على مستوياته فوق 60 ألف دولار.. | 🏆 الذهب يسجل مستويات قياسية جديدة اليوم.. | GBT HUB: نضمن لكم أفضل عمولة وساطة في السوق المصري والعالمي..
-    </marquee>
+<div class="top-bar">
+    <marquee>⚡ تحديث مباشر: الذهب يكسر حاجز المقاومة.. | ₿ البيتكوين في منطقة تجميع قوية.. | الدولار مقابل الجنيه: استقرار حذر في التداولات.. | منصة عصام الكومي للوساطة ترحب بكم..</marquee>
 </div>
 
 <header>
-    <div class="brand">GBT HUB</div>
-    <div style="text-align: left;">عصام الكومي | 01017667875</div>
+    <div class="brand"><b>GBT</b> HUB</div>
+    <div class="contact-info">
+        المدير التنفيذي: <b>عصام الكومي</b><br>
+        دعم الصفقات: 01017667875
+    </div>
 </header>
 
-<div class="clocks-container">
-    <div class="clock-item"><span>القاهرة</span><div class="time" id="cairo">--:--:--</div></div>
-    <div class="clock-item"><span>لندن</span><div class="time" id="london">--:--:--</div></div>
-    <div class="clock-item"><span>نيويورك</span><div class="time" id="ny">--:--:--</div></div>
-</div>
-
-<div class="container">
-    <div class="market-grid">
+<div class="main-container">
+    <div class="content-area">
         <div class="card">
-            <h2>₿ تداول العملات الرقمية</h2>
+            <h2>📈 لوحة التداول المتقدمة (بث مباشر)</h2>
             <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                {
-                    "symbols": [["BTCUSD", "BTC"], ["ETHUSD", "ETH"], ["BNBUSD", "BNB"]],
-                    "width": "100%", "height": 400, "locale": "ar", "colorTheme": "light"
-                }
+                <div id="tradingview_advanced"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                <script type="text/javascript">
+                new TradingView.widget({
+                  "width": "100%", "height": 500, "symbol": "BTCUSD", "interval": "D", "timezone": "Africa/Cairo",
+                  "theme": "light", "style": "1", "locale": "ar", "toolbar_bg": "#f1f3f6",
+                  "enable_publishing": false, "allow_symbol_change": true, "container_id": "tradingview_advanced"
+                });
                 </script>
             </div>
         </div>
 
         <div class="card">
-            <h2>📈 الأسهم والذهب</h2>
+            <h2>🔥 خريطة حرارة السوق (Hotlist)</h2>
             <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                {
-                    "symbols": [["FOREXCOM:XAUUSD", "GOLD"], ["FX_IDC:USDEGP", "USD/EGP"], ["FX:EURUSD", "EUR/USD"]],
-                    "width": "100%", "height": 400, "locale": "ar", "colorTheme": "light"
-                }
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js" async>
+                { "colorTheme": "light", "dateRange": "12M", "exchange": "US", "showChart": true, "locale": "ar", "width": "100%", "height": "400" }
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="card">
+            <h2>📅 التقويم الاقتصادي</h2>
+            <div class="tradingview-widget-container">
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                { "colorTheme": "light", "isTransparent": false, "width": "100%", "height": "400", "locale": "ar", "importanceFilter": "-1,0,1" }
+                </script>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>💰 أسعار الصرف الفورية</h2>
+            <div class="tradingview-widget-container">
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
+                { "width": "100%", "height": "400", "currencies": ["EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD"], "locale": "ar", "colorTheme": "light" }
                 </script>
             </div>
         </div>
     </div>
 </div>
 
-<a href="https://wa.me/201017667875" class="whatsapp-float" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="WA">
+<a href="https://wa.me/201017667875" class="float-btn">
+    <span>تنفيذ صفقة فورية</span>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="25">
 </a>
-
-<script>
-    // تحديث الساعات
-    function updateClocks() {
-        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-        document.getElementById('cairo').innerText = new Date().toLocaleString('en-US', { ...options, timeZone: 'Africa/Cairo' });
-        document.getElementById('london').innerText = new Date().toLocaleString('en-US', { ...options, timeZone: 'Europe/London' });
-        document.getElementById('ny').innerText = new Date().toLocaleString('en-US', { ...options, timeZone: 'America/New_York' });
-    }
-    setInterval(updateClocks, 1000);
-    updateClocks();
-</script>
 
 </body>
 </html>
