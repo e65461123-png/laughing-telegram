@@ -1,29 +1,717 @@
-const terminal = document.getElementById("terminal");
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
 
-const logs = [
-"[SYSTEM] الاتصال بالخادم...",
-"[AI] تفعيل النواة الذكية...",
-"[SECURITY] فحص التهديدات...",
-"[NETWORK] ربط العقد العالمية...",
-"[LIVE] مراقبة الأنظمة...",
-"[OK] النظام مستقر...",
-"[AETHER] التشغيل الكامل..."
-];
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-let i = 0;
+<title>AETHER PROTOCOL</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+background:#000;
+font-family:'Cairo',sans-serif;
+color:white;
+overflow-x:hidden;
+position:relative;
+}
+
+/* MATRIX */
+
+#matrix{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-3;
+}
+
+/* GRID */
+
+.grid{
+position:fixed;
+width:100%;
+height:100%;
+background:
+linear-gradient(rgba(255,215,0,.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,215,0,.04) 1px, transparent 1px);
+background-size:40px 40px;
+z-index:-2;
+animation:gridMove 12s linear infinite;
+}
+
+@keyframes gridMove{
+0%{transform:translateY(0);}
+100%{transform:translateY(40px);}
+}
+
+/* LOADER */
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+font-size:2rem;
+font-family:'Orbitron';
+color:gold;
+letter-spacing:5px;
+
+animation:fadeOut 4s forwards;
+}
+
+@keyframes fadeOut{
+
+0%,80%{
+opacity:1;
+visibility:visible;
+}
+
+100%{
+opacity:0;
+visibility:hidden;
+}
+
+}
+
+/* HEADER */
+
+.hero{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:20px;
+position:relative;
+}
+
+.logo{
+
+font-size:5rem;
+font-family:'Orbitron';
+font-weight:900;
+
+background:linear-gradient(90deg,#ffd700,#ffae00,#ffd700);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+text-shadow:
+0 0 10px gold,
+0 0 20px orange,
+0 0 50px gold;
+
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+
+from{
+filter:drop-shadow(0 0 10px gold);
+}
+
+to{
+filter:drop-shadow(0 0 35px orange);
+}
+
+}
+
+.subtitle{
+margin-top:20px;
+font-size:1.3rem;
+opacity:.8;
+max-width:800px;
+line-height:2;
+}
+
+.hero-buttons{
+display:flex;
+gap:20px;
+margin-top:40px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.hero-buttons button{
+
+padding:15px 35px;
+
+background:rgba(255,215,0,.08);
+
+border:1px solid gold;
+
+color:white;
+
+cursor:pointer;
+
+font-size:1rem;
+
+transition:.4s;
+
+backdrop-filter:blur(10px);
+
+font-family:'Orbitron';
+}
+
+.hero-buttons button:hover{
+
+background:gold;
+color:black;
+
+transform:translateY(-8px);
+
+box-shadow:0 0 30px gold;
+
+}
+
+/* SECTION */
+
+section{
+padding:80px 8%;
+}
+
+/* TITLES */
+
+.title{
+font-size:3rem;
+font-family:'Orbitron';
+margin-bottom:50px;
+color:gold;
+text-align:center;
+text-shadow:0 0 15px gold;
+}
+
+/* LIVE MONEY */
+
+.money-box{
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,215,0,.2);
+
+padding:40px;
+
+border-radius:25px;
+
+text-align:center;
+
+backdrop-filter:blur(12px);
+
+box-shadow:0 0 25px rgba(255,215,0,.08);
+}
+
+.money-box h2{
+color:gold;
+margin-bottom:20px;
+font-size:2rem;
+}
+
+#money{
+font-size:4rem;
+font-weight:bold;
+font-family:'Orbitron';
+}
+
+/* TERMINAL */
+
+.terminal-box{
+
+margin-top:50px;
+
+background:#050505;
+
+border-radius:25px;
+
+padding:30px;
+
+border:1px solid rgba(255,215,0,.2);
+
+box-shadow:0 0 30px rgba(255,215,0,.08);
+
+}
+
+.terminal-title{
+
+text-align:left;
+
+font-family:'Orbitron';
+
+color:gold;
+
+font-size:2rem;
+
+margin-bottom:20px;
+}
+
+.terminal{
+
+height:300px;
+
+background:black;
+
+padding:20px;
+
+overflow:hidden;
+
+font-family:monospace;
+
+color:#00ff66;
+
+border:1px solid #222;
+
+line-height:2;
+
+font-size:1rem;
+}
+
+/* CARDS */
+
+.cards{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:25px;
+
+margin-top:60px;
+}
+
+.card{
+
+background:rgba(255,255,255,.05);
+
+padding:30px;
+
+border-radius:20px;
+
+border:1px solid rgba(255,215,0,.15);
+
+transition:.4s;
+
+backdrop-filter:blur(10px);
+
+position:relative;
+
+overflow:hidden;
+}
+
+.card::before{
+
+content:'';
+
+position:absolute;
+
+width:200%;
+
+height:200%;
+
+background:linear-gradient(
+45deg,
+transparent,
+rgba(255,215,0,.08),
+transparent
+);
+
+top:-50%;
+left:-50%;
+
+transform:rotate(25deg);
+}
+
+.card:hover{
+
+transform:translateY(-10px);
+
+box-shadow:0 0 30px rgba(255,215,0,.25);
+
+border-color:gold;
+}
+
+.card h3{
+
+color:gold;
+
+font-size:1.6rem;
+
+margin-bottom:20px;
+
+font-family:'Orbitron';
+}
+
+/* STATS */
+
+.stats{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:25px;
+
+margin-top:70px;
+}
+
+.stat{
+
+background:#0a0a0a;
+
+padding:30px;
+
+border-radius:20px;
+
+text-align:center;
+
+border:1px solid rgba(255,215,0,.2);
+}
+
+.stat h1{
+
+font-size:3rem;
+
+color:gold;
+
+font-family:'Orbitron';
+}
+
+/* FOOTER */
+
+footer{
+
+padding:40px;
+
+margin-top:80px;
+
+border-top:1px solid rgba(255,215,0,.1);
+
+text-align:center;
+
+color:gold;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.logo{
+font-size:2.7rem;
+}
+
+.subtitle{
+font-size:1rem;
+}
+
+.title{
+font-size:2rem;
+}
+
+#money{
+font-size:2.2rem;
+}
+
+.hero{
+height:auto;
+padding-top:120px;
+padding-bottom:100px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- LOADER -->
+
+<div id="loader">
+AETHER INITIALIZING...
+</div>
+
+<!-- MATRIX -->
+
+<canvas id="matrix"></canvas>
+
+<!-- GRID -->
+
+<div class="grid"></div>
+
+<!-- HERO -->
+
+<header class="hero">
+
+<h1 class="logo">
+AETHER PROTOCOL
+</h1>
+
+<p class="subtitle">
+منظومة سيبرانية مستقبلية مدعومة بالذكاء الاصطناعي والمراقبة الحية والتحكم العالمي المتقدم.
+</p>
+
+<div class="hero-buttons">
+
+<button>ENTER SYSTEM</button>
+
+<button>LIVE CONTROL</button>
+
+<button>AI NETWORK</button>
+
+</div>
+
+</header>
+
+<!-- MAIN -->
+
+<section>
+
+<h1 class="title">
+الخزنة السيادية الحية
+</h1>
+
+<div class="money-box">
+
+<h2>
+LIVE DIGITAL VAULT
+</h2>
+
+<div id="money">
+19,146,368
+</div>
+
+<p style="margin-top:20px;color:#00ff66;">
+AI NETWORK ACTIVE
+</p>
+
+</div>
+
+<!-- TERMINAL -->
+
+<div class="terminal-box">
+
+<div class="terminal-title">
+LIVE TERMINAL
+</div>
+
+<div class="terminal" id="terminal">
+</div>
+
+</div>
+
+<!-- CARDS -->
+
+<div class="cards">
+
+<div class="card">
+
+<h3>AI CORE</h3>
+
+<p>
+نواة ذكاء اصطناعي مستقلة لتحليل البيانات واتخاذ القرارات.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>CYBER DEFENSE</h3>
+
+<p>
+منظومة حماية ومراقبة سيبرانية متقدمة ضد التهديدات.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>GLOBAL NETWORK</h3>
+
+<p>
+شبكة اتصال عالمية متزامنة بسرعة عالية.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>LIVE MONITOR</h3>
+
+<p>
+مراقبة حية وتحليل فوري للنشاطات والأنظمة.
+</p>
+
+</div>
+
+</div>
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+<h1>99.9%</h1>
+<p>SECURITY</p>
+</div>
+
+<div class="stat">
+<h1>24/7</h1>
+<p>LIVE STATUS</p>
+</div>
+
+<div class="stat">
+<h1>369</h1>
+<p>AI NODES</p>
+</div>
+
+<div class="stat">
+<h1>14M+</h1>
+<p>CALCULATIONS</p>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+⚠ بروتوكول أثير | AETHER PROTOCOL 2026
+
+</footer>
+
+<script>
+
+/* MATRIX */
+
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters =
+"01アイウエオカキクケコサシスセソABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+const array = letters.split("");
+
+const fontSize = 14;
+
+const columns = canvas.width / fontSize;
+
+const drops = [];
+
+for(let i = 0; i < columns; i++){
+drops[i] = 1;
+}
+
+function draw(){
+
+ctx.fillStyle = "rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle = "#00ff66";
+ctx.font = fontSize + "px monospace";
+
+for(let i = 0; i < drops.length; i++){
+
+const text =
+array[Math.floor(Math.random()*array.length)];
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize > canvas.height &&
+Math.random() > 0.975){
+
+drops[i] = 0;
+
+}
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(draw,35);
+
+/* MONEY COUNTER */
+
+const money =
+document.getElementById("money");
+
+let count = 19146368;
 
 setInterval(()=>{
 
-const line = document.createElement("div");
+count += Math.random()*1000;
 
-line.textContent = logs[Math.floor(Math.random()*logs.length)];
+money.innerText =
+Math.floor(count).toLocaleString();
+
+},120);
+
+/* TERMINAL */
+
+const terminal =
+document.getElementById("terminal");
+
+const logs = [
+
+"[SYSTEM] جاري الاتصال بالنواة...",
+"[AI] تفعيل الذكاء الاصطناعي...",
+"[NETWORK] ربط الشبكات...",
+"[SECURITY] فحص التهديدات...",
+"[AETHER] مزامنة البروتوكول...",
+"[LIVE] مراقبة الأنظمة...",
+"[OK] النظام مستقر...",
+"[ACTIVE] تشغيل الشبكة...",
+"[SCAN] تحليل البيانات...",
+"[QUANTUM] تشفير القنوات..."
+
+];
+
+setInterval(()=>{
+
+const line =
+document.createElement("div");
+
+line.textContent =
+logs[Math.floor(Math.random()*logs.length)];
 
 terminal.appendChild(line);
 
-terminal.scrollTop = terminal.scrollHeight;
+terminal.scrollTop =
+terminal.scrollHeight;
 
-if(terminal.children.length > 20){
-terminal.removeChild(terminal.children[0]);
+if(terminal.children.length > 18){
+
+terminal.removeChild(
+terminal.children[0]
+);
+
 }
 
-},1200);
+},1000);
+
+</script>
+
+</body>
+</html>
