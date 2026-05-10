@@ -3,106 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GBT HUB | المنصة المالية المتكاملة</title>
+    <title>GBT HUB | الخزنة والمنصة العالمية</title>
     <style>
-        :root { --gold: #d4af37; --blue: #0a1128; --white: #ffffff; --bg: #f0f2f5; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: var(--blue); }
+        :root { --gold: #d4af37; --bg: #050a14; --card: #0d1425; --text: #e2e8f0; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); }
         
-        /* شريط أسعار البورصة المتحرك العلوي */
-        .ticker-header { background: #000; height: 40px; border-bottom: 2px solid var(--gold); }
+        header { background: #000; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); }
+        .logo { font-size: 28px; font-weight: 900; color: var(--gold); }
+
+        /* ستايل الخزنة السرية */
+        .vault-section { background: linear-gradient(145deg, #0d1425, #1a263f); border: 2px dashed var(--gold); margin: 20px 5%; padding: 20px; border-radius: 15px; text-align: center; }
+        .vault-title { color: var(--gold); font-size: 24px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .bank-card { background: #1e293b; padding: 15px; border-radius: 10px; display: inline-block; border: 1px solid #334155; margin-top: 10px; }
         
-        header { background: var(--blue); color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .logo { font-size: 30px; font-weight: 900; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; }
-        .owner-badge { background: rgba(212, 175, 55, 0.2); padding: 5px 15px; border-radius: 20px; border: 1px solid var(--gold); font-size: 13px; }
+        .action-btns { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .btn { padding: 12px 25px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; }
+        .btn-deposit { background: var(--gold); color: black; }
+        .btn-withdraw { background: #dc2626; color: white; }
 
-        .main-grid { padding: 20px 3%; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; }
-        @media (max-width: 1000px) { .main-grid { grid-template-columns: 1fr; } }
-
-        .card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #e1e4e8; }
-        h2 { font-size: 20px; margin-top: 0; border-right: 5px solid var(--gold); padding-right: 15px; color: var(--blue); }
-
-        /* زر تنفيذ العمليات العائم */
-        .trade-btn { position: fixed; bottom: 30px; left: 30px; background: #25d366; color: white; padding: 18px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 18px; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); z-index: 9999; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
-        .trade-btn:hover { transform: scale(1.05); background: #1ebe57; }
+        .main-grid { padding: 0 5% 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+        .card { background: var(--card); border-radius: 12px; padding: 20px; border: 1px solid #1e293b; }
     </style>
 </head>
 <body>
 
-<div class="ticker-header">
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-    {
-      "symbols": [
-        {"proName": "FOREXCOM:SPXUSD", "title": "S&P 500"},
-        {"proName": "FOREXCOM:NSXUSD", "title": "Nasdaq 100"},
-        {"proName": "FX_IDC:USDEGP", "title": "USD/EGP"},
-        {"proName": "BITSTAMP:BTCUSD", "title": "Bitcoin"},
-        {"proName": "BITSTAMP:ETHUSD", "title": "Ethereum"},
-        {"description": "الذهب", "proName": "OANDA:XAUUSD"}
-      ],
-      "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": false, "displayMode": "adaptive", "locale": "ar"
-    }
-    </script>
-</div>
-
 <header>
     <div class="logo">GBT HUB</div>
-    <div style="text-align: left;">
-        <div class="owner-badge">القائد: <b>عصام الكومي</b></div>
-        <div style="font-size: 12px; margin-top: 5px;">إدارة الأصول والوساطة الدولية</div>
-    </div>
+    <div style="color: var(--gold);">الخزنة الشخصية | عصام الكومي</div>
 </header>
 
-<div class="main-grid">
-    <div class="left-side">
-        <div class="card">
-            <h2>📊 مركز التحليل الفني المباشر</h2>
-            <div id="tradingview_pro"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-            <script type="text/javascript">
-            new TradingView.widget({
-              "width": "100%", "height": 550, "symbol": "BTCUSD", "interval": "H", "timezone": "Africa/Cairo",
-              "theme": "light", "style": "1", "locale": "ar", "toolbar_bg": "#f1f3f6", "enable_publishing": false,
-              "withdateranges": true, "hide_side_toolbar": false, "allow_symbol_change": true, "details": true, "hotlist": true, "calendar": true,
-              "container_id": "tradingview_pro"
-            });
-            </script>
-        </div>
-
-        <div class="card">
-            <h2>📰 شريط الأخبار الاقتصادية العاجلة</h2>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-            { "feedMode": "all_symbols", "colorTheme": "light", "isTransparent": false, "displayMode": "regular", "width": "100%", "height": 450, "locale": "ar" }
-            </script>
-        </div>
+<section class="vault-section">
+    <div class="vault-title">🔒 الخزنة الرقمية للعمولات</div>
+    <div class="bank-card">
+        <div style="font-size: 14px; opacity: 0.8;">البنك المربوط:</div>
+        <div style="font-size: 18px; color: var(--gold); font-weight: bold;">Mashreq Neo (المشرق نيو)</div>
+        <div style="margin-top: 5px; letter-spacing: 2px;">**** **** **** 7875</div> </div>
+    
+    <div class="action-btns">
+        <a href="https://wa.me/201017667875?text=طلب+تحويل+أرباح" class="btn btn-deposit">تحويل عمولة</a>
+        <a href="https://wa.me/201017667875?text=طلب+سحب+رصيد" class="btn btn-withdraw">سحب رصيد</a>
     </div>
+    <p style="font-size: 12px; margin-top: 15px; opacity: 0.6;">* جميع العمليات تتم بتشفير كامل عبر الوسيط الفني.</p>
+</section>
 
-    <div class="right-side">
-        <div class="card">
-            <h2>📅 مفكرة الأحداث العالمية</h2>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-            { "colorTheme": "light", "isTransparent": false, "width": "100%", "height": 400, "locale": "ar", "importanceFilter": "-1,0,1" }
-            </script>
-        </div>
-
-        <div class="card">
-            <h2>💰 حاسبة أسعار الصرف</h2>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
-            { "width": "100%", "height": 400, "currencies": ["EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD"], "locale": "ar", "colorTheme": "light" }
-            </script>
-        </div>
-
-        <div class="card" style="background: var(--blue); color: white; text-align: center;">
-            <h2 style="color: var(--gold); border-color: var(--gold);">دعم الصفقات</h2>
-            <p>تواصل مع المكتب الفني لتنفيذ صفقاتك بعمولة خاصة</p>
-            <p style="font-size: 20px; font-weight: bold;">01017667875</p>
-        </div>
+<div class="main-grid">
+    <div class="card">
+        <h2 style="color: var(--gold);">📊 مراقبة السوق اللحظية</h2>
+        <div id="tradingview_pro"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+        <script type="text/javascript">
+        new TradingView.widget({
+          "width": "100%", "height": 400, "symbol": "BTCUSD", "interval": "H", "theme": "dark", "locale": "ar", "container_id": "tradingview_pro"
+        });
+        </script>
+    </div>
+    
+    <div class="card">
+        <h2 style="color: var(--gold);">📅 التقويم والأخبار</h2>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+        { "colorTheme": "dark", "width": "100%", "height": 400, "locale": "ar" }
+        </script>
     </div>
 </div>
-
-<a href="https://wa.me/201017667875" class="trade-btn">
-    <span>تنفيذ صفقة فورية</span>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30">
-</a>
 
 </body>
 </html>
