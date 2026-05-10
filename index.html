@@ -3,124 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GBT HUB | المنصة المالية الاحترافية</title>
+    <title>GBT HUB | المنصة المالية المؤمنة</title>
     <style>
         :root { --gold: #d4af37; --bg: #050a14; --card: #0d1425; --text: #e2e8f0; --green: #22c55e; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
-        
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); }
         header { background: #000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 28px; font-weight: 900; color: var(--gold); letter-spacing: 2px; }
-
-        .main-container { padding: 20px 5%; max-width: 1200px; margin: 0 auto; }
-
-        /* منطقة العميل - مستوحى من Exness */
-        .client-area { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
-        @media (max-width: 800px) { .client-area { grid-template-columns: 1fr; } }
-
-        .balance-card { background: linear-gradient(135deg, #0d1425 0%, #1a263f 100%); padding: 25px; border-radius: 15px; border: 1px solid var(--gold); position: relative; overflow: hidden; }
-        .balance-amount { font-size: 38px; font-weight: bold; margin: 10px 0; color: #fff; }
+        .logo { font-size: 26px; font-weight: 900; color: var(--gold); letter-spacing: 1px; }
+        .container { padding: 20px 5%; max-width: 1200px; margin: 0 auto; }
         
-        .account-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border: 1px solid #1e293b; }
-        .account-type { font-size: 11px; text-transform: uppercase; color: var(--gold); font-weight: bold; }
-
-        /* جدول العمليات */
-        .history-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-        .history-table th { text-align: right; color: var(--gold); padding: 10px; border-bottom: 1px solid #1e293b; }
-        .history-table td { padding: 10px; border-bottom: 1px solid #0d1425; }
-
-        .btn-action { display: flex; gap: 10px; margin-top: 20px; }
-        .btn { flex: 1; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.3s; }
-        .btn-deposit { background: var(--gold); color: #000; }
-        .btn-withdraw { border: 1px solid var(--gold); color: var(--gold); }
-
-        .trading-section { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-        @media (max-width: 900px) { .trading-section { grid-template-columns: 1fr; } }
-        .card { background: var(--card); border-radius: 12px; padding: 20px; border: 1px solid #1e293b; }
+        /* نظام الحماية */
+        #vault-content { display: none; }
+        .lock-screen { text-align: center; padding: 50px 20px; background: var(--card); border-radius: 15px; border: 1px dashed var(--gold); margin-bottom: 30px; }
+        .pass-input { padding: 12px; border-radius: 8px; border: 1px solid var(--gold); background: #000; color: #fff; text-align: center; width: 200px; margin-bottom: 10px; }
+        
+        /* تصميم الخزنة المستوحى من Exness */
+        .balance-card { background: linear-gradient(135deg, #0d1425 0%, #1a263f 100%); padding: 25px; border-radius: 15px; border: 1px solid var(--gold); margin-bottom: 20px; }
+        .accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        @media (max-width: 700px) { .accounts-grid { grid-template-columns: 1fr; } }
+        .acc-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border-right: 4px solid var(--gold); }
+        
+        .btn { display: inline-block; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; transition: 0.3s; border: none; }
+        .btn-gold { background: var(--gold); color: #000; }
+        
+        table { width: 100%; margin-top: 15px; border-collapse: collapse; font-size: 13px; }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #1e293b; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="logo">GBT HUB</div>
-    <div style="text-align: left; font-size: 12px;">
-        <span style="color: var(--gold);">الحساب الحقيقي:</span> عصام الكومي<br>
-        <span style="color: var(--green);">● متصل مباشر</span>
+    <div id="user-status" style="font-size: 12px; text-align: left;">
+        <span style="color: var(--gold);">المسؤول:</span> عصام الكومي<br>
+        <span id="status-dot" style="color: #666;">● غير مسجل الدخول</span>
     </div>
 </header>
 
-<div class="main-container">
-    <div class="client-area">
+<div class="container">
+    <div id="lock-screen" class="lock-screen">
+        <h2 style="color: var(--gold);">🔒 منطقة الوصول الآمن</h2>
+        <p style="font-size: 14px; opacity: 0.7;">أدخل كلمة السر لفتح الخزنة المالية</p>
+        <input type="password" id="pass-field" class="pass-input" placeholder="كلمة السر"><br>
+        <button onclick="unlockVault()" class="btn btn-gold">فتح الخزنة</button>
+    </div>
+
+    <div id="vault-content">
         <div class="balance-card">
-            <span style="opacity: 0.7; font-size: 14px;">إجمالي رصيد المحفظة (Wallet)</span>
-            <div class="balance-amount">$14,250.00</div>
-            <div class="btn-action">
-                <a href="https://wa.me/201017667875?text=إيداع+جديد" class="btn btn-deposit">إيداع</a>
-                <a href="https://wa.me/201017667875?text=سحب+أرباح" class="btn btn-withdraw">سحب</a>
+            <span style="opacity: 0.7; font-size: 14px;">إجمالي الرصيد المتاح (Live)</span>
+            <div style="font-size: 36px; font-weight: bold; margin: 10px 0;">$14,250.00</div>
+            <div style="display: flex; gap: 10px;">
+                <a href="https://wa.me/201017667875" class="btn btn-gold" style="flex:1">إيداع</a>
+                <a href="https://wa.me/201017667875" class="btn" style="flex:1; border: 1px solid var(--gold); color: var(--gold);">سحب</a>
             </div>
         </div>
 
-        <div style="display: grid; gap: 15px;">
-            <div class="account-box" style="border-right: 4px solid var(--gold);">
-                <div class="account-type">🏦 حساب بنك المشرق نيو</div>
-                <div style="margin-top: 5px;">Mashreq Neo - Business</div>
-                <code style="color: var(--gold); font-size: 12px;">IBAN: **** **** **** 7875</code>
+        <div class="accounts-grid">
+            <div class="acc-box">
+                <div style="font-size: 11px; color: var(--gold);">🏦 Mashreq Neo</div>
+                <div style="margin: 5px 0; font-weight: bold;">الحساب البنكي الرسمي</div>
+                <code>**** **** **** 7875</code>
             </div>
-            <div class="account-box" style="border-right: 4px solid var(--green);">
-                <div class="account-type">📱 المحفظة الإلكترونية / USDT</div>
-                <div style="margin-top: 5px;">Vodafone Cash / Crypto</div>
-                <code style="color: var(--green); font-size: 12px;">ID: 01017667875</code>
+            <div class="acc-box" style="border-color: var(--green);">
+                <div style="font-size: 11px; color: var(--green);">📱 Vodafone Cash / USDT</div>
+                <div style="margin: 5px 0; font-weight: bold;">المحفظة الإلكترونية</div>
+                <code>ID: 01017667875</code>
             </div>
+        </div>
+
+        <div style="background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+            <h3 style="margin-top:0; color: var(--gold);">🕒 آخر العمليات</h3>
+            <table>
+                <thead><tr><th>النوع</th><th>التاريخ</th><th>المبلغ</th></tr></thead>
+                <tbody>
+                    <tr><td>إيداع</td><td>2026-05-10</td><td style="color: var(--green);">+$2,500</td></tr>
+                    <tr><td>سحب</td><td>2026-05-08</td><td style="color: #ff4444;">-$1,200</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <div class="card" style="margin-bottom: 30px;">
-        <h2 style="color: var(--gold); font-size: 18px; margin-top: 0;">🕒 سجل العمليات الأخير</h2>
-        <table class="history-table">
-            <thead>
-                <tr>
-                    <th>العملية</th>
-                    <th>التاريخ</th>
-                    <th>المبلغ</th>
-                    <th>الحالة</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>إيداع عمولة</td>
-                    <td>2026-05-10</td>
-                    <td style="color: var(--green);">+$2,500.00</td>
-                    <td style="color: var(--green);">مكتمل</td>
-                </tr>
-                <tr>
-                    <td>سحب أرباح</td>
-                    <td>2026-05-08</td>
-                    <td style="color: #ef4444;">-$1,200.00</td>
-                    <td style="color: var(--green);">مكتمل</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="trading-section">
-        <div class="card">
-            <h2 style="color: var(--gold);">📊 مراقبة السوق الحية</h2>
-            <div id="trading_chart"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-            <script type="text/javascript">
-            new TradingView.widget({
-              "width": "100%", "height": 450, "symbol": "BTCUSD", "interval": "H", "theme": "dark", "locale": "ar", "container_id": "trading_chart"
-            });
-            </script>
-        </div>
-        
-        <div class="card">
-            <h2 style="color: var(--gold);">📰 أخبار البورصة</h2>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-            { "colorTheme": "dark", "width": "100%", "height": 450, "locale": "ar" }
-            </script>
-        </div>
+    <div style="background: var(--card); padding: 20px; border-radius: 12px;">
+        <h3 style="color: var(--gold);">📊 مراقبة السوق اللحظية</h3>
+        <div id="tradingview_chart"></div>
     </div>
 </div>
+
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script>
+    // تهيئة الرسم البياني
+    new TradingView.widget({
+      "width": "100%", "height": 400, "symbol": "BTCUSD", "interval": "H", "theme": "dark", "locale": "ar", "container_id": "tradingview_chart"
+    });
+
+    // وظيفة فتح الخزنة
+    function unlockVault() {
+        const pass = document.getElementById('pass-field').value;
+        // كلمة السر الخاصة بك هي الكود الذي حددناه سابقاً
+        if(pass === "369") { 
+            document.getElementById('lock-screen').style.display = 'none';
+            document.getElementById('vault-content').style.display = 'block';
+            document.getElementById('status-dot').style.color = 'var(--green)';
+            document.getElementById('status-dot').innerText = '● متصل (الخزنة مفتوحة)';
+        } else {
+            alert("كلمة السر خاطئة! حاول مرة أخرى.");
+        }
+    }
+</script>
 
 </body>
 </html>
