@@ -3,65 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHER MASTER V6000 | COMMAND CENTER</title>
+    <title>AETHER COMMAND CENTER V6000</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        :root { --gold: #ffcc00; --neon: #00ff41; --bg: #000; --cyan: #00ffcc; }
-        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); color: #fff; font-family: 'Segoe UI', monospace; overflow: hidden; }
+        :root { --gold: #ffcc00; --neon: #00ff41; --bg: #000; --deep: #00ffcc; }
+        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); color: #fff; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
         
-        /* الخريطة السيادية */
-        #map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; filter: invert(100%) hue-rotate(180deg) brightness(0.3) contrast(1.5); z-index: 1; }
+        /* الخريطة */
+        #map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; filter: invert(100%) hue-rotate(180deg) brightness(0.2) contrast(1.6); z-index: 1; }
 
-        /* لوحة التحكم الرئيسية */
-        .control-panel { 
-            position: absolute; top: 20px; right: 20px; z-index: 1000; 
-            background: rgba(0, 10, 0, 0.9); padding: 20px; border: 2px solid var(--gold); 
-            width: 380px; border-radius: 15px; box-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
-            backdrop-filter: blur(10px);
+        /* شاشة الرصد MASTER V6000 */
+        .master-v6000 {
+            position: absolute; top: 20px; right: 20px; z-index: 1000;
+            background: rgba(0, 5, 0, 0.95); border: 2px solid var(--gold);
+            width: 400px; padding: 25px; border-radius: 15px;
+            box-shadow: 0 0 40px rgba(255, 204, 0, 0.3); backdrop-filter: blur(10px);
         }
 
-        /* غرفة المراقبة (الأيقونات) */
-        .sidebar { position: absolute; top: 20px; left: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 12px; }
-        .icon-btn { width: 55px; height: 55px; background: #000; border: 1px solid var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 1.4rem; cursor: pointer; transition: 0.3s; }
-        .icon-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
+        /* أيقونات التحكم */
+        .side-icons { position: absolute; top: 20px; left: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
+        .btn-icon { width: 60px; height: 60px; background: rgba(0,0,0,0.8); border: 1px solid var(--gold); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border-radius: 12px; cursor: pointer; transition: 0.3s; }
+        .btn-icon:hover { background: var(--gold); color: #000; box-shadow: 0 0 25px var(--gold); transform: scale(1.1); }
 
-        /* وحدة MASTER V6000 (العمق) */
-        .master-v6000 { margin-top: 15px; border: 1px solid #333; padding: 10px; border-radius: 10px; background: rgba(20,20,20,0.8); }
-        .live-market { color: var(--cyan); font-size: 1.8rem; font-weight: bold; text-align: center; margin: 10px 0; }
-        
-        #terminal { height: 150px; background: #000; overflow-y: auto; font-size: 0.8rem; color: var(--neon); padding: 8px; border: 1px solid #222; margin-top: 10px; font-family: monospace; }
-        #footer-ticker { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 1px solid var(--gold); color: var(--gold); padding: 8px; z-index: 2000; font-size: 0.9rem; }
+        .live-btc { color: var(--deep); font-size: 2.2rem; font-weight: bold; text-align: center; text-shadow: 0 0 10px var(--deep); }
+        #terminal { height: 180px; background: #000; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--neon); padding: 10px; border-top: 1px solid #222; margin-top: 15px; }
+        .ticker-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 2px solid var(--gold); color: var(--gold); padding: 10px; z-index: 2000; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div id="map"></div>
 
-<div class="sidebar">
-    <div class="icon-btn"><i class="fas fa-eye"></i></div>
-    <div class="icon-btn"><i class="fab fa-bitcoin"></i></div>
-    <div class="icon-btn"><i class="fas fa-satellite-dish"></i></div>
-    <div class="icon-btn"><i class="fas fa-user-shield"></i></div>
+<div class="side-icons">
+    <div class="btn-icon"><i class="fas fa-eye"></i></div>
+    <div class="btn-icon"><i class="fab fa-bitcoin"></i></div>
+    <div class="btn-icon"><i class="fas fa-satellite"></i></div>
+    <div class="btn-icon"><i class="fas fa-user-secret"></i></div>
 </div>
 
-<div class="control-panel">
-    <h2 style="color:var(--gold); margin:0; text-align:center;">MASTER V6000</h2>
-    <p style="text-align:center; font-size:0.9rem; margin:5px 0;">القائد: عصام الكومي</p>
+<div class="master-v6000">
+    <h2 style="color:var(--gold); text-align:center; margin:0; letter-spacing: 3px;">MASTER V6000</h2>
+    <p style="text-align:center; color:#fff; margin:5px 0;">بروتوكول أثير | القائد عصام الكومي</p>
     
-    <div class="master-v6000">
-        <div style="font-size:0.8rem; color:var(--cyan);">LIVE BTC/USD:</div>
-        <div id="btc-price" class="live-market">$80,882</div>
-        <div style="font-size:0.7rem; color:var(--gold);">RAVEN'S EYE: <span id="raven-status">نشط</span></div>
+    <div style="background: rgba(10,10,10,0.8); border: 1px solid #333; border-radius: 10px; padding: 15px; margin-top: 15px;">
+        <div style="font-size:0.9rem; color:var(--deep);">LIVE MARKET (BTC/USD):</div>
+        <div id="btc" class="live-btc">$80,882</div>
     </div>
 
-    <div style="margin-top:10px; font-size:1.1rem;">الخزنة: <span id="vault" style="color:#fff;">19,146,368</span></div>
+    <div style="margin-top:15px; font-size:1.2rem; border-right: 4px solid var(--neon); padding-right:10px;">
+        الخزنة: <span id="vault" style="color:#fff;">19,146,368.00</span>
+    </div>
 
-    <div id="terminal">> جاري الاتصال بالعمق...</div>
+    <div id="terminal">> جاري تحميل عمق النظام V6000...<br></div>
 </div>
 
-<div id="footer-ticker">
-    <marquee>🛡️ بروتوكول أثير 369 | رصد الهكرز الأسود: نشط | الذهب: 3,450 | تم تأمين 14 قطاعاً في الدلتا | نظام MASTER V6000 متصل بالأقمار الصناعية</marquee>
+<div class="ticker-bar">
+    <marquee scrollamount="8">
+        🛡️ بروتوكول أثير 369 : نظام الرصد الأخلاقي يعمل بكامل قوته | ₿ البيتكوين: متتبع | ⚠️ تم صد هجمات الهكر الأسود بنجاح 🛰️
+    </marquee>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -70,18 +70,16 @@
         var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([30.0444, 31.2357], 7);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
 
-        // عداد البيتكوين والأسعار الحية
         let price = 80882;
         setInterval(() => {
-            price += (Math.random() * 20 - 10);
-            document.getElementById('btc-price').innerText = "$" + Math.floor(price).toLocaleString();
-        }, 1500);
+            price += (Math.random() * 30 - 15);
+            document.getElementById('btc').innerText = "$" + Math.floor(price).toLocaleString();
+        }, 1000);
 
-        // تيرمينال المراقبة
         const term = document.getElementById('terminal');
-        const logs = ["مزامنة الأقمار الصناعية", "رصد محاولة اختراق", "تحديث قاعدة بيانات الغلابة", "تتبع إشارة الهكر الأسود"];
+        const logs = ["تتبع محفظة مشبوهة.. تم الحظر", "إشارة القمر 369 مستقرة", "رصد اختراق.. تم الصد"];
         setInterval(() => {
-            term.innerHTML += `<div>> ${logs[Math.floor(Math.random()*logs.length)]}</div>`;
+            term.innerHTML += `<div>> ${new Date().toLocaleTimeString()} | ${logs[Math.floor(Math.random()*logs.length)]}</div>`;
             term.scrollTop = term.scrollHeight;
         }, 3000);
     };
