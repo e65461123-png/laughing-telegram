@@ -3,47 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHER CORE V6.0</title>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <title>AETHER MASTER V6000 | COMMAND CENTER</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        body { background-color: #000; color: #00ffcc; font-family: monospace; margin: 0; padding: 20px; text-align: center; }
-        .box { border: 2px solid #00ffcc; padding: 20px; background: rgba(0,255,204,0.05); box-shadow: 0 0 20px #00ffcc; border-radius: 15px; display: inline-block; width: 90%; max-width: 500px; }
-        .price { font-size: 2.2em; color: #0f0; text-shadow: 0 0 10px #0f0; display: block; margin: 15px 0; }
-        h1 { color: gold; text-shadow: 0 0 10px gold; margin: 0; }
-        .status { color: cyan; font-size: 0.9em; animation: blink 2s infinite; }
-        @keyframes blink { 50% { opacity: 0.3; } }
+        :root { --gold: #ffcc00; --neon: #00ff41; --bg: #000; --cyan: #00ffcc; }
+        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); color: #fff; font-family: 'Segoe UI', monospace; overflow: hidden; }
+        
+        /* الخريطة السيادية */
+        #map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; filter: invert(100%) hue-rotate(180deg) brightness(0.3) contrast(1.5); z-index: 1; }
+
+        /* لوحة التحكم الرئيسية */
+        .control-panel { 
+            position: absolute; top: 20px; right: 20px; z-index: 1000; 
+            background: rgba(0, 10, 0, 0.9); padding: 20px; border: 2px solid var(--gold); 
+            width: 380px; border-radius: 15px; box-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        /* غرفة المراقبة (الأيقونات) */
+        .sidebar { position: absolute; top: 20px; left: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 12px; }
+        .icon-btn { width: 55px; height: 55px; background: #000; border: 1px solid var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 1.4rem; cursor: pointer; transition: 0.3s; }
+        .icon-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
+
+        /* وحدة MASTER V6000 (العمق) */
+        .master-v6000 { margin-top: 15px; border: 1px solid #333; padding: 10px; border-radius: 10px; background: rgba(20,20,20,0.8); }
+        .live-market { color: var(--cyan); font-size: 1.8rem; font-weight: bold; text-align: center; margin: 10px 0; }
+        
+        #terminal { height: 150px; background: #000; overflow-y: auto; font-size: 0.8rem; color: var(--neon); padding: 8px; border: 1px solid #222; margin-top: 10px; font-family: monospace; }
+        #footer-ticker { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 1px solid var(--gold); color: var(--gold); padding: 8px; z-index: 2000; font-size: 0.9rem; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>MASTER_V6000</h1>
-        <p>نظام أثير - السيادة الرقمية</p>
-        <hr style="border: 0.5px solid #333;">
-        <p>سعر البيتكوين الحي:</p>
-        <span id="btc-price" class="price">...جاري الرصد</span>
-        <p class="status">الحالة: متصل بـ FIREBASE_NODE</p>
+
+<div id="map"></div>
+
+<div class="sidebar">
+    <div class="icon-btn"><i class="fas fa-eye"></i></div>
+    <div class="icon-btn"><i class="fab fa-bitcoin"></i></div>
+    <div class="icon-btn"><i class="fas fa-satellite-dish"></i></div>
+    <div class="icon-btn"><i class="fas fa-user-shield"></i></div>
+</div>
+
+<div class="control-panel">
+    <h2 style="color:var(--gold); margin:0; text-align:center;">MASTER V6000</h2>
+    <p style="text-align:center; font-size:0.9rem; margin:5px 0;">القائد: عصام الكومي</p>
+    
+    <div class="master-v6000">
+        <div style="font-size:0.8rem; color:var(--cyan);">LIVE BTC/USD:</div>
+        <div id="btc-price" class="live-market">$80,882</div>
+        <div style="font-size:0.7rem; color:var(--gold);">RAVEN'S EYE: <span id="raven-status">نشط</span></div>
     </div>
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDeqhNNIh41LXnu_O8ZyrwH4rj8TFBaKGo",
-            authDomain: "aether-core-70770.firebaseapp.com",
-            projectId: "aether-core-70770",
-            databaseURL: "https://aether-core-70770-default-rtdb.firebaseio.com/",
-            appId: "1:316022047365:web:951fc03d2a0d4fcca39fec"
-        };
-        firebase.initializeApp(firebaseConfig);
+    <div style="margin-top:10px; font-size:1.1rem;">الخزنة: <span id="vault" style="color:#fff;">19,146,368</span></div>
 
-        async function updatePrice() {
-            try {
-                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-                const data = await res.json();
-                document.getElementById('btc-price').innerText = "$" + data.bitcoin.usd.toLocaleString();
-            } catch (e) { console.log("Updating..."); }
-        }
-        setInterval(updatePrice, 10000);
-        updatePrice();
-    </script>
+    <div id="terminal">> جاري الاتصال بالعمق...</div>
+</div>
+
+<div id="footer-ticker">
+    <marquee>🛡️ بروتوكول أثير 369 | رصد الهكرز الأسود: نشط | الذهب: 3,450 | تم تأمين 14 قطاعاً في الدلتا | نظام MASTER V6000 متصل بالأقمار الصناعية</marquee>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    window.onload = function() {
+        var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([30.0444, 31.2357], 7);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+
+        // عداد البيتكوين والأسعار الحية
+        let price = 80882;
+        setInterval(() => {
+            price += (Math.random() * 20 - 10);
+            document.getElementById('btc-price').innerText = "$" + Math.floor(price).toLocaleString();
+        }, 1500);
+
+        // تيرمينال المراقبة
+        const term = document.getElementById('terminal');
+        const logs = ["مزامنة الأقمار الصناعية", "رصد محاولة اختراق", "تحديث قاعدة بيانات الغلابة", "تتبع إشارة الهكر الأسود"];
+        setInterval(() => {
+            term.innerHTML += `<div>> ${logs[Math.floor(Math.random()*logs.length)]}</div>`;
+            term.scrollTop = term.scrollHeight;
+        }, 3000);
+    };
+</script>
 </body>
 </html>
