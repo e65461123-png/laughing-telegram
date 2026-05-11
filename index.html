@@ -3,65 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHER COMMAND CENTER V6000</title>
+    <title>AETHER | THE MASTER PROTOCOL 369</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        :root { --gold: #ffcc00; --neon: #00ff41; --bg: #000; --deep: #00ffcc; }
-        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); color: #fff; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
+        :root { --gold: #ffcc00; --neon: #00ff41; --bg: #000; --cyan: #00ffcc; --red: #ff3131; }
+        * { box-sizing: border-box; cursor: crosshair; }
+        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
         
-        /* الخريطة */
+        /* خريطة الرصد العالمي */
         #map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; filter: invert(100%) hue-rotate(180deg) brightness(0.2) contrast(1.6); z-index: 1; }
 
-        /* شاشة الرصد MASTER V6000 */
-        .master-v6000 {
+        /* لوحة MASTER V6000 */
+        .control-panel {
             position: absolute; top: 20px; right: 20px; z-index: 1000;
-            background: rgba(0, 5, 0, 0.95); border: 2px solid var(--gold);
-            width: 400px; padding: 25px; border-radius: 15px;
-            box-shadow: 0 0 40px rgba(255, 204, 0, 0.3); backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.9); border: 2px solid var(--gold);
+            width: 380px; padding: 20px; border-radius: 15px; box-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
+            backdrop-filter: blur(10px);
         }
 
-        /* أيقونات التحكم */
+        /* شريط الأدوات السيادي */
         .side-icons { position: absolute; top: 20px; left: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
-        .btn-icon { width: 60px; height: 60px; background: rgba(0,0,0,0.8); border: 1px solid var(--gold); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border-radius: 12px; cursor: pointer; transition: 0.3s; }
-        .btn-icon:hover { background: var(--gold); color: #000; box-shadow: 0 0 25px var(--gold); transform: scale(1.1); }
+        .icon-box { width: 55px; height: 55px; background: #000; border: 1px solid var(--gold); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .icon-box:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); transform: scale(1.1); }
 
-        .live-btc { color: var(--deep); font-size: 2.2rem; font-weight: bold; text-align: center; text-shadow: 0 0 10px var(--deep); }
-        #terminal { height: 180px; background: #000; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--neon); padding: 10px; border-top: 1px solid #222; margin-top: 15px; }
-        .ticker-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 2px solid var(--gold); color: var(--gold); padding: 10px; z-index: 2000; font-weight: bold; }
+        /* وحدات البيانات الحية */
+        .module { background: rgba(15, 15, 15, 0.9); border: 1px solid #333; border-radius: 10px; padding: 15px; margin-bottom: 15px; border-right: 4px solid var(--gold); }
+        .live-value { color: var(--cyan); font-size: 2rem; font-weight: bold; text-align: center; text-shadow: 0 0 10px var(--cyan); }
+        
+        /* تيرمينال الاختراق الأخلاقي */
+        #terminal { height: 150px; background: #000; overflow-y: auto; font-family: monospace; font-size: 0.8rem; color: var(--neon); padding: 10px; border-top: 1px solid #222; margin-top: 10px; }
+        
+        /* شريط الأخبار السفلي */
+        .ticker { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 2px solid var(--gold); color: var(--gold); padding: 8px; z-index: 2000; font-weight: bold; }
+        
+        /* تنبيه الهكر */
+        #alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; background: var(--red); color: #fff; padding: 25px; border: 4px solid #fff; text-align: center; font-weight: bold; animation: blink 0.5s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
+<div id="alert">⚠️ تم رصد محاولة اختراق.. جاري الحظر وتتبع المصدر ⚠️</div>
 <div id="map"></div>
 
 <div class="side-icons">
-    <div class="btn-icon"><i class="fas fa-eye"></i></div>
-    <div class="btn-icon"><i class="fab fa-bitcoin"></i></div>
-    <div class="btn-icon"><i class="fas fa-satellite"></i></div>
-    <div class="btn-icon"><i class="fas fa-user-secret"></i></div>
+    <div class="icon-box" title="عين الغراب"><i class="fas fa-eye"></i></div>
+    <div class="icon-box" title="البورصة"><i class="fab fa-bitcoin"></i></div>
+    <div class="icon-box" title="الأقمار الصناعية"><i class="fas fa-satellite"></i></div>
+    <div class="icon-box" title="تأمين سيادي"><i class="fas fa-shield-halved"></i></div>
 </div>
 
-<div class="master-v6000">
-    <h2 style="color:var(--gold); text-align:center; margin:0; letter-spacing: 3px;">MASTER V6000</h2>
-    <p style="text-align:center; color:#fff; margin:5px 0;">بروتوكول أثير | القائد عصام الكومي</p>
+<div class="control-panel">
+    <h1 style="color:var(--gold); text-align:center; margin:0; letter-spacing: 2px;">MASTER_V6000</h1>
+    <p style="text-align:center; color:#fff; font-size:0.9rem; margin:5px 0;">بروتوكول أثير | القائد عصام الكومي</p>
     
-    <div style="background: rgba(10,10,10,0.8); border: 1px solid #333; border-radius: 10px; padding: 15px; margin-top: 15px;">
-        <div style="font-size:0.9rem; color:var(--deep);">LIVE MARKET (BTC/USD):</div>
-        <div id="btc" class="live-btc">$80,882</div>
+    <div class="module">
+        <div style="font-size:0.8rem; color:var(--gold);">LIVE BTC/USD:</div>
+        <div id="btc-price" class="live-value">$80,905</div>
     </div>
 
-    <div style="margin-top:15px; font-size:1.2rem; border-right: 4px solid var(--neon); padding-right:10px;">
-        الخزنة: <span id="vault" style="color:#fff;">19,146,368.00</span>
-    </div>
+    <div style="font-size:1.1rem; margin-bottom:10px;">الخزنة السيادية: <span id="vault" style="color:#fff; font-weight:bold;">19,146,368.00</span></div>
 
-    <div id="terminal">> جاري تحميل عمق النظام V6000...<br></div>
+    <div id="terminal">> جاري تشغيل Raven's Eye...</div>
 </div>
 
-<div class="ticker-bar">
-    <marquee scrollamount="8">
-        🛡️ بروتوكول أثير 369 : نظام الرصد الأخلاقي يعمل بكامل قوته | ₿ البيتكوين: متتبع | ⚠️ تم صد هجمات الهكر الأسود بنجاح 🛰️
-    </marquee>
+<div class="ticker">
+    <marquee scrollamount="7">🛡️ نظام أثير 369 نشط | تم تأمين قطاع الدلتا | الذهب: 3,450 | رصد الهكرز الأسود: تم صد 3 محاولات بنجاح | السيادة الرقمية مكفولة 🛰️</marquee>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -70,18 +78,27 @@
         var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([30.0444, 31.2357], 7);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
 
-        let price = 80882;
+        // تحديث البورصة الحية
+        let price = 80905;
         setInterval(() => {
-            price += (Math.random() * 30 - 15);
-            document.getElementById('btc').innerText = "$" + Math.floor(price).toLocaleString();
-        }, 1000);
+            price += (Math.random() * 20 - 10);
+            document.getElementById('btc-price').innerText = "$" + Math.floor(price).toLocaleString();
+        }, 1500);
 
+        // التيرمينال وتنبيه الهكر
         const term = document.getElementById('terminal');
-        const logs = ["تتبع محفظة مشبوهة.. تم الحظر", "إشارة القمر 369 مستقرة", "رصد اختراق.. تم الصد"];
+        const alertBox = document.getElementById('alert');
+        const logs = ["تتبع IP مشبوه", "مزامنة القمر الصناعي 369", "تأمين بيانات الغلابة", "تحديث بروتوكول التشفير"];
+        
         setInterval(() => {
             term.innerHTML += `<div>> ${new Date().toLocaleTimeString()} | ${logs[Math.floor(Math.random()*logs.length)]}</div>`;
             term.scrollTop = term.scrollHeight;
-        }, 3000);
+            
+            if(Math.random() > 0.95) {
+                alertBox.style.display = 'block';
+                setTimeout(() => { alertBox.style.display = 'none'; }, 2000);
+            }
+        }, 3500);
     };
 </script>
 </body>
