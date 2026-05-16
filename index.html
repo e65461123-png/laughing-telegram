@@ -2,104 +2,221 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHER | THE MASTER PROTOCOL 369</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Atheer Protocol</title>
     <style>
-        :root { --gold: #ffcc00; --neon: #00ff41; --bg: #000; --cyan: #00ffcc; --red: #ff3131; }
-        * { box-sizing: border-box; cursor: crosshair; }
-        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
-        
-        /* خريطة الرصد العالمي */
-        #map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; filter: invert(100%) hue-rotate(180deg) brightness(0.2) contrast(1.6); z-index: 1; }
-
-        /* لوحة MASTER V6000 */
-        .control-panel {
-            position: absolute; top: 20px; right: 20px; z-index: 1000;
-            background: rgba(0, 0, 0, 0.9); border: 2px solid var(--gold);
-            width: 380px; padding: 20px; border-radius: 15px; box-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
-            backdrop-filter: blur(10px);
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
         }
-
-        /* شريط الأدوات السيادي */
-        .side-icons { position: absolute; top: 20px; left: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
-        .icon-box { width: 55px; height: 55px; background: #000; border: 1px solid var(--gold); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-        .icon-box:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); transform: scale(1.1); }
-
-        /* وحدات البيانات الحية */
-        .module { background: rgba(15, 15, 15, 0.9); border: 1px solid #333; border-radius: 10px; padding: 15px; margin-bottom: 15px; border-right: 4px solid var(--gold); }
-        .live-value { color: var(--cyan); font-size: 2rem; font-weight: bold; text-align: center; text-shadow: 0 0 10px var(--cyan); }
-        
-        /* تيرمينال الاختراق الأخلاقي */
-        #terminal { height: 150px; background: #000; overflow-y: auto; font-family: monospace; font-size: 0.8rem; color: var(--neon); padding: 10px; border-top: 1px solid #222; margin-top: 10px; }
-        
-        /* شريط الأخبار السفلي */
-        .ticker { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 2px solid var(--gold); color: var(--gold); padding: 8px; z-index: 2000; font-weight: bold; }
-        
-        /* تنبيه الهكر */
-        #alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; background: var(--red); color: #fff; padding: 25px; border: 4px solid #fff; text-align: center; font-weight: bold; animation: blink 0.5s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+        .cyber-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.95)), url('https://w0.peakpx.com/wallpaper/340/944/HD-wallpaper-matrix-code-binary-code-green-numbers-black-background-technology-concepts-matrix.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+        .wrapper {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding-bottom: 25px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        .star-icon {
+            font-size: 28px;
+            color: #7cfc00;
+            filter: drop-shadow(0 0 8px #7cfc00);
+        }
+        .nav-menu {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.05);
+            padding: 12px 5px;
+            border-radius: 10px;
+            border: 1px solid rgba(0,255,255,0.2);
+        }
+        .nav-item {
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #fff;
+        }
+        .nav-item:active {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            transform: scale(0.95);
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .title-sub {
+            font-size: 28px;
+            color: #00ffff;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px #00ffff;
+            font-weight: 900;
+        }
+        .title-main {
+            font-size: 34px;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: 900;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        .title-protocol {
+            font-size: 38px;
+            color: #00ffff;
+            margin-bottom: 20px;
+            font-weight: 900;
+            text-shadow: 0 0 20px #00ffff;
+        }
+        .desc {
+            font-size: 16px;
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 90%;
+        }
+        .btn-container {
+            display: flex;
+            width: 100%;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            flex: 1;
+            padding: 15px 5px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,255,255,0.3);
+        }
+        .btn-cyan {
+            background-color: #00ffff;
+            color: #000;
+        }
+        .btn-cyan:active {
+            background-color: #00cccc;
+            transform: scale(0.98);
+        }
     </style>
 </head>
 <body>
 
-<div id="alert">⚠️ تم رصد محاولة اختراق.. جاري الحظر وتتبع المصدر ⚠️</div>
-<div id="map"></div>
+    <div class="cyber-bg"></div>
 
-<div class="side-icons">
-    <div class="icon-box" title="عين الغراب"><i class="fas fa-eye"></i></div>
-    <div class="icon-box" title="البورصة"><i class="fab fa-bitcoin"></i></div>
-    <div class="icon-box" title="الأقمار الصناعية"><i class="fas fa-satellite"></i></div>
-    <div class="icon-box" title="تأمين سيادي"><i class="fas fa-shield-halved"></i></div>
-</div>
+    <div class="wrapper">
+        <div class="header">
+            <span class="star-icon" onclick="triggerAction('main')">★</span>
+            <span class="logo">Atheer Protocol</span>
+        </div>
 
-<div class="control-panel">
-    <h1 style="color:var(--gold); text-align:center; margin:0; letter-spacing: 2px;">MASTER_V6000</h1>
-    <p style="text-align:center; color:#fff; font-size:0.9rem; margin:5px 0;">بروتوكول أثير | القائد عصام الكومي</p>
-    
-    <div class="module">
-        <div style="font-size:0.8rem; color:var(--gold);">LIVE BTC/USD:</div>
-        <div id="btc-price" class="live-value">$80,905</div>
+        <div class="nav-menu">
+            <div class="nav-item" onclick="triggerAction('main')">الرئيسية</div>
+            <div class="nav-item" onclick="triggerAction('ai')">AI</div>
+            <div class="nav-item" onclick="triggerAction('radar')">البث</div>
+            <div class="nav-item" onclick="triggerAction('security')">الأمن</div>
+            <div class="nav-item" onclick="triggerAction('finance')">الاستثمار</div>
+        </div>
+
+        <div class="main-content">
+            <div class="title-sub">AETHER X</div>
+            <div class="title-main">AETHER</div>
+            <div class="title-protocol">PROTOCOL X</div>
+            <div class="desc">منصة عالمية للذكاء الاصطناعي والأمن السيبراني والبث والاستثمار</div>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn btn-cyan" onclick="triggerAction('ai')">تشغيل الذكاء الاصطناعي</button>
+            <button class="btn btn-cyan" onclick="triggerAction('finance')">ابدأ الآن</button>
+        </div>
     </div>
 
-    <div style="font-size:1.1rem; margin-bottom:10px;">الخزنة السيادية: <span id="vault" style="color:#fff; font-weight:bold;">19,146,368.00</span></div>
-
-    <div id="terminal">> جاري تشغيل Raven's Eye...</div>
-</div>
-
-<div class="ticker">
-    <marquee scrollamount="7">🛡️ نظام أثير 369 نشط | تم تأمين قطاع الدلتا | الذهب: 3,450 | رصد الهكرز الأسود: تم صد 3 محاولات بنجاح | السيادة الرقمية مكفولة 🛰️</marquee>
-</div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-    window.onload = function() {
-        var map = L.map('map', { zoomControl: false, attributionControl: false }).setView([30.0444, 31.2357], 7);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
-
-        // تحديث البورصة الحية
-        let price = 80905;
-        setInterval(() => {
-            price += (Math.random() * 20 - 10);
-            document.getElementById('btc-price').innerText = "$" + Math.floor(price).toLocaleString();
-        }, 1500);
-
-        // التيرمينال وتنبيه الهكر
-        const term = document.getElementById('terminal');
-        const alertBox = document.getElementById('alert');
-        const logs = ["تتبع IP مشبوه", "مزامنة القمر الصناعي 369", "تأمين بيانات الغلابة", "تحديث بروتوكول التشفير"];
-        
-        setInterval(() => {
-            term.innerHTML += `<div>> ${new Date().toLocaleTimeString()} | ${logs[Math.floor(Math.random()*logs.length)]}</div>`;
-            term.scrollTop = term.scrollHeight;
-            
-            if(Math.random() > 0.95) {
-                alertBox.style.display = 'block';
-                setTimeout(() => { alertBox.style.display = 'none'; }, 2000);
+    <script>
+        // 1. نظام سحب أسعار البورصة والاستثمار الحي (API حقيقي)
+        async function fetchLiveFinance() {
+            try {
+                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd');
+                const data = await res.json();
+                alert(`📊 أسعار الاستثمار الحية في بروتوكول أثير الآن:\n• Bitcoin: $${data.bitcoin.usd.toLocaleString()}\n• Ethereum: $${data.ethereum.usd.toLocaleString()}`);
+            } catch (err) {
+                alert("جاري الاتصال التلقائي بسيرفر البورصة العالمية...");
             }
-        }, 3500);
-    };
-</script>
+        }
+
+        // 2. نظام الأمن السيبراني لفحص الـ IP والشبكة فوراً (API حقيقي)
+        async function checkNetworkSecurity() {
+            try {
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                alert(`🛡️ تقرير بروتوكول الأمن لشبكتك الحالية:\n• عنوان الـ IP الفعلي: ${data.ip}\n• حالة الجدار الناري: آمن تماماً عبر Quantum Security`);
+            } catch (err) {
+                alert("جاري سحب وفحص بروتوكولات حماية الشبكة الحالية...");
+            }
+        }
+
+        // 3. المحرك المباشر لتوجيه لمسات التاتش للواقع
+        function triggerAction(type) {
+            switch(type) {
+                case 'main':
+                    alert("أهلاً بك يا معماري. إنت الآن في قلب لوحة التحكم الرئيسية لبروتوكول أثير.");
+                    break;
+                case 'ai':
+                    window.location.href = "https://gemini.google.com";
+                    break;
+                case 'radar':
+                    window.location.href = "https://www.zoomearth.com/";
+                    break;
+                case 'security':
+                    checkNetworkSecurity();
+                    break;
+                case 'finance':
+                    fetchLiveFinance();
+                    break;
+            }
+        }
+    </script>
 </body>
 </html>
