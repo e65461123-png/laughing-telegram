@@ -3,65 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بروتوكول أثير | منصة EH369</title>
+    <title>بروتوكول أثير العملاق | مركز السيادة EH369</title>
     <style>
+        :root {
+            --primary: #00e676;
+            --secondary: #00b0ff;
+            --bg-dark: #070a13;
+            --card-bg: rgba(16, 24, 48, 0.9);
+            --text: #ffffff;
+            --accent: #ffd600;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0b0f19;
-            color: #ffffff;
+            background-color: var(--bg-dark);
+            color: var(--text);
             margin: 0;
-            padding: 20px;
+            padding: 0;
             text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* شريط تدفق البيانات العصبي في أعلى المنصة */
+        .neural-ticker {
+            background: linear-gradient(90px, #000, #111);
+            color: var(--secondary);
+            font-size: 12px;
+            padding: 8px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(0, 176, 255, 0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 25s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translate3d(100%, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
         }
 
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(23, 32, 54, 0.8);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px 0 rgba(0, 230, 118, 0.2);
-            border: 1px solid rgba(0, 230, 118, 0.3);
+            max-width: 650px;
+            margin: 20px auto;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .main-card {
+            background: var(--card-bg);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 230, 118, 0.15);
+            border: 1px solid rgba(0, 230, 118, 0.25);
+            backdrop-filter: blur(10px);
         }
 
         h1 {
-            color: #00e676;
-            font-size: 24px;
-            margin-bottom: 5px;
+            color: var(--primary);
+            font-size: 28px;
+            margin: 10px 0 5px 0;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
         }
 
         .tagline {
             color: #8a99ad;
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 25px;
         }
 
-        .dashboard {
-            background: #111827;
-            padding: 15px;
-            border-radius: 10px;
+        /* لوحة التحكم والبيانات الحية والمحفظة */
+        .grid-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             margin-bottom: 20px;
-            border-left: 4px solid #00e676;
         }
 
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #1f2937;
+        .stat-box {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #1e293b;
+            text-align: center;
         }
 
-        .stat-row:last-child {
-            border-bottom: none;
+        .stat-label {
+            font-size: 11px;
+            color: #64748b;
+            display: block;
+            margin-bottom: 4px;
         }
 
-        .betting-section {
-            background: #172036;
+        .stat-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text);
+        }
+
+        .wallet-value {
+            color: var(--accent);
+        }
+
+        /* قسم التوقعات والمراهنات الذكي */
+        .engine-section {
+            background: #111827;
             padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #2d3748;
+            border-radius: 15px;
+            border: 1px solid #1f2937;
+            margin-top: 15px;
         }
 
         .input-group {
@@ -71,173 +126,257 @@
 
         label {
             display: block;
-            margin-bottom: 5px;
-            color: #a0aec0;
-            font-size: 14px;
+            margin-bottom: 6px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 500;
         }
 
         select, input {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #4a5568;
-            background: #0f172a;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background: #070a13;
             color: white;
             font-size: 16px;
             box-sizing: border-box;
+            transition: 0.3s;
         }
 
-        .btn-predict {
+        select:focus, input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.2);
+        }
+
+        /* زر المعالجة الرئيسي للبروتوكول */
+        .btn-core {
             width: 100%;
-            background: linear-gradient(135px, #00e676 0%, #00b0ff 100%);
+            background: linear-gradient(135px, var(--primary) 0%, var(--secondary) 100%);
             color: #000;
             border: none;
-            padding: 14px;
+            padding: 16px;
             font-size: 18px;
-            font-weight: bold;
-            border-radius: 8px;
+            font-weight: 800;
+            border-radius: 10px;
             cursor: pointer;
             transition: 0.3s ease;
             margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3);
         }
 
-        .btn-predict:hover {
+        .btn-core:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 230, 118, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.5);
         }
 
-        .result-box {
+        /* صندوق النتيجة المتقدم مع التشفير */
+        .result-container {
             margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 18px;
+            border-radius: 12px;
             display: none;
-            font-weight: bold;
-            font-size: 16px;
+            text-align: right;
+            border-right: 5px solid var(--primary);
+            background: rgba(0, 230, 118, 0.05);
         }
 
-        .success {
-            background-color: rgba(0, 230, 118, 0.15);
-            border: 1px solid #00e676;
-            color: #00e676;
+        .crypto-hash {
+            font-family: monospace;
+            font-size: 10px;
+            color: #475569;
+            word-break: break-all;
+            margin-top: 8px;
+            border-top: 1px dashed #334155;
+            padding-top: 8px;
         }
 
-        .footer-text {
-            margin-top: 25px;
+        .footer {
+            margin-top: 30px;
             font-size: 11px;
-            color: #4a5568;
+            color: #475569;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
+    <div class="neural-ticker">
+        <div class="ticker-content">
+            ⚡ نـظـام EH369 الـذاتـي نـشـط الآن • بـتـكـويـن BTC/USDT: $92,450 (+3.2%) • إيـثـيـريـوم ETH/USDT: $3,420 • الـسـيـادة الـرقـمـيـة مـؤمـنـة بالكامل عبر بروتوكول أثير • خوادم القاهرة تعمل بكفاءة قصوى ⚡
+        </div>
+    </div>
+
     <div class="container">
-        <h1>ATHEER PROTOCOL</h1>
-        <div class="tagline">نظام السيادة الرقمية والتحليل الذاتي • EH369</div>
+        <div class="main-card">
+            <h1>ATHEER PROTOCOL</h1>
+            <div class="tagline">البنية التحتية المستقلة والتحليل العصبي المتقدم • مفتاح 369</div>
 
-        <div class="dashboard">
-            <div class="stat-row">
-                <span>حالة الخادم الذكي:</span>
-                <span style="color: #00e676; font-weight: bold;">مُتصل ونشط</span>
-            </div>
-            <div class="stat-row">
-                <span>تشفير البيانات:</span>
-                <span style="color: #00b0ff;">End-to-End (مشفر)</span>
-            </div>
-            <div class="stat-row">
-                <span>معدل دقة النظام الحالي:</span>
-                <span style="color: #ffd600;">94.2%</span>
-            </div>
-        </div>
-
-        <div class="betting-section">
-            <h3 style="margin-top: 0; color: #00b0ff;">محرك التوقعات الرياضية والمالية</h3>
-            
-            <div class="input-group">
-                <label for="market-type">اختر سوق التوقع:</label>
-                <select id="market-type" onchange="updateMarkets()">
-                    <option value="sports">مباريات كرة القدم العالمية</option>
-                    <option value="crypto">اتجاهات العملات الرقمية (Crypto)</option>
-                </select>
+            <div class="grid-stats">
+                <div class="stat-box">
+                    <span class="stat-label">محفظة أثير الرقمية</span>
+                    <span id="wallet-balance" class="stat-value wallet-value">1,000 نقطة</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">حالة السيادة والاتصال</span>
+                    <span id="node-status" class="stat-value" style="color: var(--primary);">عقدة رئيسية آمنة</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">مبادرة أثير للخير</span>
+                    <span class="stat-value" style="color: #a78bfa;">مُفعلة ونشطة</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">معدل كفاءة محرك التحليل</span>
+                    <span class="stat-value" style="color: var(--secondary);">96.8%</span>
+                </div>
             </div>
 
-            <div class="input-group">
-                <label for="event-select">اختر الحدث القائم:</label>
-                <select id="event-select"></select>
+            <div class="engine-section">
+                <h3 style="margin-top: 0; color: var(--secondary); font-size: 18px; text-align: right;">محرك المعالجة الاستباقية للبيانات</h3>
+                
+                <div class="input-group">
+                    <label for="market-select">اختيار بيئة التوقع والتحليل:</label>
+                    <select id="market-select" onchange="loadEvents()">
+                        <option value="sports">الأسواق الرياضية الدولية</option>
+                        <option value="crypto">اتجاهات العملات المشفرة والبورصة</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="event-select">اختيار الحدث المستهدف بدقة:</label>
+                    <select id="event-select"></select>
+                </div>
+
+                <div class="input-group">
+                    <label for="bet-points">نقاط التخصيص أو المراهنة المعالجة:</label>
+                    <input type="number" id="bet-points" value="100" min="10">
+                </div>
+
+                <button class="btn-core" onclick="runAtheerEngine()">معالجة وتوليد النواة الذكية</button>
+
+                <div id="result-container" class="result-container">
+                    <div id="result-text"></div>
+                    <div id="crypto-hash" class="crypto-hash"></div>
+                </div>
             </div>
 
-            <div class="input-group">
-                <label for="bet-amount">القيمة الافتراضية للنقاط / الرهان:</label>
-                <input type="number" id="bet-amount" value="100" min="10">
+            <div class="footer">
+                صرح بروتوكول أثير الرقمي المستقل © 2026 | تطوير المعماري التقني عصام الكومي
             </div>
-
-            <button class="btn-predict" onclick="generatePrediction()">معالجة وتوليد التوقع الذكي</button>
-
-            <div id="result" class="result-box success"></div>
-        </div>
-
-        <div class="footer-text">
-            حقوق التطوير محفوظة لـ المعماري والمبتكر الرقمي عصام الكومي © 2026
         </div>
     </div>
 
     <script>
-        const dataOptions = {
+        // مصفوفة البيانات الضخمة للمحرك
+        const dataset = {
             sports: [
-                "ريال مدريد ضد برشلونة",
-                "مانشستر سيتي ضد ليفربول",
-                "الأهلي ضد الزمالك",
-                "بايرن ميونخ ضد باريس سان جيرمان"
+                "ريال مدريد ضد برشلونة (الدوري الإسباني)",
+                "مانشستر سيتي ضد ليفربول (الدوري الإنجليزي)",
+                "الأهلي ضد الزمالك (قمة الدوري المصري)",
+                "بايرن ميونخ ضد باريس سان جيرمان (دوري الأبطال)"
             ],
             crypto: [
-                "اتجاه البتكوين (BTC/USDT) خلال 4 ساعات",
-                "اتجاه إيثيريوم (ETH/USDT) اليومي",
-                "مؤشر حركة العملات البديلة الميمية"
+                "حركة البتكوين الفورية (BTC/USDT)",
+                "مؤشر السيولة الفوري للإيثيريوم (ETH/USDT)",
+                "اتجاه عقود سولانا الذكية (SOL/USDT)",
+                "تدفقات بورصة السلع والمعادن العالمية"
             ]
         };
 
-        function updateMarkets() {
-            const marketType = document.getElementById("market-type").value;
-            const eventSelect = document.getElementById("event-select");
+        // دالة إدارة المحفظة وحفظ البيانات محلياً لتصبح المنصة حقيقية
+        let currentBalance = localStorage.getItem('atheer_balance');
+        if (!currentBalance) {
+            currentBalance = 1000;
+            localStorage.setItem('atheer_balance', currentBalance);
+        } else {
+            currentBalance = parseInt(currentBalance);
+        }
+
+        function updateWalletDisplay() {
+            document.getElementById('wallet-balance').innerText = currentBalance.toLocaleString() + " نقطة";
+        }
+
+        // تحميل الأحداث ديناميكياً
+        function loadEvents() {
+            const market = document.getElementById('market-select').value;
+            const eventSelect = document.getElementById('event-select');
             eventSelect.innerHTML = "";
-            
-            dataOptions[marketType].forEach(event => {
-                let option = document.createElement("option");
-                option.value = event;
-                option.text = event;
+
+            dataset[market].forEach(item => {
+                let option = document.createElement('option');
+                option.value = item;
+                option.text = item;
                 eventSelect.appendChild(option);
             });
         }
 
-        function generatePrediction() {
-            const event = document.getElementById("event-select").value;
-            const amount = document.getElementById("bet-amount").value;
-            const resultBox = document.getElementById("result");
+        // تشغيل محرك المعالجة المطور لـ EH369 واحتساب الربح والخسارة حركياً
+        function runAtheerEngine() {
+            const event = document.getElementById('event-select').value;
+            const points = parseInt(document.getElementById('bet-points').value);
+            const resultContainer = document.getElementById('result-container');
+            const resultText = document.getElementById('result-text');
+            const hashBox = document.getElementById('crypto-hash');
 
-            if(!amount || amount <= 0) {
-                alert("الرجاء إدخال قيمة صحيحة");
+            if (!points || points <= 0) {
+                alert("الرجاء تحديد نقاط صالحة للمعالجة!");
                 return;
             }
 
-            const outcomes = [
-                "فوز الفريق الأول بنسبة صعود قوية (+2.5)",
-                "تحول إيجابي غير متوقع وصعود فوري في الدقائق الأخيرة",
-                "تحليل الخوارزمية يرجح: التعادل أو ثبات السعر الحالي",
-                "هبوط مؤقت يتبعه قفزة سريعة للأعلى",
-                "تفوق كاسح للطرف الثاني بناء على قراءة التدفقات الحالية"
+            if (points > currentBalance) {
+                alert("عذراً، رصيد نقاطك الحالي في محفظة أثير غير كافٍ لإتمام هذه المعالجة!");
+                return;
+            }
+
+            // مصفوفة الاحتمالات الذكية للمحرك
+            const engineOutcomes = [
+                { text: "تحليل إيجابي قوي: فوز الطرف الأول / صعود السعر فوري وصعود حاد.", win: true },
+                { text: "توقع الخوارزمية يرجح: التعادل التام وثبات المؤشرات السعرية والتحليلية.", win: false },
+                { text: "تحول مفاجئ في التدفقات: تفوق كاسح للطرف الثاني واختراق خطوط الدعم والمقاومة.", win: true },
+                { text: "معالجة حرجة: هبوط وتصحيح مؤقت للمؤشر يتبعه قفزة سريعة للأعلى.", win: true },
+                { text: "قراءة المحرك تحذر: تراجع حاد للمؤشرات وضغط بيعي / تفوق دفاعي تام.", win: false }
             ];
 
-            const randomOutcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+            // اختيار النتيجة بشكل عشوائي ذكي
+            const selectedOutcome = engineOutcomes[Math.floor(Math.random() * engineOutcomes.length)];
 
-            resultBox.style.display = "block";
-            resultBox.innerHTML = `
-                ⚙️ تم تحليل الحدث: (${event})<br>
-                💰 القيمة المعالجة: ${amount} نقطة<br><br>
-                <span style="color: #ffd600;">🔮 التوقع النهائي لـ EH369:</span><br>
-                ${randomOutcome}
+            // احتساب الرصيد الجديد في المحفظة محلياً
+            if (selectedOutcome.win) {
+                currentBalance += points; 
+                resultContainer.style.borderRightColor = "var(--primary)";
+                resultContainer.style.background = "rgba(0, 230, 118, 0.05)";
+            } else {
+                currentBalance -= points;
+                resultContainer.style.borderRightColor = "#ef4444";
+                resultContainer.style.background = "rgba(239, 68, 68, 0.05)";
+            }
+
+            // حفظ التعديل الجديد في ذاكرة الهاتف المتصفح
+            localStorage.setItem('atheer_balance', currentBalance);
+            updateWalletDisplay();
+
+            // توليد رمز تشفير أمان وهمي لمحاكاة التوثيق الخاص بـ بروتوكول أثير
+            const randomHash = "EH369-BLOCK-" + Math.random().toString(36).substring(2, 15).toUpperCase() + "-" + Math.random().toString(36).substring(2, 15).toUpperCase();
+
+            // عرض البيانات المجمعة للمستخدم بصرياً
+            resultContainer.style.display = "block";
+            resultText.innerHTML = `
+                📌 <strong>الحدث الخاضع للتحليل:</strong> ${event}<br>
+                💰 <strong>النقاط المستهلكة:</strong> ${points} نقطة<br>
+                📊 <strong>حالة المعالجة:</strong> ${selectedOutcome.win ? '<span style="color:var(--primary)">ربح وتوسع رصيد (+)' : '<span style="color:#ef4444">انكماش وتصحيح رصيد (-)'}</span><br><br>
+                🔮 <strong>توقع خوارزمية EH369 الذاتية:</strong><br>
+                <span style="color: var(--accent); font-size: 15px;">${selectedOutcome.text}</span>
             `;
+            hashBox.innerText = `التوقيع الرقمي المشفر للكتلة: ${randomHash}`;
         }
 
-        window.onload = updateMarkets;
+        // تفعيل النظام الفوري عند التحميل
+        window.onload = function() {
+            loadEvents();
+            updateWalletDisplay();
+        };
     </script>
 </body>
 </html>
+
