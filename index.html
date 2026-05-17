@@ -1,42 +1,30 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atheer Protocol X</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #000000; color: #ffffff; padding-bottom: 40px; }
-        
-        /* شريط العنوان العلوي */
-        .top-bar { background-color: #14613B; padding: 15px; text-align: center; font-size: 22px; font-weight: bold; border-radius: 0 0 15px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; text-align: center; }
-
-        /* شريط التنقل */
-        .nav-bar { background-color: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #333; display: flex; justify-content: space-around; font-size: 14px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Orbitron', sans-serif; }
+        body { background-color: #000000; color: #ffffff; padding-bottom: 40px; text-align: center; }
+        .top-bar { background-color: #14613B; padding: 15px; font-size: 22px; font-weight: bold; border-radius: 0 0 15px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .nav-bar { background-color: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #333; display: flex; justify-content: space-around; font-size: 12px; }
         .nav-item { color: #ffffff; text-decoration: none; font-weight: bold; }
         .nav-item.active { color: #00e5ff; }
-
-        /* الهوية المركزية */
         .hero h1 { color: #00e5ff; font-size: 36px; text-shadow: 0 0 10px #00e5ff; margin-bottom: 5px; }
         .hero h2 { font-size: 45px; color: #ffffff; margin-bottom: 5px; }
-        .hero .subtitle { color: #b3b3b3; font-size: 16px; margin-bottom: 30px; line-height: 1.6; }
-
-        /* لوحة البيانات المباشرة */
+        .hero .subtitle { color: #b3b3b3; font-size: 14px; margin-bottom: 30px; line-height: 1.6; }
         .status-container { display: flex; gap: 15px; margin-bottom: 30px; }
         .status-box { flex: 1; background-color: #012626; border: 1px solid #00e5ff; border-radius: 10px; padding: 15px; box-shadow: inset 0 0 10px rgba(0,229,255,0.2); }
-        .status-box h3 { color: #00e5ff; font-size: 16px; margin-bottom: 8px; }
-        .status-box p { font-size: 14px; color: #ffffff; }
-
-        /* أزرار التحكم النيون */
+        .status-box h3 { color: #00e5ff; font-size: 15px; margin-bottom: 8px; }
+        .status-box p { font-size: 13px; color: #ffffff; }
         .btn-group { display: flex; gap: 15px; margin-top: 20px; }
-        .btn { flex: 1; background-color: #00e5ff; color: #000000; border: none; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 10px; cursor: pointer; box-shadow: 0 0 15px #00e5ff; transition: 0.3s; }
+        .btn { flex: 1; background-color: #00e5ff; color: #000000; border: none; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; box-shadow: 0 0 15px #00e5ff; transition: 0.3s; }
         .btn:hover { background-color: #00b2cc; box-shadow: 0 0 25px #00e5ff; }
         .btn-secondary { background-color: #ff007f; box-shadow: 0 0 15px #ff007f; color: white; }
         .btn-secondary:hover { background-color: #cc0066; box-shadow: 0 0 25px #ff007f; }
-
         .footer { margin-top: 50px; color: #555; font-size: 12px; }
     </style>
 </head>
@@ -46,61 +34,40 @@
 
     <div class="container">
         <div class="nav-bar">
-            <span class="nav-item active">الرئيسية</span>
-            <span class="nav-item">الذكاء الاصطناعي</span>
-            <span class="nav-item">البث لايف</span>
-            <span class="nav-item">الأمن السيبراني</span>
-            <span class="nav-item">منصة الاستثمار</span>
+            <span class="nav-item active">HOME</span>
+            <span class="nav-item">CORE AI</span>
+            <span class="nav-item">LIVE STREAM</span>
+            <span class="nav-item">CYBER SECURITY</span>
+            <span class="nav-item">INVESTMENT</span>
         </div>
 
         <div class="hero">
             <h1>AETHER X</h1>
             <h2>AETHER</h2>
             <h1>PROTOCOL X</h1>
-            <p class="subtitle">منصة عالمية متكاملة للذكاء الاصطناعي، الأمن السيبراني، البث المباشر، وإدارة وساطة الاستثمار المتقدمة.</p>
+            <p class="subtitle">Global decentralized architecture integrating Artificial Intelligence, Quantum Cyber Security, Live Streaming, and Advanced Investment Brokerage Solutions.</p>
         </div>
 
         <div class="status-container">
             <div class="status-box">
-                <h3>🛡️ نظام الأمن السيبراني</h3>
-                <p id="crypto-status">🔐 تشفير البيانات الكمي نشط</p>
+                <h3>🛡️ Cyber Security System</h3>
+                <p id="crypto-status">🔐 Quantum Data Encryption Active</p>
             </div>
             <div class="status-box">
-                <h3>📈 بورصة الاستثمار والوساطة</h3>
-                <p>تحديث مباشر: <b id="live-price" style="color: #ff007f;">$2550.00</b></p>
+                <h3>📈 Live Investment Exchange</h3>
+                <p>Live Ticker: <b id="live-price" style="color: #ff007f;">$2550.00</b></p>
             </div>
         </div>
 
         <div class="btn-group">
-            <button class="btn" onclick="runAI()">🤖 تشغيل محرك AI</button>
-            <button class="btn btn-secondary" onclick="startNow()">🚀 اطلق المنصة</button>
+            <button class="btn" onclick="runAI()">🤖 RUN AI ENGINE</button>
+            <button class="btn btn-secondary" onclick="startNow()">🚀 LAUNCH PLATFORM</button>
         </div>
 
         <div class="footer">Lead Developer: Essam Elkomy | System: Ready for Global Outreach</div>
     </div>
 
     <script>
-        // محرك التحديث التلقائي اللحظي والآمن للبيانات والأسعار
         setInterval(() => {
             const price = (Math.random() * (2600 - 2500) + 2500).toFixed(2);
-            document.getElementById('live-price').innerText = '$' + price;
-            
-            const statuses = [
-                "🔐 النظام مستقر وآمن بالكامل",
-                "⚡ جاري فحص الثغرات الأمنية...",
-                "📡 مزامنة البيانات مع البروتوكول نشطة"
-            ];
-            const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-            document.getElementById('crypto-status').innerText = randomStatus;
-        }, 2000);
-
-        function runAI() {
-            alert("تم تشغيل خوارزميات التحليل العصبي السحابية بنجاح! المحرك جاهز.");
-        }
-
-        function startNow() {
-            alert("مرحباً بك في المنصة العالمية لـ Atheer Protocol X!");
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('
