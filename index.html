@@ -163,3 +163,81 @@
             <div class="input-group">
                 <label for="event-select">اختر الحدث القائم:</label>
                 <select id="event-select"></select>
+            </div>
+
+            <div class="input-group">
+                <label for="bet-amount">القيمة الافتراضية للنقاط / الرهان:</label>
+                <input type="number" id="bet-amount" value="100" min="10">
+            </div>
+
+            <button class="btn-predict" onclick="generatePrediction()">معالجة وتوليد التوقع الذكي</button>
+
+            <div id="result" class="result-box success"></div>
+        </div>
+
+        <div class="footer-text">
+            حقوق التطوير محفوظة لـ المعماري والمبتكر الرقمي عصام الكومي © 2026
+        </div>
+    </div>
+
+    <script>
+        const dataOptions = {
+            sports: [
+                "ريال مدريد ضد برشلونة",
+                "مانشستر سيتي ضد ليفربول",
+                "الأهلي ضد الزمالك",
+                "بايرن ميونخ ضد باريس سان جيرمان"
+            ],
+            crypto: [
+                "اتجاه البتكوين (BTC/USDT) خلال 4 ساعات",
+                "اتجاه إيثيريوم (ETH/USDT) اليومي",
+                "مؤشر حركة العملات البديلة الميمية"
+            ]
+        };
+
+        function updateMarkets() {
+            const marketType = document.getElementById("market-type").value;
+            const eventSelect = document.getElementById("event-select");
+            eventSelect.innerHTML = "";
+            
+            dataOptions[marketType].forEach(event => {
+                let option = document.createElement("option");
+                option.value = event;
+                option.text = event;
+                eventSelect.appendChild(option);
+            });
+        }
+
+        function generatePrediction() {
+            const event = document.getElementById("event-select").value;
+            const amount = document.getElementById("bet-amount").value;
+            const resultBox = document.getElementById("result");
+
+            if(!amount || amount <= 0) {
+                alert("الرجاء إدخال قيمة صحيحة");
+                return;
+            }
+
+            const outcomes = [
+                "فوز الفريق الأول بنسبة صعود قوية (+2.5)",
+                "تحول إيجابي غير متوقع وصعود فوري في الدقائق الأخيرة",
+                "تحليل الخوارزمية يرجح: التعادل أو ثبات السعر الحالي",
+                "هبوط مؤقت يتبعه قفزة سريعة للأعلى",
+                "تفوق كاسح للطرف الثاني بناء على قراءة التدفقات الحالية"
+            ];
+
+            const randomOutcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+
+            resultBox.style.display = "block";
+            resultBox.innerHTML = `
+                ⚙️ تم تحليل الحدث: (${event})<br>
+                💰 القيمة المعالجة: ${amount} نقطة<br><br>
+                <span style="color: #ffd600;">🔮 التوقع النهائي لـ EH369:</span><br>
+                ${randomOutcome}
+            `;
+        }
+
+        window.onload = updateMarkets;
+    </script>
+</body>
+</html>
