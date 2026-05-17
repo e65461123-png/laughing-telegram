@@ -55,7 +55,7 @@
 <body>
     <header>
         <h1>بروتوكول أثير | ATHER PROTOCOL</h1>
-        <div style="font-size:0.8rem; color:var(--text-muted); margin-top:5px;">المنصة التقنية العالمية السيادية • عهد جديد من التناغم الرقمي</div>
+        <div style="font-size:0.8rem; color:var(--text-muted); margin-top:5px;">المنصة التقنية العالمية السيادية</div>
     </header>
     <div class="container">
         <div class="card">
@@ -70,71 +70,71 @@
             </div>
             <div class="live-ticker" style="color:#fff;">
                 <span>شريط الأخبار العاجلة:</span>
-                <span id="news-text" style="color:var(--warning-color);">المنصة قيد التحديث النووي الشامل ومحصنة بـ 369</span>
+                <span id="news-text" style="color:var(--warning-color);">المنصة قيد التحديث الشامل ومحصنة بـ 369</span>
             </div>
         </div>
         
         <div class="card" style="border: 1px dashed var(--warning-color);">
             <h2>🔒 بوابة التحكم السيادية (Essam)</h2>
+            
             <div id="login-fields">
                 <label>اسم المستخدم:</label>
-                <input type="text" id="user-input" class="admin-input" placeholder="أدخل اسمك الحقيقي...">
+                <input type="text" id="user-input" class="admin-input" placeholder="Essam">
                 <label>كلمة المرور العليا:</label>
-                <input type="password" id="pass-input" class="admin-input" placeholder="أدخل كلمة المرور السيادية...">
+                <input type="password" id="pass-input" class="admin-input" placeholder="كلمة المرور...">
                 <button type="button" class="btn" onclick="checkCredentials()">🔓 دخول لغرفة التحكم</button>
             </div>
 
             <div id="control-room" class="admin-section">
-                <h3 style="color: var(--success-color); margin-top:0;">🔓 مرحباً بك يا شريكي عصام!</h3>
-                <label>تعديل نص مبادرة الخير وبثه:</label>
+                <h3 style="color: var(--success-color); margin-top:0;">🔓 تم الدخول بنجاح</h3>
+                <label>تعديل نص المبادرة:</label>
                 <input type="text" id="new_init" class="admin-input">
-                <label style="display:block; margin-top:10px;">بث خبر عاجل جديد فوراً:</label>
+                <label>تعديل شريط الأخبار:</label>
                 <input type="text" id="new_news" class="admin-input">
-                <button type="button" class="btn" style="background-color: var(--success-color);" onclick="saveAndBroadcast()">🚀 بث وتحديث البيانات حياً</button>
+                <button type="button" class="btn" style="background-color: var(--success-color);" onclick="saveData()">🚀 حفظ وتحديث فوري</button>
             </div>
         </div>
     </div>
     <footer>تطوير وإشراف الشريك التقني المستقل • لـ Essam 2026</footer>
     
-    <script>
-        // جلب السعر حياً مباشرة من المتصفح على الرابط العالمي
-        async function fetchBtcPrice() {
+    <script {nonce}>
+        // جلب السعر حياً مباشرة من البورصة بدون سيرفر
+        async function fetchPrice() {
             try {
                 const res = await fetch('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
                 const data = await res.json();
                 document.getElementById('live-btc-price').innerText = "$" + parseFloat(data.bpi.USD.rate_float).toLocaleString(undefined, {minimumFractionDigits: 2});
             } catch(e) {
-                document.getElementById('live-btc-price').innerText = "$65,407.00";
+                document.getElementById('live-btc-price').innerText = "$65,453.00";
             }
         }
         
-        // تحميل البيانات المحفوظة سابقاً إن وجدت
-        function loadSavedData() {
+        function loadData() {
             const savedInit = localStorage.getItem('ather_init');
             const savedNews = localStorage.getItem('ather_news');
             if(savedInit) document.getElementById('init-text').innerText = savedInit;
             if(savedNews) document.getElementById('news-text').innerText = savedNews;
         }
 
-        fetchBtcPrice();
-        loadSavedData();
-        setInterval(fetchBtcPrice, 10000);
+        fetchPrice();
+        loadData();
 
         function checkCredentials() {
             const u = document.getElementById('user-input').value;
             const p = document.getElementById('pass-input').value;
             
+            // هنا نضع التحقق الصارم مباشرة في الواجهة
             if(u === "Essam" && p === "Essam369") {
                 document.getElementById('login-fields').style.display = "none";
                 document.getElementById('control-room').style.display = "block";
                 document.getElementById('new_init').value = document.getElementById('init-text').innerText;
                 document.getElementById('new_news').value = document.getElementById('news-text').innerText;
             } else {
-                alert("❌ كلمة السر أو اسم المستخدم غلط! أعد المحاولة.");
+                alert("❌ البيانات غير صحيحة!");
             }
         }
 
-        function saveAndBroadcast() {
+        function saveData() {
             const updatedInit = document.getElementById('new_init').value;
             const updatedNews = document.getElementById('new_news').value;
             
@@ -144,7 +144,7 @@
             document.getElementById('init-text').innerText = updatedInit;
             document.getElementById('news-text').innerText = updatedNews;
             
-            alert("🚀 تم بث وتحديث البيانات بنجاح على واجهتك العالمية!");
+            alert("🚀 تم التحديث بنجاح!");
         }
     </script>
 </body>
