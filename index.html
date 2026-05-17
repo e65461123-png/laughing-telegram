@@ -3,328 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بروتوكول أثير | مركز السيادة EH369</title>
+    <title>بروتوكول أثير السيادي | ATHEER PROTOCOL</title>
     <style>
-        :root {
-            --primary: #00e676;
-            --secondary: #00b0ff;
-            --bg-dark: #070a13;
-            --card-bg: rgba(16, 24, 48, 0.9);
-            --text: #ffffff;
-            --accent: #ffd600;
-            --danger: #ef4444;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text);
-            margin: 0;
-            padding: 0;
-            text-align: center;
+            background-color: #0a0f1d;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
             overflow-x: hidden;
         }
 
-        /* شريط البورصة والتدفق العصبي المباشر */
-        .neural-ticker {
-            background: linear-gradient(90deg, #000, #111);
-            color: var(--secondary);
-            font-size: 12px;
-            padding: 8px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            border-bottom: 1px solid rgba(0, 176, 255, 0.3);
-        }
-
-        .ticker-content {
-            display: inline-block;
-            padding-right: 100%;
-            animation: ticker 30s linear infinite;
-        }
-
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
-        }
-
         .container {
-            max-width: 650px;
-            margin: 20px auto;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-
-        .main-card {
-            background: var(--card-bg);
-            padding: 30px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 230, 118, 0.15);
-            border: 1px solid rgba(0, 230, 118, 0.25);
-            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 450px;
+            background: linear-gradient(145deg, #111a2e, #0c1322);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
         }
 
         h1 {
-            color: var(--primary);
-            font-size: 28px;
-            margin: 10px 0 5px 0;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
-        }
-
-        .tagline {
-            color: #8a99ad;
-            font-size: 13px;
+            font-size: 24px;
+            font-weight: 700;
             margin-bottom: 25px;
+            background: linear-gradient(90deg, #00b0ff, #00e676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
         }
 
-        /* شبكة لوحة البيانات الرقمية */
-        .grid-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .stat-box {
-            background: #0f172a;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid #1e293b;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: #64748b;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .stat-value {
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .engine-section {
-            background: #111827;
+        .main-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
             padding: 20px;
-            border-radius: 15px;
-            border: 1px solid #1f2937;
-            text-align: right;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-title {
+            font-size: 14px;
+            color: #8ab4f8;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .points {
+            font-size: 32px;
+            font-weight: 700;
+            color: #00e676;
+            text-shadow: 0 0 10px rgba(0,230,118,0.3);
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: right;
         }
 
         label {
             display: block;
-            margin-bottom: 6px;
-            color: #94a3b8;
-            font-size: 13px;
+            font-size: 14px;
+            color: #b0bec5;
+            margin-bottom: 8px;
+            padding-right: 5px;
         }
 
-        select, input {
+        .input-box {
             width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-            background: #070a13;
+            background: rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-box:focus {
+            border-color: #00b0ff;
+            box-shadow: 0 0 15px rgba(0,176,255,0.2);
+        }
+
+        .btn {
+            width: 100%;
+            background: linear-gradient(90deg, #00b0ff, #0081cb);
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
             color: white;
             font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        .btn-core {
-            width: 100%;
-            background: linear-gradient(135px, var(--primary) 0%, var(--secondary) 100%);
-            color: #000;
-            border: none;
-            padding: 16px;
-            font-size: 18px;
-            font-weight: 800;
-            border-radius: 10px;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,176,255,0.3);
         }
 
-        .result-container {
-            margin-top: 20px;
-            padding: 18px;
-            border-radius: 12px;
-            display: none;
-            border-right: 5px solid var(--primary);
-            background: rgba(0, 230, 118, 0.05);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,176,255,0.4);
         }
 
-        .footer {
-            margin-top: 30px;
-            font-size: 11px;
-            color: #475569;
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: #607d8b;
+            margin-top: 25px;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
 
-    <div class="neural-ticker">
-        <div id="ticker-data" class="ticker-content">
-            ⚡ جاري سحب البيانات المباشرة للأسواق... بروتوكول أثير مؤمن عبر مفتاح السيادة الرقمية EH369 ⚡
-        </div>
+<div class="container">
+    <h1>بروتوكول أثير السيادي</h1>
+    
+    <div class="main-card">
+        <div class="card-title">رصيدك الفعلي على البلوكشين</div>
+        <div class="points" id="user-crypto-balance">0.0000 ETH</div>
     </div>
 
-    <div class="container">
-        <div class="main-card">
-            
-            <h1>ATHEER PROTOCOL</h1>
-            <div class="tagline">مركز التحكم والتحليل الاستباقي للبيانات • مفتاح 369</div>
-
-            <div class="grid-stats">
-                <div class="stat-box">
-                    <span class="stat-label">محفظة أثير الرقمية</span>
-                    <span id="wallet-balance" class="stat-value" style="color: var(--accent);">1,000 نقطة</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">مبادرة أثير للخير (صندوق العائلات)</span>
-                    <span id="charity-fund" class="stat-value" style="color: #a78bfa;">0 نقطة</span>
-                </div>
-            </div>
-
-            <div class="engine-section">
-                <h3 style="margin-top: 0; color: var(--secondary); font-size: 18px;">خوارزمية المعالجة الذاتية</h3>
-                
-                <div class="input-group">
-                    <label for="market-select">نطاق الأسواق المستهدفة:</label>
-                    <select id="market-select" onchange="loadEvents()">
-                        <option value="crypto">العملات الرقمية والأسواق الفورية العالمية</option>
-                        <option value="sports">الأحداث الرياضية والدولية الحية</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label for="event-select">تحديد الحدث بدقة:</label>
-                    <select id="event-select"></select>
-                </div>
-
-                <div class="input-group">
-                    <label for="bet-points">النقاط المخصصة للمعالجة:</label>
-                    <input type="number" id="bet-points" value="100" min="10">
-                </div>
-
-                <button class="btn-core" onclick="runAtheerEngine()">توليد وتحليل كتلة البيانات</button>
-
-                <div id="result-container" class="result-container">
-                    <div id="result-text"></div>
-                </div>
-            </div>
-
-            <div class="footer">
-                بنية بروتوكول أثير العملاقة المستقلة © 2026 | تطوير المعمار عصام الكومي
-            </div>
-        </div>
+    <div class="main-card">
+        <div class="card-title">الخزنة الشفافة | مبادرة أثير للخير</div>
+        <div class="points" id="charity-display-fund">0.0000 ETH</div>
     </div>
 
-    <script>
-        const dataset = {
-            crypto: [
-                "حركة البتكوين الفورية (BTC/USDT)",
-                "مؤشر السيولة الفوري للإيثيريوم (ETH/USDT)",
-                "اتجاه عقود سولانا الذكية (SOL/USDT)"
-            ],
-            sports: [
-                "الأهلي ضد الزمالك (قمة الدوري المصري)",
-                "ريال مدريد ضد برشلونة (الكلاسيكو الدولي)",
-                "مانشستر سيتي ضد ليفربول (الدوري الإنجليزي)"
-            ]
-        };
+    <div class="input-group">
+        <label>كمية البيانات المراد معالجتها بالشبكة:</label>
+        <input type="number" class="input-box" id="process-amount" placeholder="أدخل الكمية (مثال: 0.01)" step="0.001">
+    </div>
 
-        let currentBalance = localStorage.getItem('atheer_balance') ? parseInt(localStorage.getItem('atheer_balance')) : 1000;
-        let charityFund = localStorage.getItem('atheer_charity') ? parseInt(localStorage.getItem('atheer_charity')) : 0;
+    <button class="btn" onclick="processDataBlockReal()">بدء المعالجة السيادية وتوثيق الكتلة</button>
 
-        function updateDisplays() {
-            document.getElementById('wallet-balance').innerText = currentBalance.toLocaleString() + " نقطة";
-            document.getElementById('charity-fund').innerText = charityFund.toLocaleString() + " نقطة";
-        }
+    <div class="footer-text">
+        بروتوكول أثير يعمل بنظام مالي لا مركزى بالكامل (Web3).<br>
+        يتم استقطاع 5% تلقائياً لصالح مبادرة أثير للخير لدعم العائلات ميدانياً.
+    </div>
+</div>
 
-        // سحب أسعار بورصة الكريبتو الحقيقية مباشرة لحظة بلحظة
-        async function fetchLivePrices() {
-            try {
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true');
-                const data = await response.json();
-                
-                const btc = data.bitcoin.usd;
-                const btcChange = data.bitcoin.usd_24h_change.toFixed(2);
-                const eth = data.ethereum.usd;
-                const sol = data.solana.usd;
-
-                document.getElementById('ticker-data').innerHTML = `
-                    ⚡ بـتـكـويـن BTC/USDT: $${btc.toLocaleString()} (${btcChange > 0 ? '+' : ''}${btcChange}%) • 
-                    إيـثـيـريـوم ETH/USDT: $${eth.toLocaleString()} • 
-                    سـولانـا SOL: $${sol.toFixed(2)} • 
-                    السيادة الرقمية مؤمنة بالكامل عبر العقدة المركزية القاهرة EH369 ⚡
-                `;
-            } catch (error) {
-                document.getElementById('ticker-data').innerHTML = `
-                    ⚡ بـتـكـويـن BTC/USDT: $94,800 (+2.9%) • إيـثـيـريـوم ETH/USDT: $3,460 • العقدة الذاتية EH369 مستقرة ومؤمنة محلياً ⚡
-                `;
-            }
-        }
-
-        function loadEvents() {
-            const market = document.getElementById('market-select').value;
-            const eventSelect = document.getElementById('event-select');
-            eventSelect.innerHTML = "";
-
-            dataset[market].forEach(item => {
-                let option = document.createElement('option');
-                option.value = item;
-                option.text = item;
-                eventSelect.appendChild(option);
-            });
-        }
-
-        function runAtheerEngine() {
-            const event = document.getElementById('event-select').value;
-            const points = parseInt(document.getElementById('bet-points').value);
-            const resultContainer = document.getElementById('result-container');
-            const resultText = document.getElementById('result-text');
-
-            if (!points || points <= 0 || points > currentBalance) {
-                alert("الرجاء فحص نقاط المحفظة المتاحة لديك قبل المعالجة!");
-                return;
-            }
-
-            const win = Math.random() > 0.45; 
-
-            if (win) {
-                const charityCut = Math.floor(points * 0.05); // اقتطاع 5% تلقائياً لصندوق مبادرة الخير للعائلات المستحقة لضمان الشفافية والسيادة المجتمعية
-                const netWin = points - charityCut;
-                currentBalance += netWin;
-                charityFund += charityCut;
-                resultContainer.style.borderRightColor = "var(--primary)";
-                resultContainer.style.background = "rgba(0, 230, 118, 0.05)";
-                resultText.innerHTML = `📌 <strong>الحدث المستهدف:</strong> ${event}<br>📊 <strong>الحالة:</strong> <span style="color:var(--primary)">نجاح المعالجة الحسابية واكتساب رصيد (+)</span><br>🔮 قراءة محرك 369 تؤكد تفوق كامل في نقاط المؤشر وسحب أرباح قياسية لصالح المحفظة الموحدة.`;
-            } else {
-                currentBalance -= points;
-                resultContainer.style.borderRightColor = "var(--danger)";
-                resultContainer.style.background = "rgba(239, 68, 68, 0.05)";
-                resultText.innerHTML = `📌 <strong>الحدث المستهدف:</strong> ${event}<br>❌ <strong>الحالة:</strong> <span style="color:var(--danger)">انكماش وتصحيح مؤقت للكتلة (-)</span><br>🔮 المؤشر يمر بحركة ارتدادية سريعة لحصد السيولة، يُنصح بانتظار اكتمال الدورة العصبية القادمة.`;
-            }
-
-            localStorage.setItem('atheer_balance', currentBalance);
-            localStorage.setItem('atheer_charity', charityFund);
-            updateDisplays();
-            resultContainer.style.display = "block";
-        }
-
-        window.onload = function() {
-            loadEvents();
-            updateDisplays();
-            fetchLivePrices();
-            setInterval(fetchLivePrices, 60000);
-        };
-   <script>
+<script>
+// عنوان المحفظة السيادية الحقيقي لاستقبال نسبة مبادرة أثير للخير (EH369)
 const ATHEER_CHARITY_WALLET = "0xAcD406B3C01129481067B1C663F6270c4A9263B6";
 let userWalletAddress = null;
 
+// دالة ربط المحفظة الحقيقية وقراءة رصيد البلوكشين الفعلي
 async function connectRealWallet() {
     if (window.ethereum) {
         try {
@@ -338,33 +176,41 @@ async function connectRealWallet() {
             });
             const realBalance = parseFloat(parseInt(balanceHex, 16) / Math.pow(10, 18)).toFixed(4);
             
-            document.querySelector(".main-card .points").innerText = realBalance + " ETH";
-            alert("Wallet Connected: " + shortAddress);
+            document.getElementById("user-crypto-balance").innerText = realBalance + " ETH";
+            
+            const connectBtn = document.getElementById("connect-btn");
+            if (connectBtn) {
+                connectBtn.innerText = "متصل: " + shortAddress;
+                connectBtn.style.background = "linear-gradient(90deg, #00e676, #00b0ff)";
+            }
+            
+            alert("تم ربط محفظتك السيادية بنجاح بالشبكة اللامركزية: " + shortAddress);
         } catch (error) {
-            alert("Connection failed.");
+            alert("فشل ربط المحفظة. يرجى قبول الطلب.");
         }
     } else {
-        alert("Please open this site inside MetaMask Browser.");
+        alert("يرجى فتح الموقع من داخل متصفح تطبيق MetaMask المدمج لتفعيل المعاملات الحقيقية.");
     }
 }
 
+// دالة معالجة كتل البيانات الفعلية واستقطاع الـ 5% لمبادرة أثير للخير
 async function processDataBlockReal() {
-    const inputField = document.querySelector(".input-box");
+    const inputField = document.getElementById("process-amount");
     let inputAmount = parseFloat(inputField ? inputField.value : 0);
     
     if (!userWalletAddress) {
-        alert("Connect wallet first!");
+        alert("برجاء ربط محفظتك الحقيقية أولاً عبر الزر في الأعلى!");
         return;
     }
     if (isNaN(inputAmount) || inputAmount <= 0) {
-        alert("Invalid amount.");
+        alert("برجاء تحديد كمية بيانات صحيحة وحقيقية للمعالجة.");
         return;
     }
 
     let charityCut = (inputAmount * 0.05).toFixed(6);
     
     try {
-        alert("Processing block... Preparing charity transaction of " + charityCut + " ETH");
+        alert("جاري تجهيز كتلة المعالجة السيادية... سيطلب النظام الآن تأكيد محفظتك لإرسال حصة الخير (" + charityCut + " ETH) إلى الخزنة الشفافة للمبادرة.");
         const valueInWei = (charityCut * Math.pow(10, 18)).toString(16);
         
         const transactionParameters = {
@@ -378,130 +224,23 @@ async function processDataBlockReal() {
             params: [transactionParameters],
         });
 
-        const charityDisplay = document.querySelectorAll(".main-card .points")[1];
-        if (charityDisplay) {
-            charityDisplay.innerText = charityCut + " ETH";
-        }
-        alert("Success! Tx Hash: " + txHash);
+        document.getElementById("charity-display-fund").innerText = charityCut + " ETH";
+        alert("عملية معالجة سيادية ناجحة! تم توثيق المعاملة على البلوكشين برقم هاش: " + txHash);
     } catch (error) {
-        alert("Transaction cancelled or insufficient gas.");
+        alert("تم إلغاء المعاملة أو رصيد المحفظة لا يغطي رسوم الغاز لشبكة البلوكشين.");
     }
 }
 
+// تشغيل وربط الأزرار والواجهة تلقائياً عند تحميل الصفحة
 window.onload = function() {
-    if(typeof loadEvents === "function") loadEvents();
-    if(typeof updateDisplays === "function") updateDisplays();
-    if(typeof fetchLivePrices === "function") {
-        fetchLivePrices();
-        setInterval(fetchLivePrices, 30000);
-    }
-
-    const actionButton = document.querySelector(".btn");
-    if (actionButton) {
-        actionButton.setAttribute("onclick", "processDataBlockReal()");
-    }
-    
     if (!document.getElementById("connect-btn")) {
         const container = document.querySelector(".container");
         const connectBtn = document.createElement("button");
         connectBtn.id = "connect-btn";
-        connectBtn.innerText = "Connect Wallet (Web3)";
+        connectBtn.innerText = "ربط المحفظة الحقيقية (Web3)";
         connectBtn.className = "btn";
         connectBtn.style.background = "linear-gradient(90deg, #00b0ff, #00e676)";
-        connectBtn.style.marginBottom = "15px";
-        connectBtn.setAttribute("onclick", "connectRealWallet()");
-        if (container) container.insertBefore(connectBtn, container.firstChild);
-    }
-};
-</script>
- <script>
-const ATHEER_CHARITY_WALLET = "0xAcD406B3C01129481067B1C663F6270c4A9263B6";
-let userWalletAddress = null;
-
-async function connectRealWallet() {
-    if (window.ethereum) {
-        try {
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            userWalletAddress = accounts[0];
-            const shortAddress = userWalletAddress.substring(0, 6) + "..." + userWalletAddress.substring(38);
-            
-            const balanceHex = await window.ethereum.request({
-                method: 'eth_getBalance',
-                params: [userWalletAddress, 'latest']
-            });
-            const realBalance = parseFloat(parseInt(balanceHex, 16) / Math.pow(10, 18)).toFixed(4);
-            
-            document.querySelector(".main-card .points").innerText = realBalance + " ETH";
-            alert("Wallet Connected: " + shortAddress);
-        } catch (error) {
-            alert("Connection failed.");
-        }
-    } else {
-        alert("Please open this site inside MetaMask Browser.");
-    }
-}
-
-async function processDataBlockReal() {
-    const inputField = document.querySelector(".input-box");
-    let inputAmount = parseFloat(inputField ? inputField.value : 0);
-    
-    if (!userWalletAddress) {
-        alert("Connect wallet first!");
-        return;
-    }
-    if (isNaN(inputAmount) || inputAmount <= 0) {
-        alert("Invalid amount.");
-        return;
-    }
-
-    let charityCut = (inputAmount * 0.05).toFixed(6);
-    
-    try {
-        alert("Processing block... Preparing charity transaction of " + charityCut + " ETH");
-        const valueInWei = (charityCut * Math.pow(10, 18)).toString(16);
-        
-        const transactionParameters = {
-            to: ATHEER_CHARITY_WALLET,
-            from: userWalletAddress,
-            value: '0x' + valueInWei,
-        };
-
-        const txHash = await window.ethereum.request({
-            method: 'eth_sendTransaction',
-            params: [transactionParameters],
-        });
-
-        const charityDisplay = document.querySelectorAll(".main-card .points")[1];
-        if (charityDisplay) {
-            charityDisplay.innerText = charityCut + " ETH";
-        }
-        alert("Success! Tx Hash: " + txHash);
-    } catch (error) {
-        alert("Transaction cancelled or insufficient gas.");
-    }
-}
-
-window.onload = function() {
-    if(typeof loadEvents === "function") loadEvents();
-    if(typeof updateDisplays === "function") updateDisplays();
-    if(typeof fetchLivePrices === "function") {
-        fetchLivePrices();
-        setInterval(fetchLivePrices, 30000);
-    }
-
-    const actionButton = document.querySelector(".btn");
-    if (actionButton) {
-        actionButton.setAttribute("onclick", "processDataBlockReal()");
-    }
-    
-    if (!document.getElementById("connect-btn")) {
-        const container = document.querySelector(".container");
-        const connectBtn = document.createElement("button");
-        connectBtn.id = "connect-btn";
-        connectBtn.innerText = "Connect Wallet (Web3)";
-        connectBtn.className = "btn";
-        connectBtn.style.background = "linear-gradient(90deg, #00b0ff, #00e676)";
-        connectBtn.style.marginBottom = "15px";
+        connectBtn.style.marginBottom = "20px";
         connectBtn.setAttribute("onclick", "connectRealWallet()");
         if (container) container.insertBefore(connectBtn, container.firstChild);
     }
@@ -510,5 +249,3 @@ window.onload = function() {
 
 </body>
 </html>
-
-
