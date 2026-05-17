@@ -321,14 +321,10 @@
             fetchLivePrices();
             setInterval(fetchLivePrices, 60000);
         };
-    </script>
-</body>
-</html>
-    // عنوان المحفظة السيادية الحقيقي لاستقبال نسبة مبادرة أثير للخير (EH369)
+   <script>
 const ATHEER_CHARITY_WALLET = "0xAcD406B3C01129481067B1C663F6270c4A9263B6";
 let userWalletAddress = null;
 
-// دالة ربط المحفظة الحقيقية وقراءة رصيد البلوكشين الفعلي
 async function connectRealWallet() {
     if (window.ethereum) {
         try {
@@ -343,33 +339,32 @@ async function connectRealWallet() {
             const realBalance = parseFloat(parseInt(balanceHex, 16) / Math.pow(10, 18)).toFixed(4);
             
             document.querySelector(".main-card .points").innerText = realBalance + " ETH";
-            alert("تم ربط محفظتك السيادية بنجاح بالشبكة اللامركزية: " + shortAddress);
+            alert("Wallet Connected: " + shortAddress);
         } catch (error) {
-            alert("فشل الربط، يرجى قبول الطلب داخل تطبيق MetaMask.");
+            alert("Connection failed.");
         }
     } else {
-        alert("يرجى فتح الموقع من داخل متصفح تطبيق MetaMask المدمج لتفعيل المعاملات الحقيقية.");
+        alert("Please open this site inside MetaMask Browser.");
     }
 }
 
-// دالة معالجة كتل البيانات الفعلية واستقطاع الـ 5% لمبادرة أثير للخير
 async function processDataBlockReal() {
     const inputField = document.querySelector(".input-box");
     let inputAmount = parseFloat(inputField ? inputField.value : 0);
     
     if (!userWalletAddress) {
-        alert("برجاء ربط محفظتك الحقيقية أولاً عبر المتصفح المدمج!");
+        alert("Connect wallet first!");
         return;
     }
     if (isNaN(inputAmount) || inputAmount <= 0) {
-        alert("برجاء تحديد كمية بيانات صحيحة وحقيقية للمعالجة.");
+        alert("Invalid amount.");
         return;
     }
 
     let charityCut = (inputAmount * 0.05).toFixed(6);
     
     try {
-        alert(`جاري تجهيز كتلة المعالجة... سيطلب النظام الآن توقيعك لإرسال حصة الخير (${charityCut} ETH) إلى الخزنة الشفافة للمبادرة.`);
+        alert("Processing block... Preparing charity transaction of " + charityCut + " ETH");
         const valueInWei = (charityCut * Math.pow(10, 18)).toString(16);
         
         const transactionParameters = {
@@ -387,15 +382,13 @@ async function processDataBlockReal() {
         if (charityDisplay) {
             charityDisplay.innerText = charityCut + " ETH";
         }
-        alert("عملية معالجة سيادية ناجحة! تم توثيق المعاملة برقم هاش: " + txHash);
+        alert("Success! Tx Hash: " + txHash);
     } catch (error) {
-        alert("تم إلغاء المعاملة أو رصيد المحفظة لا يغطي رسوم الغاز.");
+        alert("Transaction cancelled or insufficient gas.");
     }
 }
 
-// تشغيل وربط الأزرار تلقائياً عند تحميل الصفحة
 window.onload = function() {
-    // تشغيل الدوال السابقة الخاصة بك إذا كانت ضرورية للأسعار
     if(typeof loadEvents === "function") loadEvents();
     if(typeof updateDisplays === "function") updateDisplays();
     if(typeof fetchLivePrices === "function") {
@@ -403,18 +396,16 @@ window.onload = function() {
         setInterval(fetchLivePrices, 30000);
     }
 
-    // تحويل زر المعالجة القديم ليعمل مع البلوكشين الحقيقي
     const actionButton = document.querySelector(".btn");
     if (actionButton) {
         actionButton.setAttribute("onclick", "processDataBlockReal()");
     }
     
-    // إنشاء زر ربط المحفظة الحقيقي في أعلى الصفحة تلقائياً
     if (!document.getElementById("connect-btn")) {
         const container = document.querySelector(".container");
         const connectBtn = document.createElement("button");
         connectBtn.id = "connect-btn";
-        connectBtn.innerText = "ربط المحفظة الحقيقية (Web3)";
+        connectBtn.innerText = "Connect Wallet (Web3)";
         connectBtn.className = "btn";
         connectBtn.style.background = "linear-gradient(90deg, #00b0ff, #00e676)";
         connectBtn.style.marginBottom = "15px";
@@ -422,4 +413,102 @@ window.onload = function() {
         if (container) container.insertBefore(connectBtn, container.firstChild);
     }
 };
+</script>
+ <script>
+const ATHEER_CHARITY_WALLET = "0xAcD406B3C01129481067B1C663F6270c4A9263B6";
+let userWalletAddress = null;
+
+async function connectRealWallet() {
+    if (window.ethereum) {
+        try {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            userWalletAddress = accounts[0];
+            const shortAddress = userWalletAddress.substring(0, 6) + "..." + userWalletAddress.substring(38);
+            
+            const balanceHex = await window.ethereum.request({
+                method: 'eth_getBalance',
+                params: [userWalletAddress, 'latest']
+            });
+            const realBalance = parseFloat(parseInt(balanceHex, 16) / Math.pow(10, 18)).toFixed(4);
+            
+            document.querySelector(".main-card .points").innerText = realBalance + " ETH";
+            alert("Wallet Connected: " + shortAddress);
+        } catch (error) {
+            alert("Connection failed.");
+        }
+    } else {
+        alert("Please open this site inside MetaMask Browser.");
+    }
+}
+
+async function processDataBlockReal() {
+    const inputField = document.querySelector(".input-box");
+    let inputAmount = parseFloat(inputField ? inputField.value : 0);
+    
+    if (!userWalletAddress) {
+        alert("Connect wallet first!");
+        return;
+    }
+    if (isNaN(inputAmount) || inputAmount <= 0) {
+        alert("Invalid amount.");
+        return;
+    }
+
+    let charityCut = (inputAmount * 0.05).toFixed(6);
+    
+    try {
+        alert("Processing block... Preparing charity transaction of " + charityCut + " ETH");
+        const valueInWei = (charityCut * Math.pow(10, 18)).toString(16);
+        
+        const transactionParameters = {
+            to: ATHEER_CHARITY_WALLET,
+            from: userWalletAddress,
+            value: '0x' + valueInWei,
+        };
+
+        const txHash = await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [transactionParameters],
+        });
+
+        const charityDisplay = document.querySelectorAll(".main-card .points")[1];
+        if (charityDisplay) {
+            charityDisplay.innerText = charityCut + " ETH";
+        }
+        alert("Success! Tx Hash: " + txHash);
+    } catch (error) {
+        alert("Transaction cancelled or insufficient gas.");
+    }
+}
+
+window.onload = function() {
+    if(typeof loadEvents === "function") loadEvents();
+    if(typeof updateDisplays === "function") updateDisplays();
+    if(typeof fetchLivePrices === "function") {
+        fetchLivePrices();
+        setInterval(fetchLivePrices, 30000);
+    }
+
+    const actionButton = document.querySelector(".btn");
+    if (actionButton) {
+        actionButton.setAttribute("onclick", "processDataBlockReal()");
+    }
+    
+    if (!document.getElementById("connect-btn")) {
+        const container = document.querySelector(".container");
+        const connectBtn = document.createElement("button");
+        connectBtn.id = "connect-btn";
+        connectBtn.innerText = "Connect Wallet (Web3)";
+        connectBtn.className = "btn";
+        connectBtn.style.background = "linear-gradient(90deg, #00b0ff, #00e676)";
+        connectBtn.style.marginBottom = "15px";
+        connectBtn.setAttribute("onclick", "connectRealWallet()");
+        if (container) container.insertBefore(connectBtn, container.firstChild);
+    }
+};
+</script>
+
+</body>
+</html>
+
 
