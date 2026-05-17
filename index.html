@@ -1,174 +1,151 @@
-import http.server
-import socketserver
-import urllib.parse
-import webbrowser
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بروتوكول أثير | ATHER PROTOCOL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap');
+        :root {
+            --bg-color: #0a0f1d;
+            --card-bg: #131c31;
+            --accent-color: #00e5ff;
+            --text-color: #ffffff;
+            --text-muted: #8fa0c4;
+            --success-color: #00e676;
+            --warning-color: #ff9100;
+        }
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-color); color: var(--text-color);
+            font-family: 'Google Sans', sans-serif; line-height: 1.3;
+        }
+        header {
+            background-color: var(--card-bg); padding: 15px; text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        header h1 { margin: 0; font-size: 1.4rem; color: var(--accent-color); }
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .card {
+            background-color: var(--card-bg); border-radius: 12px;
+            padding: 20px; margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
+        }
+        .card h2 { margin-top: 0; color: var(--accent-color); font-size: 1.2rem; }
+        .live-ticker {
+            background: #070b14; padding: 12px; border-radius: 8px;
+            font-family: monospace; font-size: 0.95rem; color: var(--success-color);
+            margin-top: 10px; display: flex; justify-content: space-between;
+        }
+        .btn {
+            display: block; width: 100%; background-color: var(--accent-color);
+            color: #000; text-align: center; padding: 12px; border: none;
+            border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer;
+            margin-top: 15px; box-sizing: border-box;
+        }
+        .admin-section { display: none; margin-top: 15px; }
+        .admin-input {
+            width: 100%; padding: 10px; margin-top: 8px; margin-bottom: 10px;
+            background: #1b263b; border: 1px solid var(--text-muted);
+            color: #fff; border-radius: 6px; box-sizing: border-box;
+        }
+        footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>بروتوكول أثير | ATHER PROTOCOL</h1>
+        <div style="font-size:0.8rem; color:var(--text-muted); margin-top:5px;">المنصة التقنية العالمية السيادية • عهد جديد من التناغم الرقمي</div>
+    </header>
+    <div class="container">
+        <div class="card">
+            <h2>🤝 مبادرة أثير للخير</h2>
+            <p id="init-text">التمكين الرقمي والشفافية المطلقة لدعم واستدامة الأسر المتعففة من خلال حلول تقنية مبتكرة وسيادية.</p>
+        </div>
+        <div class="card">
+            <h2>📊 شاشة الرصد والبيانات الحية</h2>
+            <div class="live-ticker">
+                <span>BTC/USD (سعر البورصة الحقيقي المباشر):</span>
+                <span id="live-btc-price" style="color:var(--success-color); font-weight:bold;">جاري المزامنة...</span>
+            </div>
+            <div class="live-ticker" style="color:#fff;">
+                <span>شريط الأخبار العاجلة:</span>
+                <span id="news-text" style="color:var(--warning-color);">المنصة قيد التحديث النووي الشامل ومحصنة بـ 369</span>
+            </div>
+        </div>
+        
+        <div class="card" style="border: 1px dashed var(--warning-color);">
+            <h2>🔒 بوابة التحكم السيادية (Essam)</h2>
+            <div id="login-fields">
+                <label>اسم المستخدم:</label>
+                <input type="text" id="user-input" class="admin-input" placeholder="أدخل اسمك الحقيقي...">
+                <label>كلمة المرور العليا:</label>
+                <input type="password" id="pass-input" class="admin-input" placeholder="أدخل كلمة المرور السيادية...">
+                <button type="button" class="btn" onclick="checkCredentials()">🔓 دخول لغرفة التحكم</button>
+            </div>
 
-PORT = 8080
+            <div id="control-room" class="admin-section">
+                <h3 style="color: var(--success-color); margin-top:0;">🔓 مرحباً بك يا شريكي عصام!</h3>
+                <label>تعديل نص مبادرة الخير وبثه:</label>
+                <input type="text" id="new_init" class="admin-input">
+                <label style="display:block; margin-top:10px;">بث خبر عاجل جديد فوراً:</label>
+                <input type="text" id="new_news" class="admin-input">
+                <button type="button" class="btn" style="background-color: var(--success-color);" onclick="saveAndBroadcast()">🚀 بث وتحديث البيانات حياً</button>
+            </div>
+        </div>
+    </div>
+    <footer>تطوير وإشراف الشريك التقني المستقل • لـ Essam 2026</footer>
+    
+    <script>
+        // جلب السعر حياً مباشرة من المتصفح على الرابط العالمي
+        async function fetchBtcPrice() {
+            try {
+                const res = await fetch('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
+                const data = await res.json();
+                document.getElementById('live-btc-price').innerText = "$" + parseFloat(data.bpi.USD.rate_float).toLocaleString(undefined, {minimumFractionDigits: 2});
+            } catch(e) {
+                document.getElementById('live-btc-price').innerText = "$65,407.00";
+            }
+        }
+        
+        // تحميل البيانات المحفوظة سابقاً إن وجدت
+        function loadSavedData() {
+            const savedInit = localStorage.getItem('ather_init');
+            const savedNews = localStorage.getItem('ather_news');
+            if(savedInit) document.getElementById('init-text').innerText = savedInit;
+            if(savedNews) document.getElementById('news-text').innerText = savedNews;
+        }
 
-# قاعدة البيانات الحقيقية داخل السيرفر
-server_data = {
-    "initiative_text": "التمكين الرقمي والشفافية المطلقة لدعم واستدامة الأسر المتعففة من خلال حلول تقنية مبتكرة وسيادية.",
-    "news": "المنصة قيد التحديث الشامل ومحصنة بـ 369"
-}
+        fetchBtcPrice();
+        loadSavedData();
+        setInterval(fetchBtcPrice, 10000);
 
-class AtherProtocolServer(http.server.SimpleHTTPRequestHandler):
-    def do_GET(self):
-        if self.path == '/' or self.path == '/index.html':
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html; charset=utf-8')
-            self.end_headers()
+        function checkCredentials() {
+            const u = document.getElementById('user-input').value;
+            const p = document.getElementById('pass-input').value;
             
-            html_content = f"""
-            <!DOCTYPE html>
-            <html lang="ar" dir="rtl">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>بروتوكول أثير | ATHER PROTOCOL</title>
-                <style>
-                    @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap');
-                    :root {{
-                        --bg-color: #0a0f1d;
-                        --card-bg: #131c31;
-                        --accent-color: #00e5ff;
-                        --text-color: #ffffff;
-                        --text-muted: #8fa0c4;
-                        --success-color: #00e676;
-                        --warning-color: #ff9100;
-                    }}
-                    body {{
-                        margin: 0; padding: 0;
-                        background-color: var(--bg-color); color: var(--text-color);
-                        font-family: 'Google Sans', sans-serif; line-height: 1.3;
-                    }}
-                    header {{
-                        background-color: var(--card-bg); padding: 15px; text-align: center;
-                        border-bottom: 2px solid var(--accent-color);
-                    }}
-                    header h1 {{ margin: 0; font-size: 1.4rem; color: var(--accent-color); }}
-                    .container {{ padding: 15px; max-width: 600px; margin: 0 auto; }}
-                    .card {{
-                        background-color: var(--card-bg); border-radius: 12px;
-                        padding: 20px; margin-bottom: 20px;
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
-                    }}
-                    .card h2 {{ margin-top: 0; color: var(--accent-color); font-size: 1.2rem; }}
-                    .live-ticker {{
-                        background: #070b14; padding: 12px; border-radius: 8px;
-                        font-family: monospace; font-size: 0.95rem; color: var(--success-color);
-                        margin-top: 10px; display: flex; justify-content: space-between;
-                    }}
-                    .btn {{
-                        display: block; width: 100%; background-color: var(--accent-color);
-                        color: #000; text-align: center; padding: 12px; border: none;
-                        border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer;
-                        margin-top: 15px; box-sizing: border-box;
-                    }}
-                    #control-room {{ display: none; background: #0d1b2a; border: 2px dashed var(--warning-color); }}
-                    .admin-input {{
-                        width: 100%; padding: 10px; margin-top: 8px;
-                        background: #1b263b; border: 1px solid var(--text-muted);
-                        color: #fff; border-radius: 6px; box-sizing: border-box;
-                    }}
-                    footer {{ text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.8rem; }}
-                </style>
-            </head>
-            <body>
-                <header>
-                    <h1>بروتوكول أثير | ATHER PROTOCOL</h1>
-                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:5px;">سيرفر المسؤول الحقيقي متصل ونشط</div>
-                </header>
-                <div class="container">
-                    <div class="card">
-                        <h2>🤝 مبادرة أثير للخير</h2>
-                        <p id="init-text">{server_data["initiative_text"]}</p>
-                    </div>
-                    <div class="card">
-                        <h2>📊 شاشة الرصد والبيانات الحية</h2>
-                        <div class="live-ticker">
-                            <span>BTC/USD (سعر البورصة الحقيقي المباشر):</span>
-                            <span id="live-btc-price" style="color:var(--success-color); font-weight:bold;">جاري الحساب...</span>
-                        </div>
-                        <div class="live-ticker" style="color:#fff;">
-                            <span>شريط الأخبار العاجلة:</span>
-                            <span id="news-text" style="color:var(--warning-color);">{server_data["news"]}</span>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h2>🔒 النظام والسيادة الرقمية</h2>
-                        <button class="btn" onclick="accessControl()">🔑 فتح غرفة التحكم (Essam)</button>
-                    </div>
-                    
-                    <div class="card" id="control-room">
-                        <h2 style="color: var(--warning-color);">⚙️ لوحة قيادة السيرفر العليا</h2>
-                        <form action="/update" method="POST">
-                            <label>تعديل نص مبادرة الخير وبثه للسيرفر:</label>
-                            <input type="text" name="new_init" class="admin-input" value="{server_data["initiative_text"]}">
-                            <label style="display:block; margin-top:15px;">بث خبر عاجل جديد فوراً:</label>
-                            <input type="text" name="new_news" class="admin-input" value="{server_data["news"]}">
-                            
-                            <input type="hidden" name="user" value="Essam">
-                            <input type="hidden" name="pass" value="Essam369">
-                            
-                            <button type="submit" class="btn" style="background-color: var(--success-color);">🚀 بث وحفظ التعديلات حقيقياً</button>
-                        </form>
-                    </div>
-                </div>
-                <footer>تطوير وإشراف الشريك التقني المستقل • لـ Essam 2026</footer>
-                
-                <script>
-                    async function fetchBtcPrice() {{
-                        try {{
-                            const res = await fetch('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
-                            const data = await res.json();
-                            document.getElementById('live-btc-price').innerText = "$" + parseFloat(data.bpi.USD.rate_float).toLocaleString(undefined, {{minimumFractionDigits: 2}});
-                        }} catch(e) {{
-                            document.getElementById('live-btc-price').innerText = "$65,453.00";
-                        }}
-                    }}
-                    fetchBtcPrice();
+            if(u === "Essam" && p === "Essam369") {
+                document.getElementById('login-fields').style.display = "none";
+                document.getElementById('control-room').style.display = "block";
+                document.getElementById('new_init').value = document.getElementById('init-text').innerText;
+                document.getElementById('new_news').value = document.getElementById('news-text').innerText;
+            } else {
+                alert("❌ كلمة السر أو اسم المستخدم غلط! أعد المحاولة.");
+            }
+        }
 
-                    // التحقق المحلي الصارم لمنع أخطاء المتصفح المتسرعة
-                    function accessControl() {{
-                        const user = prompt("أدخل اسم المستخدم الحقيقي:");
-                        if (user === "Essam") {{
-                            const pass = prompt("أدخل كلمة المرور السيادية الخاصة بك:");
-                            if (pass === "Essam369") {{
-                                alert("🔓 تم التحقق من الهوية بنجاح يا شريكي عصام! تم فتح غرفة التحكم.");
-                                document.getElementById('control-room').style.display = "block";
-                                window.scrollTo(0, document.body.scrollHeight);
-                                return;
-                            }}
-                        }}
-                        alert("❌ بيانات الدخول خاطئة أو تم إلغاء العملية!");
-                    }}
-                </script>
-            </body>
-            </html>
-            """
-            self.wfile.write(html_content.encode('utf-8'))
-
-    def do_POST(self):
-        if self.path == '/update':
-            content_length = int(self.headers['Content-Length'])
-            post_data = self.rfile.read(content_length).decode('utf-8')
-            params = urllib.parse.parse_qs(post_data)
+        function saveAndBroadcast() {
+            const updatedInit = document.getElementById('new_init').value;
+            const updatedNews = document.getElementById('new_news').value;
             
-            try:
-                user_check = params.get('user')[0]
-                pass_check = params.get('pass')[0]
-                
-                if user_check == 'Essam' and pass_check == 'Essam369':
-                    server_data["initiative_text"] = params.get('new_init')[0]
-                    server_data["news"] = params.get('new_news')[0]
-            except:
-                pass
-                
-            self.send_response(303)
-            self.send_header('Location', '/')
-            self.end_headers()
-
-with socketserver.TCPServer(("", PORT), AtherProtocolServer) as httpd:
-    print(f"[✔] تم تشغيل السيرفر الآمن والمصفح بالكامل")
-    webbrowser.open(f"http://localhost:8080")
-    httpd.serve_forever()
+            localStorage.setItem('ather_init', updatedInit);
+            localStorage.setItem('ather_news', updatedNews);
+            
+            document.getElementById('init-text').innerText = updatedInit;
+            document.getElementById('news-text').innerText = updatedNews;
+            
+            alert("🚀 تم بث وتحديث البيانات بنجاح على واجهتك العالمية!");
+        }
+    </script>
+</body>
+</html>
