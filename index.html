@@ -1,74 +1,644 @@
 <!DOCTYPE html>
-<html lang="en" translate="no">
-
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atheer Protocol X</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Orbitron', sans-serif; }
-        body { background-color: #000000; color: #ffffff; padding-bottom: 40px; text-align: center; }
-        .top-bar { background-color: #14613B; padding: 15px; font-size: 22px; font-weight: bold; border-radius: 0 0 15px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        .nav-bar { background-color: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #333; display: flex; justify-content: space-around; font-size: 12px; }
-        .nav-item { color: #ffffff; text-decoration: none; font-weight: bold; }
-        .nav-item.active { color: #00e5ff; }
-        .hero h1 { color: #00e5ff; font-size: 36px; text-shadow: 0 0 10px #00e5ff; margin-bottom: 5px; }
-        .hero h2 { font-size: 45px; color: #ffffff; margin-bottom: 5px; }
-        .hero .subtitle { color: #b3b3b3; font-size: 14px; margin-bottom: 30px; line-height: 1.6; }
-        .status-container { display: flex; gap: 15px; margin-bottom: 30px; }
-        .status-box { flex: 1; background-color: #012626; border: 1px solid #00e5ff; border-radius: 10px; padding: 15px; box-shadow: inset 0 0 10px rgba(0,229,255,0.2); }
-        .status-box h3 { color: #00e5ff; font-size: 15px; margin-bottom: 8px; }
-        .status-box p { font-size: 13px; color: #ffffff; }
-        .btn-group { display: flex; gap: 15px; margin-top: 20px; }
-        .btn { flex: 1; background-color: #00e5ff; color: #000000; border: none; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; box-shadow: 0 0 15px #00e5ff; transition: 0.3s; }
-        .btn:hover { background-color: #00b2cc; box-shadow: 0 0 25px #00e5ff; }
-        .btn-secondary { background-color: #ff007f; box-shadow: 0 0 15px #ff007f; color: white; }
-        .btn-secondary:hover { background-color: #cc0066; box-shadow: 0 0 25px #ff007f; }
-        .footer { margin-top: 50px; color: #555; font-size: 12px; }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>AETHER PROTOCOL | CYBER SYSTEM</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+}
+
+body{
+background:#050816;
+overflow-x:hidden;
+color:white;
+}
+
+/* خلفية */
+
+body::before{
+content:'';
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at top,#00f0ff22,transparent 40%),
+radial-gradient(circle at bottom,#ff00ff22,transparent 40%),
+#050816;
+z-index:-2;
+}
+
+/* خطوط متحركة */
+
+.cyber-lines{
+position:fixed;
+width:100%;
+height:100%;
+background-image:
+linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+background-size:40px 40px;
+animation:gridMove 15s linear infinite;
+z-index:-1;
+}
+
+@keyframes gridMove{
+0%{transform:translateY(0);}
+100%{transform:translateY(40px);}
+}
+
+/* هيدر */
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+backdrop-filter:blur(12px);
+background:#ffffff08;
+border-bottom:1px solid #00f0ff55;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.logo{
+font-size:30px;
+font-weight:900;
+color:#00f0ff;
+text-shadow:0 0 20px #00f0ff;
+}
+
+.nav{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.nav button{
+padding:12px 18px;
+border:none;
+border-radius:12px;
+background:#0b1228;
+color:white;
+cursor:pointer;
+transition:.3s;
+border:1px solid #00f0ff44;
+}
+
+.nav button:hover{
+transform:translateY(-4px);
+box-shadow:0 0 20px #00f0ff88;
+}
+
+/* Hero */
+
+.hero{
+min-height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:40px;
+}
+
+.hero h1{
+font-size:70px;
+font-weight:900;
+background:linear-gradient(90deg,#00f0ff,#ff00ff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:20px;
+}
+
+.hero p{
+max-width:900px;
+font-size:22px;
+line-height:1.8;
+color:#ddd;
+}
+
+/* بطاقات */
+
+.section{
+padding:70px 20px;
+}
+
+.section-title{
+font-size:40px;
+text-align:center;
+margin-bottom:40px;
+color:#00f0ff;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+
+.card{
+background:#ffffff08;
+border:1px solid #ffffff11;
+padding:25px;
+border-radius:24px;
+backdrop-filter:blur(14px);
+transition:.4s;
+position:relative;
+overflow:hidden;
+}
+
+.card:hover{
+transform:translateY(-8px) scale(1.02);
+box-shadow:0 0 30px #00f0ff33;
+}
+
+.card h3{
+margin-bottom:15px;
+font-size:25px;
+color:#00f0ff;
+}
+
+.card p{
+line-height:1.7;
+color:#ddd;
+}
+
+/* تسجيل */
+
+.auth-box{
+max-width:500px;
+margin:auto;
+background:#ffffff08;
+padding:35px;
+border-radius:25px;
+backdrop-filter:blur(15px);
+border:1px solid #00f0ff33;
+}
+
+.input{
+width:100%;
+padding:16px;
+margin-top:15px;
+border:none;
+border-radius:14px;
+background:#0b1228;
+color:white;
+outline:none;
+}
+
+.btn{
+width:100%;
+padding:16px;
+margin-top:18px;
+border:none;
+border-radius:14px;
+background:linear-gradient(90deg,#00f0ff,#ff00ff);
+color:white;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+}
+
+.btn:hover{
+transform:scale(1.03);
+}
+
+/* شات */
+
+.chat-box{
+height:350px;
+overflow:auto;
+background:#0b1228;
+border-radius:18px;
+padding:20px;
+margin-bottom:15px;
+}
+
+.message{
+background:#00f0ff22;
+padding:12px;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+/* لوحة الإدارة */
+
+.admin-panel{
+display:none;
+padding:40px;
+}
+
+.admin-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.admin-box{
+background:#ffffff08;
+padding:25px;
+border-radius:20px;
+text-align:center;
+border:1px solid #ff00ff44;
+}
+
+.admin-box h2{
+font-size:40px;
+color:#ff00ff;
+}
+
+/* إشعارات */
+
+.notify{
+position:fixed;
+top:20px;
+left:20px;
+background:#00f0ff;
+padding:15px 20px;
+border-radius:15px;
+color:#000;
+font-weight:bold;
+display:none;
+z-index:999;
+}
+
+/* فوتر */
+
+footer{
+padding:40px;
+text-align:center;
+background:#00000055;
+margin-top:60px;
+}
+
+.lang-switch{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#00f0ff;
+border:none;
+padding:15px;
+border-radius:50%;
+cursor:pointer;
+font-weight:bold;
+z-index:999;
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:42px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+header{
+padding:15px;
+flex-direction:column;
+gap:15px;
+}
+
+}
+
+</style>
 </head>
+
 <body>
 
-    <div class="top-bar">Atheer Protocol</div>
+<div class="cyber-lines"></div>
 
-    <div class="container">
-        <div class="nav-bar">
-            <span class="nav-item active">HOME</span>
-            <span class="nav-item">CORE AI</span>
-            <span class="nav-item">LIVE STREAM</span>
-            <span class="nav-item">CYBER SECURITY</span>
-            <span class="nav-item">INVESTMENT</span>
-        </div>
+<div class="notify" id="notify">
+تم التنفيذ بنجاح
+</div>
 
-        <div class="hero">
-            <h1>AETHER X</h1>
-            <h2>AETHER</h2>
-            <h1>PROTOCOL X</h1>
-            <p class="subtitle">Global decentralized architecture integrating Artificial Intelligence, Quantum Cyber Security, Live Streaming, and Advanced Investment Brokerage Solutions.</p>
-        </div>
+<header>
 
-        <div class="status-container">
-            <div class="status-box">
-                <h3>🛡️ Cyber Security System</h3>
-                <p id="crypto-status">🔐 Quantum Data Encryption Active</p>
-            </div>
-            <div class="status-box">
-                <h3>📈 Live Investment Exchange</h3>
-                <p>Live Ticker: <b id="live-price" style="color: #ff007f;">$2550.00</b></p>
-            </div>
-        </div>
+<div class="logo">
+AETHER PROTOCOL
+</div>
 
-        <div class="btn-group">
-            <button class="btn" onclick="runAI()">🤖 RUN AI ENGINE</button>
-            <button class="btn btn-secondary" onclick="startNow()">🚀 LAUNCH PLATFORM</button>
-        </div>
+<div class="nav">
+<button onclick="scrollToSection('features')">المميزات</button>
+<button onclick="scrollToSection('auth')">تسجيل</button>
+<button onclick="openAdmin()">لوحة التحكم</button>
+<button onclick="toggleTheme()">الوضع</button>
+</div>
 
-        <div class="footer">Lead Developer: Essam Elkomy | System: Ready for Global Outreach</div>
-    </div>
+</header>
 
-    <script>
-        setInterval(() => {
-            const price = (Math.random() * (2600 - 2500) + 2500).toFixed(2);
-            document.getElementById('
+<section class="hero">
+
+<h1>AETHER CYBER SYSTEM</h1>
+
+<p>
+منصة سيادية مستقبلية بواجهة Cyber متطورة تضم تسجيل مستخدمين،
+لوحة إدارة خاصة، نظام دردشة، حماية، مؤثرات بصرية،
+ودعم تحويل المشروع إلى منصة عالمية حقيقية.
+</p>
+
+</section>
+
+<section class="section" id="features">
+
+<h2 class="section-title">
+المميزات النووية
+</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>لوحة تحكم</h3>
+<p>
+نظام إدارة كامل للمستخدمين والإشعارات والتحكم بالمحتوى.
+</p>
+</div>
+
+<div class="card">
+<h3>دردشة مباشرة</h3>
+<p>
+واجهة Messenger حديثة تدعم التفاعل السريع.
+</p>
+</div>
+
+<div class="card">
+<h3>حماية وأمان</h3>
+<p>
+أساس قوي لتطوير نظام آمن مع تسجيل حقيقي لاحقًا.
+</p>
+</div>
+
+<div class="card">
+<h3>دعم عالمي</h3>
+<p>
+تصميم متجاوب يدعم الهاتف والكمبيوتر و APK.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section" id="auth">
+
+<h2 class="section-title">
+تسجيل المستخدمين
+</h2>
+
+<div class="auth-box">
+
+<input type="text" class="input" id="username" placeholder="اسم المستخدم">
+
+<input type="password" class="input" id="password" placeholder="كلمة المرور">
+
+<button class="btn" onclick="registerUser()">
+تسجيل الدخول
+</button>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 class="section-title">
+غرفة الدردشة
+</h2>
+
+<div class="auth-box">
+
+<div class="chat-box" id="chatBox">
+
+<div class="message">
+مرحبا بك داخل نظام AETHER
+</div>
+
+</div>
+
+<input type="text" class="input" id="chatInput" placeholder="اكتب رسالة">
+
+<button class="btn" onclick="sendMessage()">
+إرسال
+</button>
+
+</div>
+
+</section>
+
+<section class="admin-panel" id="adminPanel">
+
+<h2 class="section-title">
+غرفة القيادة الخاصة
+</h2>
+
+<div class="admin-grid">
+
+<div class="admin-box">
+<h2 id="usersCount">0</h2>
+<p>المستخدمين</p>
+</div>
+
+<div class="admin-box">
+<h2>ONLINE</h2>
+<p>حالة النظام</p>
+</div>
+
+<div class="admin-box">
+<h2>SECURE</h2>
+<p>الحماية</p>
+</div>
+
+<div class="admin-box">
+<h2>V9000</h2>
+<p>الإصدار</p>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<h2>AETHER PROTOCOL © 2026</h2>
+
+<p>
+CYBER • AI • SECURITY • FUTURE
+</p>
+
+</footer>
+
+<button class="lang-switch" onclick="toggleLanguage()">
+EN
+</button>
+
+<script>
+
+let users = [];
+
+function notify(msg){
+
+const n = document.getElementById('notify');
+
+n.innerText = msg;
+n.style.display = 'block';
+
+setTimeout(()=>{
+n.style.display='none';
+},3000);
+
+}
+
+function registerUser(){
+
+const username =
+document.getElementById('username').value;
+
+const password =
+document.getElementById('password').value;
+
+if(username === '' || password === ''){
+
+notify('املأ جميع الحقول');
+return;
+
+}
+
+users.push(username);
+
+document.getElementById('usersCount')
+.innerText = users.length;
+
+notify('تم تسجيل الدخول بنجاح');
+
+localStorage.setItem('aetherUser',username);
+
+}
+
+function sendMessage(){
+
+const input =
+document.getElementById('chatInput');
+
+if(input.value === '') return;
+
+const box =
+document.getElementById('chatBox');
+
+const msg =
+document.createElement('div');
+
+msg.className='message';
+
+msg.innerText=input.value;
+
+box.appendChild(msg);
+
+input.value='';
+
+box.scrollTop = box.scrollHeight;
+
+}
+
+function openAdmin(){
+
+const pass =
+prompt('ادخل كلمة مرور الادمن');
+
+if(pass === 'AETHER369'){
+
+document.getElementById('adminPanel')
+.style.display='block';
+
+notify('تم فتح غرفة القيادة');
+
+}else{
+
+notify('كلمة مرور خاطئة');
+
+}
+
+}
+
+function toggleTheme(){
+
+document.body.classList.toggle('light');
+
+if(document.body.classList.contains('light')){
+
+document.body.style.background='#e9f2ff';
+document.body.style.color='#000';
+
+}else{
+
+document.body.style.background='#050816';
+document.body.style.color='#fff';
+
+}
+
+}
+
+function scrollToSection(id){
+
+document.getElementById(id)
+.scrollIntoView({
+behavior:'smooth'
+});
+
+}
+
+let currentLang = 'ar';
+
+function toggleLanguage(){
+
+if(currentLang === 'ar'){
+
+document.documentElement.lang='en';
+document.documentElement.dir='ltr';
+
+currentLang='en';
+
+notify('English Enabled');
+
+}else{
+
+document.documentElement.lang='ar';
+document.documentElement.dir='rtl';
+
+currentLang='ar';
+
+notify('تم تفعيل العربية');
+
+}
+
+}
+
+window.onload = ()=>{
+
+const saved =
+localStorage.getItem('aetherUser');
+
+if(saved){
+
+notify('مرحبا بعودتك ' + saved);
+
+}
+
+};
+
+</script>
+
+</body>
+</html>
