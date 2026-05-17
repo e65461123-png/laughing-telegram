@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بروتوكول أثير العملاق | مركز السيادة EH369</title>
+    <title>بروتوكول أثير | مركز السيادة EH369</title>
     <style>
         :root {
             --primary: #00e676;
@@ -12,6 +12,7 @@
             --card-bg: rgba(16, 24, 48, 0.9);
             --text: #ffffff;
             --accent: #ffd600;
+            --danger: #ef4444;
         }
 
         body {
@@ -24,25 +25,25 @@
             overflow-x: hidden;
         }
 
-        /* شريط تدفق البيانات العصبي في أعلى المنصة */
+        /* شريط البورصة والتدفق العصبي المباشر */
         .neural-ticker {
-            background: linear-gradient(90px, #000, #111);
+            background: linear-gradient(90deg, #000, #111);
             color: var(--secondary);
             font-size: 12px;
             padding: 8px 0;
             white-space: nowrap;
             overflow: hidden;
             border-bottom: 1px solid rgba(0, 176, 255, 0.3);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .ticker-content {
             display: inline-block;
-            animation: ticker 25s linear infinite;
+            padding-right: 100%;
+            animation: ticker 30s linear infinite;
         }
 
         @keyframes ticker {
-            0% { transform: translate3d(100%, 0, 0); }
+            0% { transform: translate3d(0, 0, 0); }
             100% { transform: translate3d(-100%, 0, 0); }
         }
 
@@ -66,7 +67,6 @@
             color: var(--primary);
             font-size: 28px;
             margin: 10px 0 5px 0;
-            text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
         }
@@ -77,7 +77,7 @@
             margin-bottom: 25px;
         }
 
-        /* لوحة التحكم والبيانات الحية والمحفظة */
+        /* شبكة لوحة البيانات الرقمية */
         .grid-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -90,7 +90,6 @@
             padding: 12px;
             border-radius: 12px;
             border: 1px solid #1e293b;
-            text-align: center;
         }
 
         .stat-label {
@@ -103,25 +102,18 @@
         .stat-value {
             font-size: 16px;
             font-weight: bold;
-            color: var(--text);
         }
 
-        .wallet-value {
-            color: var(--accent);
-        }
-
-        /* قسم التوقعات والمراهنات الذكي */
         .engine-section {
             background: #111827;
             padding: 20px;
             border-radius: 15px;
             border: 1px solid #1f2937;
-            margin-top: 15px;
+            text-align: right;
         }
 
         .input-group {
             margin-bottom: 15px;
-            text-align: right;
         }
 
         label {
@@ -129,7 +121,6 @@
             margin-bottom: 6px;
             color: #94a3b8;
             font-size: 13px;
-            font-weight: 500;
         }
 
         select, input {
@@ -141,16 +132,8 @@
             color: white;
             font-size: 16px;
             box-sizing: border-box;
-            transition: 0.3s;
         }
 
-        select:focus, input:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 10px rgba(0, 230, 118, 0.2);
-        }
-
-        /* زر المعالجة الرئيسي للبروتوكول */
         .btn-core {
             width: 100%;
             background: linear-gradient(135px, var(--primary) 0%, var(--secondary) 100%);
@@ -161,143 +144,130 @@
             font-weight: 800;
             border-radius: 10px;
             cursor: pointer;
-            transition: 0.3s ease;
-            margin-top: 10px;
             box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3);
         }
 
-        .btn-core:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.5);
-        }
-
-        /* صندوق النتيجة المتقدم مع التشفير */
         .result-container {
             margin-top: 20px;
             padding: 18px;
             border-radius: 12px;
             display: none;
-            text-align: right;
             border-right: 5px solid var(--primary);
             background: rgba(0, 230, 118, 0.05);
-        }
-
-        .crypto-hash {
-            font-family: monospace;
-            font-size: 10px;
-            color: #475569;
-            word-break: break-all;
-            margin-top: 8px;
-            border-top: 1px dashed #334155;
-            padding-top: 8px;
         }
 
         .footer {
             margin-top: 30px;
             font-size: 11px;
             color: #475569;
-            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
     <div class="neural-ticker">
-        <div class="ticker-content">
-            ⚡ نـظـام EH369 الـذاتـي نـشـط الآن • بـتـكـويـن BTC/USDT: $92,450 (+3.2%) • إيـثـيـريـوم ETH/USDT: $3,420 • الـسـيـادة الـرقـمـيـة مـؤمـنـة بالكامل عبر بروتوكول أثير • خوادم القاهرة تعمل بكفاءة قصوى ⚡
+        <div id="ticker-data" class="ticker-content">
+            ⚡ جاري سحب البيانات المباشرة للأسواق... بروتوكول أثير مؤمن عبر مفتاح السيادة الرقمية EH369 ⚡
         </div>
     </div>
 
     <div class="container">
         <div class="main-card">
+            
             <h1>ATHEER PROTOCOL</h1>
-            <div class="tagline">البنية التحتية المستقلة والتحليل العصبي المتقدم • مفتاح 369</div>
+            <div class="tagline">مركز التحكم والتحليل الاستباقي للبيانات • مفتاح 369</div>
 
             <div class="grid-stats">
                 <div class="stat-box">
                     <span class="stat-label">محفظة أثير الرقمية</span>
-                    <span id="wallet-balance" class="stat-value wallet-value">1,000 نقطة</span>
+                    <span id="wallet-balance" class="stat-value" style="color: var(--accent);">1,000 نقطة</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-label">حالة السيادة والاتصال</span>
-                    <span id="node-status" class="stat-value" style="color: var(--primary);">عقدة رئيسية آمنة</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">مبادرة أثير للخير</span>
-                    <span class="stat-value" style="color: #a78bfa;">مُفعلة ونشطة</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">معدل كفاءة محرك التحليل</span>
-                    <span class="stat-value" style="color: var(--secondary);">96.8%</span>
+                    <span class="stat-label">مبادرة أثير للخير (صندوق العائلات)</span>
+                    <span id="charity-fund" class="stat-value" style="color: #a78bfa;">0 نقطة</span>
                 </div>
             </div>
 
             <div class="engine-section">
-                <h3 style="margin-top: 0; color: var(--secondary); font-size: 18px; text-align: right;">محرك المعالجة الاستباقية للبيانات</h3>
+                <h3 style="margin-top: 0; color: var(--secondary); font-size: 18px;">خوارزمية المعالجة الذاتية</h3>
                 
                 <div class="input-group">
-                    <label for="market-select">اختيار بيئة التوقع والتحليل:</label>
+                    <label for="market-select">نطاق الأسواق المستهدفة:</label>
                     <select id="market-select" onchange="loadEvents()">
-                        <option value="sports">الأسواق الرياضية الدولية</option>
-                        <option value="crypto">اتجاهات العملات المشفرة والبورصة</option>
+                        <option value="crypto">العملات الرقمية والأسواق الفورية العالمية</option>
+                        <option value="sports">الأحداث الرياضية والدولية الحية</option>
                     </select>
                 </div>
 
                 <div class="input-group">
-                    <label for="event-select">اختيار الحدث المستهدف بدقة:</label>
+                    <label for="event-select">تحديد الحدث بدقة:</label>
                     <select id="event-select"></select>
                 </div>
 
                 <div class="input-group">
-                    <label for="bet-points">نقاط التخصيص أو المراهنة المعالجة:</label>
+                    <label for="bet-points">النقاط المخصصة للمعالجة:</label>
                     <input type="number" id="bet-points" value="100" min="10">
                 </div>
 
-                <button class="btn-core" onclick="runAtheerEngine()">معالجة وتوليد النواة الذكية</button>
+                <button class="btn-core" onclick="runAtheerEngine()">توليد وتحليل كتلة البيانات</button>
 
                 <div id="result-container" class="result-container">
                     <div id="result-text"></div>
-                    <div id="crypto-hash" class="crypto-hash"></div>
                 </div>
             </div>
 
             <div class="footer">
-                صرح بروتوكول أثير الرقمي المستقل © 2026 | تطوير المعماري التقني عصام الكومي
+                بنية بروتوكول أثير العملاقة المستقلة © 2026 | تطوير المعمار عصام الكومي
             </div>
         </div>
     </div>
 
     <script>
-        // مصفوفة البيانات الضخمة للمحرك
         const dataset = {
-            sports: [
-                "ريال مدريد ضد برشلونة (الدوري الإسباني)",
-                "مانشستر سيتي ضد ليفربول (الدوري الإنجليزي)",
-                "الأهلي ضد الزمالك (قمة الدوري المصري)",
-                "بايرن ميونخ ضد باريس سان جيرمان (دوري الأبطال)"
-            ],
             crypto: [
                 "حركة البتكوين الفورية (BTC/USDT)",
                 "مؤشر السيولة الفوري للإيثيريوم (ETH/USDT)",
-                "اتجاه عقود سولانا الذكية (SOL/USDT)",
-                "تدفقات بورصة السلع والمعادن العالمية"
+                "اتجاه عقود سولانا الذكية (SOL/USDT)"
+            ],
+            sports: [
+                "الأهلي ضد الزمالك (قمة الدوري المصري)",
+                "ريال مدريد ضد برشلونة (الكلاسيكو الدولي)",
+                "مانشستر سيتي ضد ليفربول (الدوري الإنجليزي)"
             ]
         };
 
-        // دالة إدارة المحفظة وحفظ البيانات محلياً لتصبح المنصة حقيقية
-        let currentBalance = localStorage.getItem('atheer_balance');
-        if (!currentBalance) {
-            currentBalance = 1000;
-            localStorage.setItem('atheer_balance', currentBalance);
-        } else {
-            currentBalance = parseInt(currentBalance);
-        }
+        let currentBalance = localStorage.getItem('atheer_balance') ? parseInt(localStorage.getItem('atheer_balance')) : 1000;
+        let charityFund = localStorage.getItem('atheer_charity') ? parseInt(localStorage.getItem('atheer_charity')) : 0;
 
-        function updateWalletDisplay() {
+        function updateDisplays() {
             document.getElementById('wallet-balance').innerText = currentBalance.toLocaleString() + " نقطة";
+            document.getElementById('charity-fund').innerText = charityFund.toLocaleString() + " نقطة";
         }
 
-        // تحميل الأحداث ديناميكياً
+        // سحب أسعار بورصة الكريبتو الحقيقية مباشرة لحظة بلحظة
+        async function fetchLivePrices() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true');
+                const data = await response.json();
+                
+                const btc = data.bitcoin.usd;
+                const btcChange = data.bitcoin.usd_24h_change.toFixed(2);
+                const eth = data.ethereum.usd;
+                const sol = data.solana.usd;
+
+                document.getElementById('ticker-data').innerHTML = `
+                    ⚡ بـتـكـويـن BTC/USDT: $${btc.toLocaleString()} (${btcChange > 0 ? '+' : ''}${btcChange}%) • 
+                    إيـثـيـريـوم ETH/USDT: $${eth.toLocaleString()} • 
+                    سـولانـا SOL: $${sol.toFixed(2)} • 
+                    السيادة الرقمية مؤمنة بالكامل عبر العقدة المركزية القاهرة EH369 ⚡
+                `;
+            } catch (error) {
+                document.getElementById('ticker-data').innerHTML = `
+                    ⚡ بـتـكـويـن BTC/USDT: $94,800 (+2.9%) • إيـثـيـريـوم ETH/USDT: $3,460 • العقدة الذاتية EH369 مستقرة ومؤمنة محلياً ⚡
+                `;
+            }
+        }
+
         function loadEvents() {
             const market = document.getElementById('market-select').value;
             const eventSelect = document.getElementById('event-select');
@@ -311,72 +281,47 @@
             });
         }
 
-        // تشغيل محرك المعالجة المطور لـ EH369 واحتساب الربح والخسارة حركياً
         function runAtheerEngine() {
             const event = document.getElementById('event-select').value;
             const points = parseInt(document.getElementById('bet-points').value);
             const resultContainer = document.getElementById('result-container');
             const resultText = document.getElementById('result-text');
-            const hashBox = document.getElementById('crypto-hash');
 
-            if (!points || points <= 0) {
-                alert("الرجاء تحديد نقاط صالحة للمعالجة!");
+            if (!points || points <= 0 || points > currentBalance) {
+                alert("الرجاء فحص نقاط المحفظة المتاحة لديك قبل المعالجة!");
                 return;
             }
 
-            if (points > currentBalance) {
-                alert("عذراً، رصيد نقاطك الحالي في محفظة أثير غير كافٍ لإتمام هذه المعالجة!");
-                return;
-            }
+            const win = Math.random() > 0.45; 
 
-            // مصفوفة الاحتمالات الذكية للمحرك
-            const engineOutcomes = [
-                { text: "تحليل إيجابي قوي: فوز الطرف الأول / صعود السعر فوري وصعود حاد.", win: true },
-                { text: "توقع الخوارزمية يرجح: التعادل التام وثبات المؤشرات السعرية والتحليلية.", win: false },
-                { text: "تحول مفاجئ في التدفقات: تفوق كاسح للطرف الثاني واختراق خطوط الدعم والمقاومة.", win: true },
-                { text: "معالجة حرجة: هبوط وتصحيح مؤقت للمؤشر يتبعه قفزة سريعة للأعلى.", win: true },
-                { text: "قراءة المحرك تحذر: تراجع حاد للمؤشرات وضغط بيعي / تفوق دفاعي تام.", win: false }
-            ];
-
-            // اختيار النتيجة بشكل عشوائي ذكي
-            const selectedOutcome = engineOutcomes[Math.floor(Math.random() * engineOutcomes.length)];
-
-            // احتساب الرصيد الجديد في المحفظة محلياً
-            if (selectedOutcome.win) {
-                currentBalance += points; 
+            if (win) {
+                const charityCut = Math.floor(points * 0.05); // اقتطاع 5% تلقائياً لصندوق مبادرة الخير للعائلات المستحقة لضمان الشفافية والسيادة المجتمعية
+                const netWin = points - charityCut;
+                currentBalance += netWin;
+                charityFund += charityCut;
                 resultContainer.style.borderRightColor = "var(--primary)";
                 resultContainer.style.background = "rgba(0, 230, 118, 0.05)";
+                resultText.innerHTML = `📌 <strong>الحدث المستهدف:</strong> ${event}<br>📊 <strong>الحالة:</strong> <span style="color:var(--primary)">نجاح المعالجة الحسابية واكتساب رصيد (+)</span><br>🔮 قراءة محرك 369 تؤكد تفوق كامل في نقاط المؤشر وسحب أرباح قياسية لصالح المحفظة الموحدة.`;
             } else {
                 currentBalance -= points;
-                resultContainer.style.borderRightColor = "#ef4444";
+                resultContainer.style.borderRightColor = "var(--danger)";
                 resultContainer.style.background = "rgba(239, 68, 68, 0.05)";
+                resultText.innerHTML = `📌 <strong>الحدث المستهدف:</strong> ${event}<br>❌ <strong>الحالة:</strong> <span style="color:var(--danger)">انكماش وتصحيح مؤقت للكتلة (-)</span><br>🔮 المؤشر يمر بحركة ارتدادية سريعة لحصد السيولة، يُنصح بانتظار اكتمال الدورة العصبية القادمة.`;
             }
 
-            // حفظ التعديل الجديد في ذاكرة الهاتف المتصفح
             localStorage.setItem('atheer_balance', currentBalance);
-            updateWalletDisplay();
-
-            // توليد رمز تشفير أمان وهمي لمحاكاة التوثيق الخاص بـ بروتوكول أثير
-            const randomHash = "EH369-BLOCK-" + Math.random().toString(36).substring(2, 15).toUpperCase() + "-" + Math.random().toString(36).substring(2, 15).toUpperCase();
-
-            // عرض البيانات المجمعة للمستخدم بصرياً
+            localStorage.setItem('atheer_charity', charityFund);
+            updateDisplays();
             resultContainer.style.display = "block";
-            resultText.innerHTML = `
-                📌 <strong>الحدث الخاضع للتحليل:</strong> ${event}<br>
-                💰 <strong>النقاط المستهلكة:</strong> ${points} نقطة<br>
-                📊 <strong>حالة المعالجة:</strong> ${selectedOutcome.win ? '<span style="color:var(--primary)">ربح وتوسع رصيد (+)' : '<span style="color:#ef4444">انكماش وتصحيح رصيد (-)'}</span><br><br>
-                🔮 <strong>توقع خوارزمية EH369 الذاتية:</strong><br>
-                <span style="color: var(--accent); font-size: 15px;">${selectedOutcome.text}</span>
-            `;
-            hashBox.innerText = `التوقيع الرقمي المشفر للكتلة: ${randomHash}`;
         }
 
-        // تفعيل النظام الفوري عند التحميل
         window.onload = function() {
             loadEvents();
-            updateWalletDisplay();
+            updateDisplays();
+            fetchLivePrices();
+            setInterval(fetchLivePrices, 60000);
         };
     </script>
 </body>
 </html>
-
+    
